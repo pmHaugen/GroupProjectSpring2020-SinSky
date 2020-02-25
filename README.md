@@ -1,2 +1,3 @@
-# GroupProjectSpring2020
-Herman, Sofie, Dorthe, Paal og Andreas
+# GroupProject
+
+Developed with Unreal Engine 4
