@@ -18,7 +18,7 @@ AMainCharacter::AMainCharacter()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 800.f;
 	CameraBoom->bEnableCameraLag = true;
-	CameraBoom->SetRelativeRotation(FRotator(0.f, -30.f, 50.f));
+	CameraBoom->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
 	CameraBoom->bUsePawnControlRotation = false;
 	CameraBoom->bInheritYaw = false;
 	CameraBoom->bDoCollisionTest = false;
@@ -26,7 +26,7 @@ AMainCharacter::AMainCharacter()
 	//Make the camera follow
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Follow Camera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	FollowCamera->SetRelativeRotation(FRotator(0.f, 15.f, 0.f));
+	FollowCamera->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
 
 }
 
