@@ -83,21 +83,21 @@ void AMainCharacter::MoveSideways(float Value)
 	AddMovementInput(Direction, Value);
 }
 
-void AMainCharacter::CastSpell()
-{
-	UWorld* World = GetWorld();
+//void AMainCharacter::CastSpell()
+//{
+	//UWorld* World = GetWorld();
 
-	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
-	FRotator SpellSpawnRotation = GetActorRotation();
+	//FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
+	//FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (SpellChoosen == 1)
-	{
-		if (World)
-		{
-			World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-		}
-	}
-}
+	//if (SpellChoosen == 1)
+	//{
+		//if (World)
+		//{
+			//World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+		//}
+	//}
+//}
 
 void AMainCharacter::SpellChooser()
 {
