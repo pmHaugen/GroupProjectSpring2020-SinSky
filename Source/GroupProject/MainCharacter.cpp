@@ -5,8 +5,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
-#include "Fireball.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Fireball.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -88,7 +88,6 @@ void AMainCharacter::CastSpell()
 	UWorld* World = GetWorld();
 
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
-
 	FRotator SpellSpawnRotation = GetActorRotation();
 
 	if (SpellChoosen == 1)
