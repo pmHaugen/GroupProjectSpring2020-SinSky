@@ -36,10 +36,12 @@ void AFireball::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FVector Location = GetActorLocation();
-
+	FVector Direction = GetActorForwardVector();
 	
-
-	Location.X += Speed * DeltaTime;
+	Location.Y += (Direction.Y * DeltaTime) * Speed;
+	Location.X += (Direction.X * DeltaTime) * Speed;
+	
+		
 	SetActorLocation(Location);
 }
 
