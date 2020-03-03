@@ -97,7 +97,6 @@ void AMainCharacter::CastSpell()
 		}
 	}
 }
->>>>>>> d08567c15572747d66362faeb1b8fa31a4d94081
 
 void AMainCharacter::SpellChooser()
 {
