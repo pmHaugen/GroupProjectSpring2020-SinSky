@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Fireball.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -57,6 +58,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+
+	InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -80,4 +83,21 @@ void AMainCharacter::MoveSideways(float Value)
 	AddMovementInput(Direction, Value);
 }
 
+void AMainCharacter::CastSpell()
+{
+	UWorld* World = GetWorld();
+
+	if (SpellChoosen == 1)
+	{
+		if (World)
+		{
+			World->SpawnActor<AFireball>(Fireball_BP, GetActorLocation() + FVector(SpellLocation, 0.f, SpellHeight), GetActorRotation());
+		}
+	}
+}
+
+void AMainCharacter::SpellChooser()
+{
+	SpellChoosen = 1;
+}
 

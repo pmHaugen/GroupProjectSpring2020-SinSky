@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MainCharacter.generated.h"
 
+
 UCLASS()
 class GROUPPROJECT_API AMainCharacter : public ACharacter
 {
@@ -24,6 +25,8 @@ public:
 	float WalkSpeed;
 	float RunSpeed;
 
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -39,6 +42,22 @@ public:
 
 	void MoveSideways(float Value);
 	void MoveForward(float Value);
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
+	float SpellLocation = 70.f;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
+	float SpellHeight = 240.f;
+
+	UPROPERTY(EditAnywhere, Category = "The Bullet")
+	TSubclassOf<class AFireball> Fireball_BP;
+
+	float Damage;
+	//Spells:
+
+	int32 SpellChoosen{ 1 };
+
+	void CastSpell();
+	void SpellChooser();
 
 
 
