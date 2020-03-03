@@ -44,9 +44,10 @@ public:
 	void MoveForward(float Value);
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
-	float SpellLocation = 70.f;
+	float SpellForwardOffset = 100.f;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
-	float SpellHeight = 240.f;
+	float SpellHeightOffset = 0.f;
+
 
 	UPROPERTY(EditAnywhere, Category = "The Bullet")
 	TSubclassOf<class AFireball> Fireball_BP;

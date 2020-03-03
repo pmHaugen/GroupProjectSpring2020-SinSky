@@ -30,7 +30,14 @@ public:
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere)
-	float Speed{ 600.f };
+	FVector Speed;
+
+	
+
+	float TimeSinceSpawned{ 0 };
+
+	UPROPERTY(VisibleAnywhere)
+	float SpellDuration;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

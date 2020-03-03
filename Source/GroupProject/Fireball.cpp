@@ -19,7 +19,11 @@ AFireball::AFireball()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
 	Mesh->SetupAttachment(RootComponent);
+
+	SpellDuration = 10;
+	Speed = { 1000.f, 0.f, 0.f };
 }
+
 
 // Called when the game starts or when spawned
 void AFireball::BeginPlay()
@@ -35,14 +39,23 @@ void AFireball::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector Location = GetActorLocation();
-	FVector Direction = GetActorForwardVector();
+
 	
-	Location.Y += (Direction.Y * DeltaTime) * Speed;
-	Location.X += (Direction.X * DeltaTime) * Speed;
+
+	//Location.Y += (Direction.Y * DeltaTime) * Speed;
+	//Location.X += (Direction.X * DeltaTime) * Speed;
 	
+	//Improved:
+
+	AddActorLocalOffset(Speed * DeltaTime);
+
+	TimeSinceSpawned += DeltaTime;
+
+		if (TimeSinceSpawned >= SpellDuration)
+		{
+			Destroy();
+		}
 		
-	SetActorLocation(Location);
 }
 
 void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

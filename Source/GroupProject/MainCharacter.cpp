@@ -87,11 +87,15 @@ void AMainCharacter::CastSpell()
 {
 	UWorld* World = GetWorld();
 
+	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
+
+	FRotator SpellSpawnRotation = GetActorRotation();
+
 	if (SpellChoosen == 1)
 	{
 		if (World)
 		{
-			World->SpawnActor<AFireball>(Fireball_BP, GetActorLocation() + FVector(SpellLocation, 0.f, SpellHeight), GetActorRotation());
+			World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 		}
 	}
 }
