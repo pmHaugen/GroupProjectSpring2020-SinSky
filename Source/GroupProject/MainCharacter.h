@@ -48,6 +48,10 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
 	float SpellHeightOffset = 0.f;
 
+	float Cooldown;
+	float TimeSinceSpell;
+	float SpellCD;
+
 
 	UPROPERTY(EditAnywhere, Category = "The Bullet")
 	TSubclassOf<class AFireball> Fireball_BP;

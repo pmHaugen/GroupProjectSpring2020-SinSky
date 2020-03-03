@@ -30,6 +30,11 @@ AMainCharacter::AMainCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->SetRelativeRotation(FRotator(0.f, 0.f, 0.f)); // Y,Z,X
 
+
+	SpellCD = { 0.5f };
+	Cooldown = { 0 };
+	TimeSinceSpell = { 0 };
+
 }
 
 // Called when the game starts or when spawned
@@ -46,6 +51,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TimeSinceSpell += DeltaTime;
 
 }
 
@@ -84,16 +90,20 @@ void AMainCharacter::MoveSideways(float Value)
 
 void AMainCharacter::CastSpell()
 {
-	UWorld* World = GetWorld();
+	UWorld* World = GetWorld(); 
 
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (SpellChoosen == 1)
+	if (SpellCD <= TimeSinceSpell) 
 	{
-		if (World)
+		if (SpellChoosen == 1)
 		{
-			World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+			if (World)
+			{
+				World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+				TimeSinceSpell = 0;
+			}
 		}
 	}
 }
