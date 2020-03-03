@@ -36,7 +36,7 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 }
 
@@ -54,17 +54,30 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
-	//PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 }
 
 void AMainCharacter::MoveForward(float Value)
 {
-	//Direction = GetActorForwardVector();
-
-	//AddMovementInput(Direction, Value);
+	FVector Direction;
+	FRotator tempRotation = CameraBoom->GetComponentRotation();
+	tempRotation -= GetViewRotation();
+	tempRotation.Pitch = 0.f;
+	Direction = tempRotation.Vector();
+	AddMovementInput(Direction, Value);
 }
 
-
+void AMainCharacter::MoveSideways(float Value)
+{
+	FVector Direction;
+	FRotator tempRotation = CameraBoom->GetComponentRotation();
+	tempRotation -= GetViewRotation();
+	tempRotation.Pitch = 0.f;
+	tempRotation.Yaw += 90.f;
+	Direction = tempRotation.Vector();
+	AddMovementInput(Direction, Value);
+}
 
 
