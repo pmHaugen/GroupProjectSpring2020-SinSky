@@ -93,7 +93,7 @@ void AMainCharacter::CastSpell()
 	{
 		if (World)
 		{
-			//World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+			World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 		}
 	}
 }
