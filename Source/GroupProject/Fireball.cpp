@@ -21,7 +21,7 @@ AFireball::AFireball()
 	Mesh->SetupAttachment(RootComponent);
 
 	SpellDuration = 10;
-	Speed = { 1000.f, 0.f, 0.f };
+	Speed = { 500.f, 0.f, 0.f };
 }
 
 

@@ -46,7 +46,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	Clock(DeltaTime);
 
 }
 
@@ -104,4 +104,3 @@ void AMainCharacter::SpellChooser()
 {
 	SpellChoosen = 1;
 }
-
