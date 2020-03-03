@@ -52,7 +52,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "The Bullet")
 	TSubclassOf<class AFireball> Fireball_BP;
 
-	void Clock(float Value);
 
 	float Damage;
 	//Spells:
