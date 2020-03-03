@@ -4,4 +4,4 @@ Echo deleting folders
 @RD /S /Q "Saved"
 @RD /S /Q "Intermediate"
 @RD /S /Q ".vs"
-del ".sln" /s /f /q
+DEL "*.sln" /s /f /q
