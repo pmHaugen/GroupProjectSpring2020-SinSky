@@ -18,6 +18,7 @@ AMainCharacter::AMainCharacter()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 800.f;
 	CameraBoom->bEnableCameraLag = true;
+	CameraBoom->CameraLagSpeed = 40.f;
 	CameraBoom->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
 	CameraBoom->bUsePawnControlRotation = false;
 	CameraBoom->bInheritYaw = false;
@@ -35,12 +36,16 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 }
 
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
 
 }
 
@@ -49,5 +54,17 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	//PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
 }
+
+void AMainCharacter::MoveForward(float Value)
+{
+	//Direction = GetActorForwardVector();
+
+	//AddMovementInput(Direction, Value);
+}
+
+
+
 

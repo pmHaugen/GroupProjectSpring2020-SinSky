@@ -37,8 +37,8 @@ public:
 			//UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			//bool bFromSweep, const FHitResult& SweepResult);
 
-	//void MoveSideways(float Value);
-	//void MoveForward(float Value);
+	void MoveSideways(float Value);
+	void MoveForward(float Value);
 
 
 
