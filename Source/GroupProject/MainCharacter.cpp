@@ -5,7 +5,12 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/Decalcomponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Materials/Material.h"
+#include "Engine/World.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Kismet/GameplayStatics.h"
 #include "Fireball.h"
 
 // Sets default values
@@ -30,6 +35,18 @@ AMainCharacter::AMainCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->SetRelativeRotation(FRotator(0.f, 0.f, 0.f)); // Y,Z,X
 
+	//Mouse
+	CursorToWorld = CreateDefaultSubobject<UDecalComponent>("CursorToWorld");
+	CursorToWorld->SetupAttachment(RootComponent);
+	UE_LOG(LogTemp, Warning, TEXT("trying to add decal form hardcoded path!"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/Materials/M_Cursor_Decal.M_Cursor_Decal'"));
+	if (DecalMaterialAsset.Succeeded())
+	{
+		CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
+		UE_LOG(LogTemp, Warning, TEXT("Succeded adding decal form hardcoded path!"));
+	}
+	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
+	CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
 
 	SpellCD = { 0.5f };
 	Cooldown = { 0 };
@@ -100,7 +117,7 @@ void AMainCharacter::CastSpell()
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (SpellCD <= TimeSinceSpell) 
+	if (SpellCD <= TimeSinceSpell)
 	{
 		if (SpellChoosen == 1)
 		{

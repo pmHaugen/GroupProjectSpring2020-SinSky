@@ -56,6 +56,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "The Bullet")
 	TSubclassOf<class AFireball> Fireball_BP;
 
+	//Mouse
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")
+	UDecalComponent* CursorToWorld;
+	void Mouse_XAxis(float AxisValue);
+	void Mouse_YAxis(float AxisValue);
 
 	float Damage;
 	//Spells:
@@ -66,6 +71,7 @@ public:
 	void SpellChooser();
 	void StartSpell();
 	void StopSpell();
+
 
 
 	// Called to bind functionality to input
