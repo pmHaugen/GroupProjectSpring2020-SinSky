@@ -13,6 +13,7 @@
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 
 // Sets default values
@@ -170,7 +171,8 @@ void AMainCharacter::CastSpell()
 		if (SpellChoosen == 1)
 		{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-				TimeSinceSpell = 0;
+			TimeSinceSpell = 0;
+			UGameplayStatics::PlaySound2D(this, FireballSound);
 		}
 	}
 }

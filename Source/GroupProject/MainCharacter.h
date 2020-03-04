@@ -51,6 +51,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
 	float SpellHeightOffset = 0.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	class USoundCue* FireballSound;
+
 	float Cooldown;
 	float TimeSinceSpell;
 	float SpellCD;
