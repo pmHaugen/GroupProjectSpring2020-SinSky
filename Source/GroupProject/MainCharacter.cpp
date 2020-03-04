@@ -52,7 +52,10 @@ void AMainCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	TimeSinceSpell += DeltaTime;
-
+	if (bCasting == true)
+	{
+		CastSpell();
+	}
 }
 
 // Called to bind functionality to input
@@ -64,7 +67,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 
-	InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);
+	//InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);// old without the ability to hold for fire
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::StartSpell);
+	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMainCharacter::StopSpell);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -106,6 +111,16 @@ void AMainCharacter::CastSpell()
 			}
 		}
 	}
+}
+
+void AMainCharacter::StartSpell()
+{
+	bCasting = true;
+}
+
+void AMainCharacter::StopSpell()
+{
+	bCasting = false;
 }
 
 void AMainCharacter::SpellChooser()

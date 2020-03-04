@@ -24,7 +24,7 @@ public:
 
 	float WalkSpeed;
 	float RunSpeed;
-
+	bool bCasting;
 
 
 protected:
@@ -64,7 +64,8 @@ public:
 
 	void CastSpell();
 	void SpellChooser();
-
+	void StartSpell();
+	void StopSpell();
 
 
 	// Called to bind functionality to input
