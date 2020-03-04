@@ -2,6 +2,8 @@
 
 
 #include "MainCharacter.h"
+#include "Fireball.h"
+
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
@@ -11,7 +13,7 @@
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
-#include "Fireball.h"
+
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -52,12 +54,18 @@ AMainCharacter::AMainCharacter()
 	Cooldown = { 0 };
 	TimeSinceSpell = { 0 };
 
+	//Movement
+	CurrentVelocity = FVector(0.f);
+	MaxSpeed = (400.f);
+
 }
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = false;
 	
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
@@ -68,10 +76,48 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	TimeSinceSpell += DeltaTime;
-	if (bCasting == true)
+	//Movement:
+	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+	SetActorLocation(NewLocation);
+
+	//Mouse:
+	FHitResult Hit;
+	bool HitResult = false;
+
+	//using "ByChannel" to only get the World Static Meshes
+	HitResult = GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_WorldStatic), true, Hit);
+
+	if (HitResult)
 	{
-		CastSpell();
+	//Cursor location updates:
+
+
+		FVector CursorLocation = Hit.Location;
+		UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
+
+		//Set cursor location above ground a little
+		TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 30.f);
+
+		//Calculating direction
+	    NewDirectionToCursor = TempLocation - GetActorLocation();
+		NewDirectionToCursor.Z = 0.f;
+		NewDirectionToCursor.Normalize();
+		SetActorRotation(NewDirectionToCursor.Rotation());
+		
+		//Cursor location updates:
+		FVector CursorFV = Hit.ImpactNormal;
+		FRotator CursorR = CursorFV.Rotation();
+		CursorToWorld->SetWorldLocation(Hit.Location);
+		CursorToWorld->SetWorldRotation(CursorR);
+		//End Mouse
+
+			//Spell Casting
+		TimeSinceSpell += DeltaTime;
+		if (bCasting == true)
+		{
+			CastSpell();
+		}
+		//End Spell Casting
 	}
 }
 
@@ -91,41 +137,40 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AMainCharacter::MoveForward(float Value)
 {
-	FVector Direction;
-	FRotator tempRotation = CameraBoom->GetComponentRotation();
-	tempRotation -= GetViewRotation();
-	tempRotation.Pitch = 0.f;
-	Direction = tempRotation.Vector();
-	AddMovementInput(Direction, Value);
+	//FVector Direction;
+	//FRotator Rotation = CameraBoom->GetComponentRotation();
+	//Rotation -= GetViewRotation();
+	//Rotation.Pitch = 0.f;
+	//Direction = Rotation.Vector();
+	//AddMovementInput(Direction, Value);
+	CurrentVelocity.X = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
 }
 
 void AMainCharacter::MoveSideways(float Value)
 {
-	FVector Direction;
-	FRotator tempRotation = CameraBoom->GetComponentRotation();
-	tempRotation -= GetViewRotation();
-	tempRotation.Pitch = 0.f;
-	tempRotation.Yaw += 90.f;
-	Direction = tempRotation.Vector();
-	AddMovementInput(Direction, Value);
+	//FVector Direction;
+	//FRotator Rotation = CameraBoom->GetComponentRotation();
+	//Rotation -= GetViewRotation();
+	//Rotation.Pitch = 0.f;
+	//Rotation.Yaw += 90.f;
+	//Direction = Rotation.Vector();
+	//AddMovementInput(Direction, Value);
+	CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
 }
 
 void AMainCharacter::CastSpell()
 {
-	UWorld* World = GetWorld(); 
+	//UWorld* World = GetWorld(); 
 
-	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
-	FRotator SpellSpawnRotation = GetActorRotation();
+	  FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
+      FRotator SpellSpawnRotation = GetActorRotation();
 
 	if (SpellCD <= TimeSinceSpell)
 	{
 		if (SpellChoosen == 1)
 		{
-			if (World)
-			{
-				World->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 				TimeSinceSpell = 0;
-			}
 		}
 	}
 }

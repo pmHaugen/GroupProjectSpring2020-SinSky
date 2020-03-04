@@ -21,7 +21,7 @@ AFireball::AFireball()
 	Mesh->SetupAttachment(RootComponent);
 
 	SpellDuration = 10;
-	Speed = { 500.f, 0.f, 0.f };
+	Speed = { 50.f, 0.f, 0.f };
 }
 
 
@@ -39,7 +39,7 @@ void AFireball::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	Speed += { 1000.f*DeltaTime, 0.f, 0.f };
 	
 
 	//Location.Y += (Direction.Y * DeltaTime) * Speed;

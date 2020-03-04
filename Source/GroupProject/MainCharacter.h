@@ -42,9 +42,12 @@ public:
 
 	void MoveSideways(float Value);
 	void MoveForward(float Value);
+	FVector CurrentVelocity;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float MaxSpeed;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
-	float SpellForwardOffset = 100.f;
+	float SpellForwardOffset = 200.f;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
 	float SpellHeightOffset = 0.f;
 
@@ -59,8 +62,8 @@ public:
 	//Mouse
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")
 	UDecalComponent* CursorToWorld;
-	void Mouse_XAxis(float AxisValue);
-	void Mouse_YAxis(float AxisValue);
+	FVector NewDirectionToCursor;
+	FVector TempLocation;
 
 	float Damage;
 	//Spells:
