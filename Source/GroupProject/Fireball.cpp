@@ -39,7 +39,7 @@ void AFireball::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Speed += { 1000.f*DeltaTime, 0.f, 0.f };
+	Speed += { 1500.f*DeltaTime, 0.f, 0.f };
 	
 
 	//Location.Y += (Direction.Y * DeltaTime) * Speed;
