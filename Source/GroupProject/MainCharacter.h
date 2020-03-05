@@ -53,6 +53,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* FireballSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	class USoundCue* WaterWaveSound;
 
 	float Cooldown;
 	float TimeSinceSpell;
@@ -64,8 +66,10 @@ public:
 	bool bDash;
 
 
-	UPROPERTY(EditAnywhere, Category = "The Bullet")
+	UPROPERTY(EditAnywhere, Category = "FireBall | Stage 1")
 	TSubclassOf<class AFireball> Fireball_BP;
+	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 1")
+	TSubclassOf<class AWaterWave> WaterWave_BP;
 
 	//Mouse
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")
@@ -76,13 +80,15 @@ public:
 	float Damage;
 	//Spells:
 
-	int32 SpellChoosen{ 1 };
+	float SpellChoosen;
 
 	void CastSpell();
-	void SpellChooser();
 	void StartSpell();
 	void StopSpell();
 	void Dash();
+
+	void SpellOne();
+	void SpellTwo();
 
 
 	// Called to bind functionality to input

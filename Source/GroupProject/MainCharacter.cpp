@@ -3,6 +3,7 @@
 
 #include "MainCharacter.h"
 #include "Fireball.h"
+#include "WaterWave.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -54,6 +55,7 @@ AMainCharacter::AMainCharacter()
 	SpellCD = { 0.5f };
 	Cooldown = { 0 };
 	TimeSinceSpell = { 0 };
+	SpellChoosen = 1.f;
 
 	//Movement
 	CurrentVelocity = FVector(0.f);
@@ -61,6 +63,8 @@ AMainCharacter::AMainCharacter()
 	bDash = false;
 	DashCooldown = 1.f;
 	DashTime = 0.15f;
+
+
 
 }
 
@@ -148,6 +152,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::StartSpell);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMainCharacter::StopSpell);
 
+	PlayerInputComponent->BindAction("SpellOne", IE_Pressed, this, &AMainCharacter::SpellOne);
+	PlayerInputComponent->BindAction("SpellTwo", IE_Pressed, this, &AMainCharacter::SpellTwo);
+
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 }
 
@@ -188,14 +195,20 @@ void AMainCharacter::CastSpell()
 {
 	//UWorld* World = GetWorld(); 
 
-	  FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
-      FRotator SpellSpawnRotation = GetActorRotation();
+	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
+	FRotator SpellSpawnRotation = GetActorRotation();
 
 	if (SpellCD <= TimeSinceSpell && SpellChoosen == 1)
 	{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 			TimeSinceSpell = 0;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
+	}
+	if (SpellCD <= TimeSinceSpell && SpellChoosen == 2)
+	{
+		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
+		TimeSinceSpell = 0;
+		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 	}
 }
 
@@ -209,7 +222,11 @@ void AMainCharacter::StopSpell()
 	bCasting = false;
 }
 
-void AMainCharacter::SpellChooser()
+void AMainCharacter::SpellOne()
 {
-	SpellChoosen = 1;
+	SpellChoosen = 1.f;
+}
+void AMainCharacter::SpellTwo()
+{
+	SpellChoosen = 2.f;
 }
