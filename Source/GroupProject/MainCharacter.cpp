@@ -57,7 +57,10 @@ AMainCharacter::AMainCharacter()
 
 	//Movement
 	CurrentVelocity = FVector(0.f);
-	MaxSpeed = (400.f);
+	MaxSpeed = 400.f;
+	bDash = false;
+	DashCooldown = 1.f;
+	DashTime = 0.15f;
 
 }
 
@@ -76,6 +79,7 @@ void AMainCharacter::BeginPlay()
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
@@ -112,13 +116,22 @@ void AMainCharacter::Tick(float DeltaTime)
 		CursorToWorld->SetWorldRotation(CursorR);
 		//End Mouse
 
-			//Spell Casting
+		//Spell Casting
 		TimeSinceSpell += DeltaTime;
 		if (bCasting == true)
 		{
 			CastSpell();
 		}
 		//End Spell Casting
+
+		//Dashing
+		TimeSinceDash += DeltaTime;
+		DashDuration -= DeltaTime;
+		if (DashDuration <= 0)
+		{
+			bDash = false;
+			MaxSpeed = 400.f;
+		}
 	}
 }
 
@@ -134,6 +147,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	//InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);// old without the ability to hold for fire
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::StartSpell);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMainCharacter::StopSpell);
+
+	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -159,6 +174,16 @@ void AMainCharacter::MoveSideways(float Value)
 	CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
 }
 
+void AMainCharacter::Dash()
+{
+	if (TimeSinceDash >= DashCooldown)
+	{
+		DashDuration = DashTime;
+		TimeSinceDash = 0;
+		MaxSpeed = 5000;
+	}
+}
+
 void AMainCharacter::CastSpell()
 {
 	//UWorld* World = GetWorld(); 
@@ -166,14 +191,11 @@ void AMainCharacter::CastSpell()
 	  FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
       FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (SpellCD <= TimeSinceSpell)
+	if (SpellCD <= TimeSinceSpell && SpellChoosen == 1)
 	{
-		if (SpellChoosen == 1)
-		{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 			TimeSinceSpell = 0;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
-		}
 	}
 }
 

@@ -57,6 +57,11 @@ public:
 	float Cooldown;
 	float TimeSinceSpell;
 	float SpellCD;
+	float DashCooldown;
+	float DashDuration;
+	float DashTime;
+	float TimeSinceDash;
+	bool bDash;
 
 
 	UPROPERTY(EditAnywhere, Category = "The Bullet")
@@ -77,7 +82,7 @@ public:
 	void SpellChooser();
 	void StartSpell();
 	void StopSpell();
-
+	void Dash();
 
 
 	// Called to bind functionality to input
