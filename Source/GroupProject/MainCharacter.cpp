@@ -64,6 +64,15 @@ AMainCharacter::AMainCharacter()
 	DashCooldown = 1.f;
 	DashTime = 0.15f;
 
+	//Stats
+	Health = 10;
+
+	//Resistance
+	FireResistance = 1.f;
+	WaterResistance = 1.f;
+	EarthResistance = 1.f;
+	AirResistance = 1.f;
+
 
 
 }
@@ -229,4 +238,23 @@ void AMainCharacter::SpellOne()
 void AMainCharacter::SpellTwo()
 {
 	SpellChoosen = 2.f;
+}
+
+
+//Getting Attacked
+void AMainCharacter::FireDamage(float Damage)
+{
+	Health -= (10 - FireResistance);
+}
+void AMainCharacter::WaterDamage(float Damage)
+{
+	Health -= (10 - WaterResistance);
+}
+void AMainCharacter::EarthDamage(float Damage)
+{
+	Health -= (10 - EarthResistance);
+}
+void AMainCharacter::AirDamage(float Damage)
+{
+	Health -= (10 - AirResistance);
 }

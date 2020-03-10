@@ -43,8 +43,7 @@ public:
 	void MoveSideways(float Value);
 	void MoveForward(float Value);
 	FVector CurrentVelocity;
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float MaxSpeed;
+
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
 	float SpellForwardOffset = 200.f;
@@ -77,9 +76,9 @@ public:
 	FVector NewDirectionToCursor;
 	FVector TempLocation;
 
-	float Damage;
-	//Spells:
 
+
+	//Spells:
 	float SpellChoosen;
 
 	void CastSpell();
@@ -89,6 +88,30 @@ public:
 
 	void SpellOne();
 	void SpellTwo();
+
+	//Taking Damage
+	void FireDamage(float Damage);
+	void WaterDamage(float Damage1);
+	void EarthDamage(float Damage2);
+	void AirDamage(float Damage4);
+
+	//--------------------------Stats----------------------------
+
+	//Health
+	float Health;
+	float MaxHealth;
+
+	//Defence
+	float FireResistance;
+	float WaterResistance;
+	float EarthResistance;
+	float AirResistance;
+
+	//Movement
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float MaxSpeed;
+	//-----------------------------------------------------------
+
 
 
 	// Called to bind functionality to input

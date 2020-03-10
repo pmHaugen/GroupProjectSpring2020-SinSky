@@ -25,3 +25,7 @@ void AEnemy::Tick(float DeltaTime)
 
 }
 
+void AEnemy::TakeDamage(float Damage)
+{
+	Health -= Damage;
+}
