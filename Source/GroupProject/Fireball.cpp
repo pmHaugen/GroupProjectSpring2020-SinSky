@@ -78,12 +78,12 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
 		{
-			Enemy->TakeDamage(Damage);
-			Destroy();
+				Enemy->TakeDamage(Damage);
+				Destroy();
 		}
-	}
+
 
 		//UE_LOG(LogTemp, Warning, TEXT("Destroyed"));
 
-	
+	}
 }
