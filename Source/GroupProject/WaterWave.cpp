@@ -14,7 +14,7 @@ AWaterWave::AWaterWave()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	//Collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterWave::OnOverlapBegin);
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterWave::OnOverlapBegin);
 	Collider->SetSphereRadius(50.f);
 
 	RootComponent = Collider;
@@ -61,7 +61,7 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 {
 
 	AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
-	if (Main) //Om det er Main:
+	if (Main) //Om det er MainCharacter:
 	{
 		Main->WaterDamage(Damage);
 		Destroy();

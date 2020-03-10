@@ -14,7 +14,7 @@ AFireball::AFireball()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	//Collider->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
 	Collider->SetSphereRadius(50.f);
 
 	RootComponent = Collider;
@@ -22,8 +22,8 @@ AFireball::AFireball()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 
-	SpellDuration = 10;
-	Speed = { 50.f, 0.f, 0.f };
+	SpellDuration = 2;
+	Speed = { 100.f, 0.f, 0.f };
 }
 
 
