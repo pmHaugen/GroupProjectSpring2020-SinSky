@@ -268,9 +268,15 @@ void AMainCharacter::WaterDamage(float Damage)
 }
 void AMainCharacter::EarthDamage(float Damage)
 {
-	Health -= (Damage - EarthResistance);
+	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
+	Damage -= EarthResistance;
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
+	Health -= Damage;
 }
 void AMainCharacter::AirDamage(float Damage)
 {
-	Health -= (Damage - AirResistance);
+	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
+	Damage -= AirResistance;
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
+	Health -= Damage;
 }
