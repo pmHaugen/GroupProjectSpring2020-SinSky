@@ -80,7 +80,7 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 
 
 
-		UE_LOG(LogTemp, Warning, TEXT("Destroyed"));
+		//UE_LOG(LogTemp, Warning, TEXT("Destroyed"));
 
 		Destroy();
 

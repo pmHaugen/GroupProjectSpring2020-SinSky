@@ -65,13 +65,13 @@ AMainCharacter::AMainCharacter()
 	DashTime = 0.15f;
 
 	//Stats
-	Health = 10;
+	Health = 100;
 
 	//Resistance
-	FireResistance = 1.f;
-	WaterResistance = 1.f;
-	EarthResistance = 1.f;
-	AirResistance = 1.f;
+	FireResistance = -10.f;
+	WaterResistance = -10.f;
+	EarthResistance = -10.f;
+	AirResistance = -10.f;
 
 
 
@@ -93,6 +93,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//UE_LOG(LogTemp, Warning, TEXT("Health %f!"), Health);
 
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
@@ -111,7 +112,7 @@ void AMainCharacter::Tick(float DeltaTime)
 
 
 		FVector CursorLocation = Hit.Location;
-		UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
 
 		//Set cursor location above ground a little
 		TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 30.f);
@@ -145,6 +146,10 @@ void AMainCharacter::Tick(float DeltaTime)
 			bDash = false;
 			MaxSpeed = 400.f;
 		}
+	}
+	if (Health <= 0)
+	{
+		Dead();
 	}
 }
 
@@ -221,6 +226,11 @@ void AMainCharacter::CastSpell()
 	}
 }
 
+void AMainCharacter::Dead()
+{
+	Destroy();
+}
+
 void AMainCharacter::StartSpell()
 {
 	bCasting = true;
@@ -244,17 +254,23 @@ void AMainCharacter::SpellTwo()
 //Getting Attacked
 void AMainCharacter::FireDamage(float Damage)
 {
-	Health -= (10 - FireResistance);
+	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
+	Damage -= FireResistance;
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
+	Health -= Damage;
 }
 void AMainCharacter::WaterDamage(float Damage)
 {
-	Health -= (10 - WaterResistance);
+	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
+	Damage -= WaterResistance;
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
+	Health -= Damage;
 }
 void AMainCharacter::EarthDamage(float Damage)
 {
-	Health -= (10 - EarthResistance);
+	Health -= (Damage - EarthResistance);
 }
 void AMainCharacter::AirDamage(float Damage)
 {
-	Health -= (10 - AirResistance);
+	Health -= (Damage - AirResistance);
 }

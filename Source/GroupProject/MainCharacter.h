@@ -94,6 +94,7 @@ public:
 	void WaterDamage(float Damage1);
 	void EarthDamage(float Damage2);
 	void AirDamage(float Damage4);
+	void Dead();
 
 	//--------------------------Stats----------------------------
 
