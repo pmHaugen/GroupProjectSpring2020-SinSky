@@ -60,16 +60,22 @@ void AWaterWave::Tick(float DeltaTime)
 void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
-	AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
-	if (Main) //Om det er MainCharacter:
+	if (OtherActor->IsA(AMainCharacter::StaticClass()))
 	{
-		Main->WaterDamage(Damage);
-		Destroy();
+		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
+		if (Main) //Om det er MainCharacter:
+		{
+			Main->WaterDamage(Damage);
+			Destroy();
+		}
 	}
-	AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 	if (OtherActor->IsA(AEnemy::StaticClass()))
 	{
-		Enemy->TakeDamage(Damage);
-		Destroy();
+		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
+		if (Enemy)
+		{
+			Enemy->TakeDamage(Damage);
+			Destroy();
+		}
 	}
 }
