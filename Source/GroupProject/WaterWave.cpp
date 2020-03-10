@@ -69,7 +69,7 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 			Destroy();
 		}
 	}
-	if (OtherActor->IsA(AEnemy::StaticClass()))
+	/**if (OtherActor->IsA(AEnemy::StaticClass())) -----MOVED TOO ENEMY.CPP
 	{
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
@@ -77,5 +77,5 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 			Enemy->TakeDamage(Damage);
 			Destroy();
 		}
-	}
+	}*/
 }

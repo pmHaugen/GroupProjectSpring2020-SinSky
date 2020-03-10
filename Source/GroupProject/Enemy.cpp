@@ -6,6 +6,7 @@
 #include "AiController.h"
 #include "MainCharacter.h"
 #include "Fireball.h"
+#include "WaterWave.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -87,6 +88,13 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 		{
 			bOverLappingCombatSphere = true;
 			TakeDamage(5); //Needed a float, 5 is arbritrary
+		}
+
+		AWaterWave* WaterWave = Cast<AWaterWave>(OtherActor);
+		if (WaterWave)
+		{
+			bOverLappingCombatSphere = true;
+			TakeDamage(5);
 		}
 	}
 }
