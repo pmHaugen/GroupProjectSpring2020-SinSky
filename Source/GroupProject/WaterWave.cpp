@@ -14,7 +14,7 @@ AWaterWave::AWaterWave()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterWave::OnOverlapBegin);
+	//Collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterWave::OnOverlapBegin);
 	Collider->SetSphereRadius(50.f);
 
 	RootComponent = Collider;

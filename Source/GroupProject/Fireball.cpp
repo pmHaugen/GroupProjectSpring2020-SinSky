@@ -14,7 +14,7 @@ AFireball::AFireball()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
+	//Collider->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
 	Collider->SetSphereRadius(50.f);
 
 	RootComponent = Collider;
