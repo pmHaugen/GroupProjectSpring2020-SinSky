@@ -70,5 +70,6 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 	if (OtherActor->IsA(AEnemy::StaticClass()))
 	{
 		Enemy->TakeDamage(Damage);
+		Destroy();
 	}
 }
