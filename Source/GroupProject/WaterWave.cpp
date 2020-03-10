@@ -4,7 +4,7 @@
 #include "WaterWave.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
-//#include "Enemy.h"
+#include "Enemy.h"
 #include "MainCharacter.h"
 
 // Sets default values
@@ -57,7 +57,7 @@ void AWaterWave::Tick(float DeltaTime)
 
 }
 
-/**void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
 	AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
@@ -71,4 +71,4 @@ void AWaterWave::Tick(float DeltaTime)
 	{
 		Enemy->TakeDamage(Damage);
 	}
-}*/
+}
