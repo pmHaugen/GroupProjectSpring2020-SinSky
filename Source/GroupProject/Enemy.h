@@ -69,4 +69,7 @@ public:
 
 	void MoveToTarget(class AMainCharacter* Target);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
+	bool bOverLappingCombatSphere;
+
 };

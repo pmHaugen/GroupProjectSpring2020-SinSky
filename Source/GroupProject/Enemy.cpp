@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "AiController.h"
 #include "MainCharacter.h"
+#include "Fireball.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -20,6 +21,8 @@ AEnemy::AEnemy()
 	CombatSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CombatSphere"));
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(75.f);
+
+	bOverLappingCombatSphere= false;
 }
 
 // Called when the game starts or when spawned
@@ -52,7 +55,10 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::TakeDamage(float Damage)
 {
-	Destroy();
+	if (bOverLappingCombatSphere)
+	{
+		Destroy();
+	}
 }
 
 void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -74,7 +80,15 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 
 void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
+	if (OtherActor)
+	{
+		AFireball* Fireball = Cast<AFireball>(OtherActor);
+		if (Fireball)
+		{
+			bOverLappingCombatSphere = true;
+			TakeDamage(5); //Needed a float, 5 is arbritrary
+		}
+	}
 }
 
 void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
