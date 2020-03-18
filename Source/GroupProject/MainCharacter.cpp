@@ -52,10 +52,16 @@ AMainCharacter::AMainCharacter()
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
 
-	SpellCD = { 0.5f };
-	Cooldown = { 0 };
-	TimeSinceSpell = { 0 };
 	SpellChoosen = 1.f;
+
+	FireSpellCD = { 2.f };
+	FireCooldown = { 0 };
+	FireTimeSinceSpell = { 0 };
+
+	WaterSpellCD = { 0.5f };
+	WaterCooldown = { 0 };
+	WaterTimeSinceSpell = { 0 };
+
 
 	//Movement
 	CurrentVelocity = FVector(0.f);
@@ -66,6 +72,7 @@ AMainCharacter::AMainCharacter()
 
 	//Stats
 	Health = 100;
+	MaxHealth = 100;
 
 	//Resistance
 	FireResistance = -10.f;
@@ -131,7 +138,10 @@ void AMainCharacter::Tick(float DeltaTime)
 		//End Mouse
 
 		//Spell Casting
-		TimeSinceSpell += DeltaTime;
+		FireTimeSinceSpell += DeltaTime;
+		WaterTimeSinceSpell += DeltaTime;
+		EarthTimeSinceSpell += DeltaTime;
+		AirTimeSinceSpell += DeltaTime;
 		if (bCasting == true)
 		{
 			CastSpell();
@@ -212,16 +222,16 @@ void AMainCharacter::CastSpell()
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (SpellCD <= TimeSinceSpell && SpellChoosen == 1)
+	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1)
 	{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-			TimeSinceSpell = 0;
+			FireTimeSinceSpell = 0;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
 	}
-	if (SpellCD <= TimeSinceSpell && SpellChoosen == 2)
+	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2)
 	{
 		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
-		TimeSinceSpell = 0;
+		WaterTimeSinceSpell = 0;
 		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 	}
 }

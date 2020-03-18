@@ -55,9 +55,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* WaterWaveSound;
 
-	float Cooldown;
-	float TimeSinceSpell;
-	float SpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float FireCooldown = 1;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float FireTimeSinceSpell;
+	float FireSpellCD;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float WaterCooldown;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float WaterTimeSinceSpell;
+	float WaterSpellCD;
+
+	float EarthCooldown;
+	float EarthTimeSinceSpell;
+	float EarthSpellCD;
+
+	float AirCooldown;
+	float AirTimeSinceSpell;
+	float AirSpellCD;
+
 	float DashCooldown;
 	float DashDuration;
 	float DashTime;
@@ -91,15 +108,17 @@ public:
 
 	//Taking Damage
 	void FireDamage(float Damage);
-	void WaterDamage(float Damage1);
-	void EarthDamage(float Damage2);
-	void AirDamage(float Damage4);
+	void WaterDamage(float Damage);
+	void EarthDamage(float Damage);
+	void AirDamage(float Damage);
 	void Dead();
 
 	//--------------------------Stats----------------------------
 
 	//Health
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float Health;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxHealth;
 
 	//Defence
