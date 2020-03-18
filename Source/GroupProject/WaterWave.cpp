@@ -24,6 +24,7 @@ AWaterWave::AWaterWave()
 
 	SpellDuration = 10;
 	Speed = { 50.f, 0.f, 0.f };
+	Damage = 5;
 }
 
 // Called when the game starts or when spawned

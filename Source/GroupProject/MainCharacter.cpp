@@ -54,11 +54,13 @@ AMainCharacter::AMainCharacter()
 
 	SpellChoosen = 1.f;
 
-	FireSpellCD = { 5.f };
+	FireSpellCD = { 0.8f };
 	//FireCooldown = { 0 };
 	FireTimeSinceSpell = { 0 };
+	MaxFireMana = 100;
 
-	WaterSpellCD = { 5.f };
+
+	WaterSpellCD = { 0.1f };
 	//WaterCooldown = { 0 };
 	WaterTimeSinceSpell = { 0 };
 
@@ -71,8 +73,22 @@ AMainCharacter::AMainCharacter()
 	DashTime = 0.15f;
 
 	//Stats
-	Health = 100;
-	MaxHealth = 100;
+	Health = 500.f;
+	MaxHealth = 500.f;
+	HealthRegen = 2.f;
+
+	FireMana = 0.f;
+	WaterMana = 0.f;
+	EarthMana = 0.f;
+	AirMana = 0.f;
+
+
+	MaxFireMana = 200.f;
+	MaxWaterMana = 200.f;
+	MaxEarthMana = 200.f;
+	MaxAirMana = 200.f;
+
+	ManaRegen = 10.f;
 
 	//Resistance
 	FireResistance = -10.f;
@@ -80,6 +96,11 @@ AMainCharacter::AMainCharacter()
 	EarthResistance = -10.f;
 	AirResistance = -10.f;
 
+	//Cost
+	FireManaCost = 60;
+	WaterManaCost = 5;
+	EarthManaCost = 10;
+	AirManaCost = 10;
 
 
 }
@@ -142,6 +163,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		WaterTimeSinceSpell += DeltaTime;
 		EarthTimeSinceSpell += DeltaTime;
 		AirTimeSinceSpell += DeltaTime;
+		Regeneration(HealthRegen, ManaRegen, DeltaTime); //Handles all the regeneration of mana and health
 		if (bCasting == true)
 		{
 			CastSpell();
@@ -222,16 +244,18 @@ void AMainCharacter::CastSpell()
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1)
+	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost)
 	{
-			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-			FireTimeSinceSpell = 0;
-			UGameplayStatics::PlaySound2D(this, FireballSound);
+		GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+		FireTimeSinceSpell = 0;
+		FireMana -= FireManaCost;
+		UGameplayStatics::PlaySound2D(this, FireballSound);
 	}
-	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2)
+	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
 		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
 		WaterTimeSinceSpell = 0;
+		WaterMana -= WaterManaCost;
 		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 	}
 }
@@ -289,4 +313,48 @@ void AMainCharacter::AirDamage(float Damage)
 	Damage -= AirResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
 	Health -= Damage;
+}
+
+void AMainCharacter::Regeneration(float HealthRegenerationRate, float ManaRegenerationRate, float Time)
+{
+	if (Health <= MaxHealth)
+	{
+		Health += HealthRegenerationRate * Time; //Health per second
+		if (Health >= MaxHealth)
+		{
+			Health = MaxHealth;
+		}
+	}
+	if (FireMana <= MaxFireMana)
+	{
+		FireMana += ManaRegenerationRate * Time; //Regeneration per second
+		if (FireMana >= MaxFireMana)
+		{
+			FireMana = MaxFireMana;
+		}
+	}
+	if (WaterMana <= MaxWaterMana)
+	{
+		WaterMana += ManaRegenerationRate * Time; //Regeneration per second
+		if (WaterMana >= MaxWaterMana)
+		{
+			WaterMana = MaxWaterMana;
+		}
+	}
+	if (EarthMana <= MaxEarthMana)
+	{
+		EarthMana += ManaRegenerationRate * Time; //Regeneration per second
+		if (EarthMana >= MaxEarthMana)
+		{
+			EarthMana = MaxEarthMana;
+		}
+	}
+	if (AirMana <= MaxAirMana)
+	{
+		AirMana += ManaRegenerationRate * Time; //Regeneration per second
+		if (AirMana >= MaxAirMana)
+		{
+			AirMana = MaxAirMana;
+		}
+	}
 }

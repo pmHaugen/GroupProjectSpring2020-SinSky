@@ -61,21 +61,37 @@ public:
 	float FireTimeSinceSpell;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float FireSpellCD;
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float FireMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float MaxFireMana;
+	float FireManaCost;
 
 	//float WaterCooldown;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterTimeSinceSpell;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterSpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float WaterMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float MaxWaterMana;
+	float WaterManaCost;
+
 
 	float EarthCooldown;
 	float EarthTimeSinceSpell;
 	float EarthSpellCD;
+	float EarthMana;
+	float MaxEarthMana;
+	float EarthManaCost;
 
 	float AirCooldown;
 	float AirTimeSinceSpell;
 	float AirSpellCD;
+	float AirMana;
+	float MaxAirMana;
+	float AirManaCost;
 
 	float DashCooldown;
 	float DashDuration;
@@ -122,6 +138,8 @@ public:
 	float Health;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxHealth;
+	float HealthRegen;
+	float ManaRegen;
 
 	//Defence
 	float FireResistance;
@@ -132,6 +150,8 @@ public:
 	//Movement
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MaxSpeed;
+
+	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
 	//-----------------------------------------------------------
 
 

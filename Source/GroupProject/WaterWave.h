@@ -32,7 +32,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector Speed;
 
-	float Damage = 10;
+	float Damage;
 
 
 	float TimeSinceSpawned{ 0 };
