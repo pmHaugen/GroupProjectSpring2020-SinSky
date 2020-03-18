@@ -55,16 +55,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* WaterWaveSound;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float FireCooldown = 1;
+
+	//float FireCooldown;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float FireTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float FireSpellCD;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float WaterCooldown;
+
+	//float WaterCooldown;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterSpellCD;
 
 	float EarthCooldown;

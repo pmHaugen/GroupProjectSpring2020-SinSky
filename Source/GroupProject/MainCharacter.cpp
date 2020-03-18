@@ -54,12 +54,12 @@ AMainCharacter::AMainCharacter()
 
 	SpellChoosen = 1.f;
 
-	FireSpellCD = { 2.f };
-	FireCooldown = { 0 };
+	FireSpellCD = { 5.f };
+	//FireCooldown = { 0 };
 	FireTimeSinceSpell = { 0 };
 
-	WaterSpellCD = { 0.5f };
-	WaterCooldown = { 0 };
+	WaterSpellCD = { 5.f };
+	//WaterCooldown = { 0 };
 	WaterTimeSinceSpell = { 0 };
 
 
@@ -100,7 +100,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//UE_LOG(LogTemp, Warning, TEXT("Health %f!"), Health);
+	UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
 
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
