@@ -13,5 +13,12 @@ void AMyPlayerController::BeginPlay()
 		HUDOverlay = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
 	}
 	HUDOverlay->AddToViewport();
-	HUDOverlay->SetVisibility(ESlateVisibility::Visible);
+	HUDOverlay->SetVisibility(ESlateVisibility::Hidden);
+
+	if (HUDOverlayAsset)
+	{
+		HUDTalentTree = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
+	}
+	HUDTalentTree->AddToViewport();
+	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
 }

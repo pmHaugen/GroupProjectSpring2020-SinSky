@@ -141,6 +141,10 @@ public:
 	float HealthRegen;
 	float ManaRegen;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	float SkillPoints;
+
 	//Defence
 	float FireResistance;
 	float WaterResistance;

@@ -55,13 +55,11 @@ AMainCharacter::AMainCharacter()
 	SpellChoosen = 1.f;
 
 	FireSpellCD = { 0.8f };
-	//FireCooldown = { 0 };
 	FireTimeSinceSpell = { 0 };
 	MaxFireMana = 100;
 
 
 	WaterSpellCD = { 0.1f };
-	//WaterCooldown = { 0 };
 	WaterTimeSinceSpell = { 0 };
 
 
@@ -89,6 +87,7 @@ AMainCharacter::AMainCharacter()
 	MaxAirMana = 200.f;
 
 	ManaRegen = 10.f;
+	SkillPoints = 3;
 
 	//Resistance
 	FireResistance = -10.f;
