@@ -158,7 +158,7 @@ public:
 	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
 	//-----------------------------------------------------------
 
-
+	void OpenTalentMenu();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

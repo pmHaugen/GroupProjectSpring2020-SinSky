@@ -15,6 +15,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "MyPlayerController.h"
 
 
 // Sets default values
@@ -120,7 +121,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
+	//UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
 
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
@@ -201,6 +202,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("SpellTwo", IE_Pressed, this, &AMainCharacter::SpellTwo);
 
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
+	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -283,6 +285,11 @@ void AMainCharacter::SpellTwo()
 	SpellChoosen = 2.f;
 }
 
+void AMainCharacter::OpenTalentMenu()
+{
+	AMyPlayerController* MenuController = Cast<AMyPlayerController>(this);
+	MenuController->OpenSkillMenu();
+}
 
 //Getting Attacked
 void AMainCharacter::FireDamage(float Damage)

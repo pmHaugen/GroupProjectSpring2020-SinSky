@@ -25,6 +25,11 @@ public:
 	UUserWidget* HUDOverlay;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* HUDTalentTree;
+
+	void OpenSkillMenu();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	bool bIsVisible;
 	
 protected:
 	virtual void BeginPlay() override;

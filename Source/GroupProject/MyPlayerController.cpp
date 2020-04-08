@@ -13,12 +13,22 @@ void AMyPlayerController::BeginPlay()
 		HUDOverlay = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
 	}
 	HUDOverlay->AddToViewport();
-	HUDOverlay->SetVisibility(ESlateVisibility::Hidden);
+	HUDOverlay->SetVisibility(ESlateVisibility::Visible);
 
-	if (HUDOverlayAsset)
+	if (HUDOverlayTalentTree)
 	{
-		HUDTalentTree = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
+		HUDTalentTree = CreateWidget<UUserWidget>(this, HUDOverlayTalentTree);
 	}
 	HUDTalentTree->AddToViewport();
+	HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void AMyPlayerController::OpenSkillMenu()
+{
+	UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
+
+
 	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+
+	bIsVisible = !bIsVisible;
 }
