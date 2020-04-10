@@ -14,6 +14,13 @@ class GROUPPROJECT_API AEnemySpawner : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AEnemySpawner();
+	
+	//Declaring a body for the spawner
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning")
+	class UBoxComponent* SpawningBox;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
+	TSubclassOf<class AEnemy> EnemyToSpawn;
 
 protected:
 	// Called when the game starts or when spawned
@@ -22,5 +29,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintPure, Category = "Spawning")
+	FVector GetSpawnPoint();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Spawning")
+	void SpawnEnemy(UClass* ToSpawn, const FVector& Location);
 
 };
