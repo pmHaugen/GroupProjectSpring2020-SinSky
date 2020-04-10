@@ -20,15 +20,19 @@ void AMyPlayerController::BeginPlay()
 		HUDTalentTree = CreateWidget<UUserWidget>(this, HUDOverlayTalentTree);
 	}
 	HUDTalentTree->AddToViewport();
-	HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
+	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
 }
 
 void AMyPlayerController::OpenSkillMenu()
 {
-	UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
 
 
-	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
 
-	bIsVisible = !bIsVisible;
+	if (HUDOverlayTalentTree)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
+	//	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+	}
+
+	//bIsVisible = !bIsVisible;
 }
