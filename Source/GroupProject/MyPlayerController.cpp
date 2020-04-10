@@ -4,6 +4,7 @@
 #include "MyPlayerController.h"
 #include "Blueprint/UserWidget.h"
 
+
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,19 +21,30 @@ void AMyPlayerController::BeginPlay()
 		HUDTalentTree = CreateWidget<UUserWidget>(this, HUDOverlayTalentTree);
 	}
 	HUDTalentTree->AddToViewport();
-	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+	HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void AMyPlayerController::OpenSkillMenu()
 {
 
 
-
-	if (HUDOverlayTalentTree)
-	{
+	
 		UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
-	//	HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
-	}
 
-	//bIsVisible = !bIsVisible;
+
+		if (bIsVisible)
+		{
+			if (HUDTalentTree)
+			{
+				HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+			}
+		}
+		if (!bIsVisible)
+		{
+			if (HUDTalentTree)
+			{
+				HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
+			}
+		}
+	bIsVisible = !bIsVisible;
 }

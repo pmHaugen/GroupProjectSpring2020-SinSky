@@ -287,7 +287,7 @@ void AMainCharacter::SpellTwo()
 
 void AMainCharacter::OpenTalentMenu()
 {
-	AMyPlayerController* MenuController = Cast<AMyPlayerController>(this);
+	AMyPlayerController* MenuController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 	MenuController->OpenSkillMenu();
 }
 
