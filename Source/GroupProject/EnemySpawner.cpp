@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Engine/World.h"
 #include "Enemy.h"
+#include "AIController.h"
 
 // Sets default values
 AEnemySpawner::AEnemySpawner()
@@ -22,13 +23,21 @@ void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	if (Actor_1) //&& Actor_2 && Actor_3 && Actor_4) //Add more actors when nececcary
+	{
+		SpawnArray.Add(Actor_1);
+		/**SpawnArray.Add(Actor_2);
+		SpawnArray.Add(Actor_3);
+		SpawnArray.Add(Actor_4);*/
+
+	}
 }
 
 // Called every frame
 void AEnemySpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 
 }
 
@@ -42,7 +51,7 @@ FVector AEnemySpawner::GetSpawnPoint()
 	return Point;
 }
 
-void AEnemySpawner::SpawnEnemy_Implementation(UClass* ToSpawn, const FVector& Location)
+void AEnemySpawner::SpawnActor_Implementation(UClass* ToSpawn, const FVector& Location)
 {
 	if (ToSpawn)
 	{
@@ -51,7 +60,33 @@ void AEnemySpawner::SpawnEnemy_Implementation(UClass* ToSpawn, const FVector& Lo
 
 		if (World)	
 		{
-			AEnemy* EnemySpawned = World->SpawnActor<AEnemy>(ToSpawn, Location, FRotator(0.f), SpawnParams);
+			AActor* Actor = World->SpawnActor<AActor>(ToSpawn, Location, FRotator(0.f), SpawnParams);
+
+			AEnemy* Enemy = Cast<AEnemy>(Actor);
+			if (Enemy)
+			{
+				Enemy->SpawnDefaultController();
+
+				AAIController* AICOnt = Cast<AAIController>(Enemy->GetController());
+				if (AICOnt)
+				{
+					Enemy->AIController = AICOnt;
+				}
+			}
 		}
+	}
+}
+
+TSubclassOf<AActor> AEnemySpawner::GetSpawnActor()
+{
+	if (SpawnArray.Num() > 0)
+	{
+		int32 Selection = FMath::RandRange(0, SpawnArray.Num() - 1);
+
+		return SpawnArray[Selection];
+	}
+	else
+	{
+		return nullptr;
 	}
 }
