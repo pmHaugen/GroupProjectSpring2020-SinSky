@@ -28,9 +28,12 @@ public:
 
 	void OpenSkillMenu();
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	bool bIsVisible;
 	
+
+
 protected:
 	virtual void BeginPlay() override;
 };

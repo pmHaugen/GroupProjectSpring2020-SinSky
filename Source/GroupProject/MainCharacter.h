@@ -25,6 +25,7 @@ public:
 	float WalkSpeed;
 	float RunSpeed;
 	bool bCasting;
+	bool bShowCursor = false;
 
 
 protected:
@@ -54,6 +55,8 @@ public:
 	class USoundCue* FireballSound;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* WaterWaveSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	class USoundCue* EarthBlastSound;
 
 
 	//float FireCooldown;
@@ -104,6 +107,8 @@ public:
 	TSubclassOf<class AFireball> Fireball_BP;
 	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 1")
 	TSubclassOf<class AWaterWave> WaterWave_BP;
+	UPROPERTY(EditAnywhere, Category = "EarthBlast | Stage 1")
+	TSubclassOf<class AEarthBlast> EarthBlast_BP;
 
 	//Mouse
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")
@@ -142,7 +147,7 @@ public:
 	float ManaRegen;
 
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
 	float SkillPoints;
 
 	//Defence
@@ -159,6 +164,8 @@ public:
 	//-----------------------------------------------------------
 
 	void OpenTalentMenu();
+	void UpgradeFireball();
+	void UpgradeFireResistance();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

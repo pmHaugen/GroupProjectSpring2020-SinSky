@@ -4,6 +4,7 @@
 #include "MainCharacter.h"
 #include "Fireball.h"
 #include "WaterWave.h"
+#include "EarthBlast.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -53,6 +54,8 @@ AMainCharacter::AMainCharacter()
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
 
+
+
 	SpellChoosen = 1.f;
 
 	FireSpellCD = { 0.8f };
@@ -88,7 +91,7 @@ AMainCharacter::AMainCharacter()
 	MaxAirMana = 200.f;
 
 	ManaRegen = 10.f;
-	SkillPoints = 3;
+	SkillPoints = 3.f;
 
 	//Resistance
 	FireResistance = -10.f;
@@ -259,6 +262,20 @@ void AMainCharacter::CastSpell()
 		WaterMana -= WaterManaCost;
 		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 	}
+	if (EarthSpellCD <= EarthTimeSinceSpell && SpellChoosen == 3 && EarthMana >= EarthManaCost)
+	{
+		GetWorld()->SpawnActor<AEarthBlast>(EarthBlast_BP, SpellSpawnLocation, SpellSpawnRotation);
+		EarthTimeSinceSpell = 0;
+		EarthMana -= EarthManaCost;
+		UGameplayStatics::PlaySound2D(this, EarthBlastSound);
+	}
+	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
+	{
+		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
+		WaterTimeSinceSpell = 0;
+		WaterMana -= WaterManaCost;
+		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
+	}
 }
 
 void AMainCharacter::Dead()
@@ -289,6 +306,28 @@ void AMainCharacter::OpenTalentMenu()
 {
 	AMyPlayerController* MenuController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 	MenuController->OpenSkillMenu();
+
+	if (bShowCursor == true)
+	{
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		if (PC)
+		{
+			PC->bShowMouseCursor = true;
+			PC->bEnableClickEvents = true;
+			PC->bEnableMouseOverEvents = true;
+		}
+	}
+	if (bShowCursor == false) 
+	{
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		if (PC)
+		{
+			PC->bShowMouseCursor = false;
+			PC->bEnableClickEvents = false;
+			PC->bEnableMouseOverEvents = false;
+		}
+	}
+	bShowCursor = !bShowCursor;
 }
 
 //Getting Attacked

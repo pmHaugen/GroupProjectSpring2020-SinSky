@@ -9,6 +9,10 @@ void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//MyController->bEnableClickEvents = true;
+	//MyController->bShowMouseCursor = true;
+	//MyController->bEnableMouseOverEvents = true;
+
 	if (HUDOverlayAsset)
 	{
 		HUDOverlay = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
@@ -26,11 +30,7 @@ void AMyPlayerController::BeginPlay()
 
 void AMyPlayerController::OpenSkillMenu()
 {
-
-
-	
 		UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
-
 
 		if (bIsVisible)
 		{
@@ -48,3 +48,4 @@ void AMyPlayerController::OpenSkillMenu()
 		}
 	bIsVisible = !bIsVisible;
 }
+
