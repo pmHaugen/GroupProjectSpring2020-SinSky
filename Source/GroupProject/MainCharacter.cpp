@@ -105,6 +105,8 @@ AMainCharacter::AMainCharacter()
 	EarthManaCost = 10;
 	AirManaCost = 10;
 
+	//Upgrade Levels
+	FireLvl = 1.f;
 
 }
 
@@ -203,6 +205,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("SpellOne", IE_Pressed, this, &AMainCharacter::SpellOne);
 	PlayerInputComponent->BindAction("SpellTwo", IE_Pressed, this, &AMainCharacter::SpellTwo);
+	PlayerInputComponent->BindAction("SpellThree", IE_Pressed, this, &AMainCharacter::SpellThree);
+	PlayerInputComponent->BindAction("SpellFour", IE_Pressed, this, &AMainCharacter::SpellFour);
 
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
@@ -250,10 +254,20 @@ void AMainCharacter::CastSpell()
 
 	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost)
 	{
-		GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-		FireTimeSinceSpell = 0;
-		FireMana -= FireManaCost;
-		UGameplayStatics::PlaySound2D(this, FireballSound);
+		if (FireLvl == 1)
+		{
+			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+			FireTimeSinceSpell = 0;
+			FireMana -= FireManaCost;
+			UGameplayStatics::PlaySound2D(this, FireballSound);
+		}
+		if (FireLvl == 2)
+		{
+			GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
+			FireTimeSinceSpell = 0;
+			FireMana -= FireManaCost;
+			UGameplayStatics::PlaySound2D(this, FireballSound);
+		}
 	}
 	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
@@ -269,13 +283,15 @@ void AMainCharacter::CastSpell()
 		EarthMana -= EarthManaCost;
 		UGameplayStatics::PlaySound2D(this, EarthBlastSound);
 	}
-	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
-	{
-		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
-		WaterTimeSinceSpell = 0;
-		WaterMana -= WaterManaCost;
-		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
-	}
+	
+	//if (AirSpellCD <= AirTimeSinceSpell && SpellChoosen == 2 && AirMana >= AirManaCost)
+	//{
+	//	GetWorld()->SpawnActor<AAirGun>(AirGun_BP, SpellSpawnLocation, SpellSpawnRotation);
+	//	AirTimeSinceSpell = 0;
+	//	AirMana -= AirManaCost;
+	//	UGameplayStatics::PlaySound2D(this, AirGunSound);
+	//}
+	//
 }
 
 void AMainCharacter::Dead()
@@ -300,6 +316,14 @@ void AMainCharacter::SpellOne()
 void AMainCharacter::SpellTwo()
 {
 	SpellChoosen = 2.f;
+}
+void AMainCharacter::SpellThree()
+{
+	SpellChoosen = 3.f;
+}
+void AMainCharacter::SpellFour()
+{
+	SpellChoosen = 4.f;
 }
 
 void AMainCharacter::OpenTalentMenu()

@@ -82,17 +82,25 @@ public:
 	float WaterManaCost;
 
 
-	float EarthCooldown;
+	//float EarthCooldown;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthSpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxEarthMana;
 	float EarthManaCost;
 
-	float AirCooldown;
+	//float AirCooldown;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirSpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxAirMana;
 	float AirManaCost;
 
@@ -105,6 +113,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "FireBall | Stage 1")
 	TSubclassOf<class AFireball> Fireball_BP;
+	UPROPERTY(EditAnywhere, Category = "FireBall | Stage 2")
+	TSubclassOf<class AFireball> FireballLv2_BP;
 	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 1")
 	TSubclassOf<class AWaterWave> WaterWave_BP;
 	UPROPERTY(EditAnywhere, Category = "EarthBlast | Stage 1")
@@ -128,6 +138,8 @@ public:
 
 	void SpellOne();
 	void SpellTwo();
+	void SpellThree();
+	void SpellFour();
 
 	//Taking Damage
 	void FireDamage(float Damage);
@@ -147,8 +159,11 @@ public:
 	float ManaRegen;
 
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
 	float SkillPoints;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
+	float FireLvl;
 
 	//Defence
 	float FireResistance;
