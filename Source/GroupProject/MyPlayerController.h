@@ -18,10 +18,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> HUDOverlayAsset;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDOverlayTalentTree;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* HUDOverlay;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* HUDTalentTree;
+
+	void OpenSkillMenu();
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	bool bIsVisible;
 	
+
+
 protected:
 	virtual void BeginPlay() override;
 };

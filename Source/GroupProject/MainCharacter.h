@@ -25,6 +25,7 @@ public:
 	float WalkSpeed;
 	float RunSpeed;
 	bool bCasting;
+	bool bShowCursor = false;
 
 
 protected:
@@ -54,6 +55,8 @@ public:
 	class USoundCue* FireballSound;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* WaterWaveSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	class USoundCue* EarthBlastSound;
 
 
 	//float FireCooldown;
@@ -79,17 +82,25 @@ public:
 	float WaterManaCost;
 
 
-	float EarthCooldown;
+	//float EarthCooldown;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthSpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxEarthMana;
 	float EarthManaCost;
 
-	float AirCooldown;
+	//float AirCooldown;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirTimeSinceSpell;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirSpellCD;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float MaxAirMana;
 	float AirManaCost;
 
@@ -102,8 +113,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "FireBall | Stage 1")
 	TSubclassOf<class AFireball> Fireball_BP;
+	UPROPERTY(EditAnywhere, Category = "FireBall | Stage 2")
+	TSubclassOf<class AFireball> FireballLv2_BP;
 	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 1")
 	TSubclassOf<class AWaterWave> WaterWave_BP;
+	UPROPERTY(EditAnywhere, Category = "EarthBlast | Stage 1")
+	TSubclassOf<class AEarthBlast> EarthBlast_BP;
 
 	//Mouse
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")
@@ -123,6 +138,8 @@ public:
 
 	void SpellOne();
 	void SpellTwo();
+	void SpellThree();
+	void SpellFour();
 
 	//Taking Damage
 	void FireDamage(float Damage);
@@ -141,6 +158,13 @@ public:
 	float HealthRegen;
 	float ManaRegen;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
+	float SkillPoints;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
+	float FireLvl;
+
 	//Defence
 	float FireResistance;
 	float WaterResistance;
@@ -154,7 +178,9 @@ public:
 	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
 	//-----------------------------------------------------------
 
-
+	void OpenTalentMenu();
+	void UpgradeFireball();
+	void UpgradeFireResistance();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

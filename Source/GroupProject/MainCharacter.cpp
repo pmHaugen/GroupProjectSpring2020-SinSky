@@ -4,6 +4,7 @@
 #include "MainCharacter.h"
 #include "Fireball.h"
 #include "WaterWave.h"
+#include "EarthBlast.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -15,6 +16,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "MyPlayerController.h"
 
 
 // Sets default values
@@ -52,16 +54,16 @@ AMainCharacter::AMainCharacter()
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetDecalMaterial(DecalMaterialAsset.Object);
 
+
+
 	SpellChoosen = 1.f;
 
 	FireSpellCD = { 0.8f };
-	//FireCooldown = { 0 };
 	FireTimeSinceSpell = { 0 };
 	MaxFireMana = 100;
 
 
 	WaterSpellCD = { 0.1f };
-	//WaterCooldown = { 0 };
 	WaterTimeSinceSpell = { 0 };
 
 
@@ -89,6 +91,7 @@ AMainCharacter::AMainCharacter()
 	MaxAirMana = 200.f;
 
 	ManaRegen = 10.f;
+	SkillPoints = 3.f;
 
 	//Resistance
 	FireResistance = -10.f;
@@ -102,6 +105,8 @@ AMainCharacter::AMainCharacter()
 	EarthManaCost = 10;
 	AirManaCost = 10;
 
+	//Upgrade Levels
+	FireLvl = 1.f;
 
 }
 
@@ -121,7 +126,7 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
+	//UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
 
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
@@ -200,8 +205,11 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("SpellOne", IE_Pressed, this, &AMainCharacter::SpellOne);
 	PlayerInputComponent->BindAction("SpellTwo", IE_Pressed, this, &AMainCharacter::SpellTwo);
+	PlayerInputComponent->BindAction("SpellThree", IE_Pressed, this, &AMainCharacter::SpellThree);
+	PlayerInputComponent->BindAction("SpellFour", IE_Pressed, this, &AMainCharacter::SpellFour);
 
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
+	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -246,10 +254,20 @@ void AMainCharacter::CastSpell()
 
 	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost)
 	{
-		GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
-		FireTimeSinceSpell = 0;
-		FireMana -= FireManaCost;
-		UGameplayStatics::PlaySound2D(this, FireballSound);
+		if (FireLvl == 1)
+		{
+			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
+			FireTimeSinceSpell = 0;
+			FireMana -= FireManaCost;
+			UGameplayStatics::PlaySound2D(this, FireballSound);
+		}
+		if (FireLvl == 2)
+		{
+			GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
+			FireTimeSinceSpell = 0;
+			FireMana -= FireManaCost;
+			UGameplayStatics::PlaySound2D(this, FireballSound);
+		}
 	}
 	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
@@ -258,6 +276,22 @@ void AMainCharacter::CastSpell()
 		WaterMana -= WaterManaCost;
 		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 	}
+	if (EarthSpellCD <= EarthTimeSinceSpell && SpellChoosen == 3 && EarthMana >= EarthManaCost)
+	{
+		GetWorld()->SpawnActor<AEarthBlast>(EarthBlast_BP, SpellSpawnLocation, SpellSpawnRotation);
+		EarthTimeSinceSpell = 0;
+		EarthMana -= EarthManaCost;
+		UGameplayStatics::PlaySound2D(this, EarthBlastSound);
+	}
+	
+	//if (AirSpellCD <= AirTimeSinceSpell && SpellChoosen == 2 && AirMana >= AirManaCost)
+	//{
+	//	GetWorld()->SpawnActor<AAirGun>(AirGun_BP, SpellSpawnLocation, SpellSpawnRotation);
+	//	AirTimeSinceSpell = 0;
+	//	AirMana -= AirManaCost;
+	//	UGameplayStatics::PlaySound2D(this, AirGunSound);
+	//}
+	//
 }
 
 void AMainCharacter::Dead()
@@ -283,7 +317,42 @@ void AMainCharacter::SpellTwo()
 {
 	SpellChoosen = 2.f;
 }
+void AMainCharacter::SpellThree()
+{
+	SpellChoosen = 3.f;
+}
+void AMainCharacter::SpellFour()
+{
+	SpellChoosen = 4.f;
+}
 
+void AMainCharacter::OpenTalentMenu()
+{
+	AMyPlayerController* MenuController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	MenuController->OpenSkillMenu();
+
+	if (bShowCursor == true)
+	{
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		if (PC)
+		{
+			PC->bShowMouseCursor = true;
+			PC->bEnableClickEvents = true;
+			PC->bEnableMouseOverEvents = true;
+		}
+	}
+	if (bShowCursor == false) 
+	{
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		if (PC)
+		{
+			PC->bShowMouseCursor = false;
+			PC->bEnableClickEvents = false;
+			PC->bEnableMouseOverEvents = false;
+		}
+	}
+	bShowCursor = !bShowCursor;
+}
 
 //Getting Attacked
 void AMainCharacter::FireDamage(float Damage)
