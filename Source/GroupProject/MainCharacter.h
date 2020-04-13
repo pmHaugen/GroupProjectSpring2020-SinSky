@@ -117,8 +117,6 @@ public:
 	TSubclassOf<class AFireball> FireballLv2_BP;
 	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 1")
 	TSubclassOf<class AWaterWave> WaterWave_BP;
-	UPROPERTY(EditAnywhere, Category = "WaterWave | Stage 2")
-	TSubclassOf<class AWaterWave> WaterWaveLv2_BP;
 	UPROPERTY(EditAnywhere, Category = "EarthBlast | Stage 1")
 	TSubclassOf<class AEarthBlast> EarthBlast_BP;
 
@@ -166,16 +164,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
 	float FireLvl;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
-	float WaterLvl;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
-	float EarthLvl;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
-	float AirLvl;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
-	float RegenLvl;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
-	float ManaRegenLvl;
 
 	//Defence
 	float FireResistance;
@@ -187,12 +175,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MaxSpeed;
 
-
 	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
 	//-----------------------------------------------------------
 
 	void OpenTalentMenu();
-
+	void UpgradeFireball();
+	void UpgradeFireResistance();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

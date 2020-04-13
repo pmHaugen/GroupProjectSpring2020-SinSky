@@ -32,7 +32,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector Speed;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Damage")
 	float Damage;
 
 
