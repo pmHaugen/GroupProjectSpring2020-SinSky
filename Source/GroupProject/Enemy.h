@@ -46,11 +46,14 @@ public:
 	*****Enemy Properties
 	*/
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy Properties")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
 	float MaxHealth;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy Properties")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
 	float Health;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
+	float HitDamage;
 
 
 protected:
@@ -73,8 +76,8 @@ public:
 	UFUNCTION()
 	void AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	/**UFUNCTION()
-	void CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);*/
+	UFUNCTION()
+	void CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 	void CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 

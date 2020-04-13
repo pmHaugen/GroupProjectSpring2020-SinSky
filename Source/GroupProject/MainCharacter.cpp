@@ -367,10 +367,21 @@ void AMainCharacter::OpenTalentMenu()
 //Getting Attacked
 void AMainCharacter::FireDamage(float Damage)
 {
+	if (Health - Damage <= 0.f)
+	{
+		Health -= Damage;
+		Dead();
+	}
+	else
+	{
+		Health -= Damage;
+		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth is %i"), Health);
+	}
+	/**------Borrowing this function for Enemy Damage!§-------
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
 	Damage -= FireResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
-	Health -= Damage;
+	Health -= Damage;*/
 }
 void AMainCharacter::WaterDamage(float Damage)
 {

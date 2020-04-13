@@ -17,17 +17,19 @@ AEnemy::AEnemy()
 
 	AgroSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AgroSphere"));
 	AgroSphere->SetupAttachment(GetRootComponent());
-	AgroSphere->InitSphereRadius(600.f);
+	AgroSphere->InitSphereRadius(1500.f);
 
 
 	CombatSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CombatSphere"));
 	CombatSphere->SetupAttachment(GetRootComponent());
-	CombatSphere->InitSphereRadius(75.f);
+	CombatSphere->InitSphereRadius(90.f);
 
 	bOverLappingCombatSphere= false;
 
 	MaxHealth = 150;
 	Health = 130;
+
+	HitDamage = 150;
 }
 
 // Called when the game starts or when spawned
@@ -90,25 +92,17 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 
 }
 
-/**void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor)
 	{
-		AFireball* Fireball = Cast<AFireball>(OtherActor);
-		if (Fireball)
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
 		{
-			bOverLappingCombatSphere = true;
-			TakeDamage(5); //Needed a float, 5 is arbritrary
-		}
-
-		AWaterWave* WaterWave = Cast<AWaterWave>(OtherActor);
-		if (WaterWave)
-		{
-			bOverLappingCombatSphere = true;
-			TakeDamage(5);
+			MainCharacter->FireDamage(150);
 		}
 	}
-}*/
+}
 
 void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
