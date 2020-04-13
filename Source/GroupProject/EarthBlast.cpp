@@ -72,22 +72,14 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			Main->FireDamage(Damage);
 			Destroy();
 		}
-	}
-	/**------MOVED TO ENEMY.CPP
 
-	if (OtherActor->IsA(AEnemy::StaticClass())) /
-	{
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
 		{
-				Enemy->TakeDamage(Damage);
-				Destroy();
+			Enemy->TakeDamage(Damage);
+			Destroy();
 		}
-
-
-		//UE_LOG(LogTemp, Warning, TEXT("Destroyed"));
-
-	}*/
+	}
 }
 
 
