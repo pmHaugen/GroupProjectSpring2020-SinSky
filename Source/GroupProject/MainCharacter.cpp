@@ -60,7 +60,7 @@ AMainCharacter::AMainCharacter()
 
 	FireSpellCD = { 0.8f };
 	FireTimeSinceSpell = { 0 };
-	MaxFireMana = 100;
+
 
 
 	WaterSpellCD = { 0.1f };
@@ -85,10 +85,10 @@ AMainCharacter::AMainCharacter()
 	AirMana = 0.f;
 
 
-	MaxFireMana = 200.f;
-	MaxWaterMana = 200.f;
-	MaxEarthMana = 200.f;
-	MaxAirMana = 200.f;
+	FireMaxMana = 200.f;
+	WaterMaxMana = 200.f;
+	EarthMaxMana = 200.f;
+	AirMaxMana = 200.f;
 
 	ManaRegen = 10.f;
 	SkillPoints = 3.f;
@@ -394,36 +394,36 @@ void AMainCharacter::Regeneration(float HealthRegenerationRate, float ManaRegene
 			Health = MaxHealth;
 		}
 	}
-	if (FireMana <= MaxFireMana)
+	if (FireMana <= FireMaxMana)
 	{
 		FireMana += ManaRegenerationRate * Time; //Regeneration per second
-		if (FireMana >= MaxFireMana)
+		if (FireMana >= FireMaxMana)
 		{
-			FireMana = MaxFireMana;
+			FireMana = FireMaxMana;
 		}
 	}
-	if (WaterMana <= MaxWaterMana)
+	if (WaterMana <= WaterMaxMana)
 	{
 		WaterMana += ManaRegenerationRate * Time; //Regeneration per second
-		if (WaterMana >= MaxWaterMana)
+		if (WaterMana >= WaterMaxMana)
 		{
-			WaterMana = MaxWaterMana;
+			WaterMana = WaterMaxMana;
 		}
 	}
-	if (EarthMana <= MaxEarthMana)
+	if (EarthMana <= EarthMaxMana)
 	{
 		EarthMana += ManaRegenerationRate * Time; //Regeneration per second
-		if (EarthMana >= MaxEarthMana)
+		if (EarthMana >= EarthMaxMana)
 		{
-			EarthMana = MaxEarthMana;
+			EarthMana = EarthMaxMana;
 		}
 	}
-	if (AirMana <= MaxAirMana)
+	if (AirMana <= AirMaxMana)
 	{
 		AirMana += ManaRegenerationRate * Time; //Regeneration per second
-		if (AirMana >= MaxAirMana)
+		if (AirMana >= AirMaxMana)
 		{
-			AirMana = MaxAirMana;
+			AirMana = AirMaxMana;
 		}
 	}
 }

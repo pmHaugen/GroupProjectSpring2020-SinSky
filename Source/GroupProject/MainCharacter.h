@@ -67,41 +67,41 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float FireMana;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float MaxFireMana;
+	float FireMaxMana;
 	float FireManaCost;
 
 	//float WaterCooldown;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	UPROPERTY(BlueprintReadOnly, Category = "Non Editable")
 	float WaterTimeSinceSpell;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterSpellCD;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float WaterMana;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float MaxWaterMana;
+	float WaterMaxMana;
 	float WaterManaCost;
 
 
 	//float EarthCooldown;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	UPROPERTY(BlueprintReadOnly, Category = "Non Editable")
 	float EarthTimeSinceSpell;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthSpellCD;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float EarthMana;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float MaxEarthMana;
+	float EarthMaxMana;
 	float EarthManaCost;
 
 	//float AirCooldown;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
+	UPROPERTY(BlueprintReadOnly, Category = "Non Editable")
 	float AirTimeSinceSpell;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirSpellCD;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float AirMana;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
-	float MaxAirMana;
+	float AirMaxMana;
 	float AirManaCost;
 
 	float DashCooldown;
