@@ -7,6 +7,7 @@
 #include "MainCharacter.h"
 #include "Fireball.h"
 #include "WaterWave.h"
+#include "MyPlayerController.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -62,6 +63,8 @@ void AEnemy::TakeDamage(float Damage)
 	if (Health - Damage <= 0.f)
 	{
 		Health -= Damage;
+		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+		Kills->KillCount(1.f);
 		Death();
 	}
 	else

@@ -64,8 +64,8 @@ void AFireball::Tick(float DeltaTime)
 void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
-//	if (OtherActor)
-//	{
+	if (OtherActor)
+	{
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
 		if (Main) //Om det er Main:
 		{
@@ -79,7 +79,7 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 			Enemy->TakeDamage(Damage);
 			Destroy();
 		}
-//	}
+	}
 	/**------MOVED TO ENEMY.CPP
 	
 	if (OtherActor->IsA(AEnemy::StaticClass())) 

@@ -4,7 +4,10 @@
 #include "MyPlayerController.h"
 #include "Blueprint/UserWidget.h"
 
-
+AMyPlayerController::AMyPlayerController()
+{
+	Kills = 0;
+}
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -47,5 +50,13 @@ void AMyPlayerController::OpenSkillMenu()
 			}
 		}
 	bIsVisible = !bIsVisible;
+}
+
+void AMyPlayerController::KillCount(float Amount)
+{
+	Kills += Amount;
+	UE_LOG(LogTemp, Warning, TEXT("The amount of kills are %f"), Kills);
+
+	//put if statements here.
 }
 
