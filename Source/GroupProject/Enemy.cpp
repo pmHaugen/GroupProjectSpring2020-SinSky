@@ -24,6 +24,9 @@ AEnemy::AEnemy()
 	CombatSphere->InitSphereRadius(75.f);
 
 	bOverLappingCombatSphere= false;
+
+	MaxHealth = 150;
+	Health = 130;
 }
 
 // Called when the game starts or when spawned
@@ -36,7 +39,7 @@ void AEnemy::BeginPlay()
 	AgroSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::AgroSphereOnOverlapBegin);
 	AgroSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::AgroSphereOnOverlapEnd);
 
-	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapBegin);
+	//CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapEnd);
 }
 
@@ -56,9 +59,14 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::TakeDamage(float Damage)
 {
-	if (bOverLappingCombatSphere)
+	if (Health - Damage <= 0.f)
 	{
-		Destroy();
+		Health -= Damage;
+		Death();
+	}
+	else
+	{
+		Health -= Damage;
 	}
 }
 
@@ -79,7 +87,7 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 
 }
 
-void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+/**void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor)
 	{
@@ -97,7 +105,7 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 			TakeDamage(5);
 		}
 	}
-}
+}*/
 
 void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
@@ -118,5 +126,10 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 
 		AIController->MoveTo(MoveRequest, &NavPath);
 	}
+}
+
+void AEnemy::Death()
+{
+	Destroy();
 }
 
