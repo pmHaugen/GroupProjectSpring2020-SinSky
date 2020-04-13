@@ -107,7 +107,7 @@ AMainCharacter::AMainCharacter()
 
 	//Upgrade Levels
 	FireLvl = 1.f;
-
+	WaterLvl = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -271,10 +271,20 @@ void AMainCharacter::CastSpell()
 	}
 	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
-		GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
-		WaterTimeSinceSpell = 0;
-		WaterMana -= WaterManaCost;
-		UGameplayStatics::PlaySound2D(this, WaterWaveSound);
+		if(WaterLvl == 1)
+		{
+			GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
+			WaterTimeSinceSpell = 0;
+			WaterMana -= WaterManaCost;
+			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
+		}
+		if (WaterLvl == 2)
+		{
+			GetWorld()->SpawnActor<AWaterWave>(WaterWaveLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
+			WaterTimeSinceSpell = 0;
+			WaterMana -= WaterManaCost;
+			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
+		}
 	}
 	if (EarthSpellCD <= EarthTimeSinceSpell && SpellChoosen == 3 && EarthMana >= EarthManaCost)
 	{
@@ -397,6 +407,10 @@ void AMainCharacter::AirDamage(float Damage)
 
 void AMainCharacter::Regeneration(float HealthRegenerationRate, float ManaRegenerationRate, float Time)
 {
+	if (RegenLvl==2)
+	{
+		HealthRegenerationRate = 50;
+	}
 	if (Health <= MaxHealth)
 	{
 		Health += HealthRegenerationRate * Time; //Health per second
