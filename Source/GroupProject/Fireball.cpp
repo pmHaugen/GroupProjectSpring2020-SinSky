@@ -79,8 +79,6 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 			Enemy->TakeDamage(Damage);
 			Destroy();
 		}
-
-		Destroy();
 //	}
 	/**------MOVED TO ENEMY.CPP
 	
