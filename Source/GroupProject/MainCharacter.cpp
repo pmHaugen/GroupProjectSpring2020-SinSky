@@ -66,6 +66,9 @@ AMainCharacter::AMainCharacter()
 	WaterSpellCD = { 0.1f };
 	WaterTimeSinceSpell = { 0 };
 
+	EarthSpellCD = { 1.f };
+	EarthTimeSinceSpell = { 0 };
+
 
 	//Movement
 	CurrentVelocity = FVector(0.f);
@@ -102,7 +105,7 @@ AMainCharacter::AMainCharacter()
 	//Cost
 	FireManaCost = 60;
 	WaterManaCost = 5;
-	EarthManaCost = 10;
+	EarthManaCost = 100;
 	AirManaCost = 10;
 
 	//Upgrade Levels

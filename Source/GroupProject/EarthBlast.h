@@ -23,22 +23,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(VisibleAnywhere)
-		class USphereComponent* Collider;
+	class UBoxComponent* Collider;
 
 	UPROPERTY(VisibleAnywhere)
-		UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere)
-		FVector Speed;
+	FVector Speed;
 
 	float Damage;
 
 	float TimeSinceSpawned{ 0 };
 
 	UPROPERTY(VisibleAnywhere)
-		float SpellDuration;
+	float SpellDuration;
 
 	UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };
