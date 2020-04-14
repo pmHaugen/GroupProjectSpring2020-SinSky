@@ -2,7 +2,7 @@
 
 
 #include "WaterWave.h"
-#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Enemy.h"
 #include "MainCharacter.h"
@@ -13,9 +13,9 @@ AWaterWave::AWaterWave()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterWave::OnOverlapBegin);
-	Collider->SetSphereRadius(50.f);
+	//Collider->SetSphereRadius(50.f);
 
 	RootComponent = Collider;
 
