@@ -375,7 +375,7 @@ void AMainCharacter::FireDamage(float Damage)
 	else
 	{
 		Health -= Damage;
-		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth is %i"), Health);
+		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth is %f"), Health);
 	}
 	/**------Borrowing this function for Enemy Damage!§-------
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
