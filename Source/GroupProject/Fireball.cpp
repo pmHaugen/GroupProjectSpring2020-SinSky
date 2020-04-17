@@ -4,6 +4,8 @@
 #include "Fireball.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Enemy.h"
 
@@ -21,6 +23,9 @@ AFireball::AFireball()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
 	Mesh->SetupAttachment(RootComponent);
+
+	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
+	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
 	SpellDuration = 2;
 	Speed = { 100.f, 0.f, 0.f };
@@ -70,6 +75,10 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		if (Main) //Om det er Main:
 		{
 			Main->FireDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
 
@@ -77,7 +86,12 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		if (Enemy)
 		{
 			Enemy->TakeDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
+
 	}
 }
