@@ -57,7 +57,8 @@ public:
 	class USoundCue* WaterWaveSound;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	class USoundCue* EarthBlastSound;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	class USoundCue* AirGunSound;
 
 	//float FireCooldown;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
@@ -121,6 +122,8 @@ public:
 	TSubclassOf<class AWaterWave> WaterWaveLv2_BP;
 	UPROPERTY(EditAnywhere, Category = "EarthBlast | Stage 1")
 	TSubclassOf<class AEarthBlast> EarthBlast_BP;
+	UPROPERTY(EditAnywhere, Category = "AirGun | Stage 1")
+	TSubclassOf<class AAirGun> AirGun_BP;
 
 	//Mouse
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mouse Setup")

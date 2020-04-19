@@ -5,6 +5,7 @@
 #include "Fireball.h"
 #include "WaterWave.h"
 #include "EarthBlast.h"
+#include "AirGun.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -62,12 +63,14 @@ AMainCharacter::AMainCharacter()
 	FireTimeSinceSpell = { 0 };
 
 
-
 	WaterSpellCD = { 0.1f };
 	WaterTimeSinceSpell = { 0 };
 
 	EarthSpellCD = { 1.f };
 	EarthTimeSinceSpell = { 0 };
+
+	AirSpellCD = { 1.f };
+	AirTimeSinceSpell = { 0 };
 
 
 	//Movement
@@ -85,7 +88,7 @@ AMainCharacter::AMainCharacter()
 	FireMana = 0.f;
 	WaterMana = 0.f;
 	EarthMana = 0.f;
-	AirMana = 0.f;
+	AirMana = 100.f;
 
 
 	FireMaxMana = 200.f;
@@ -297,14 +300,13 @@ void AMainCharacter::CastSpell()
 		UGameplayStatics::PlaySound2D(this, EarthBlastSound);
 	}
 	
-	//if (AirSpellCD <= AirTimeSinceSpell && SpellChoosen == 2 && AirMana >= AirManaCost)
-	//{
-	//	GetWorld()->SpawnActor<AAirGun>(AirGun_BP, SpellSpawnLocation, SpellSpawnRotation);
-	//	AirTimeSinceSpell = 0;
-	//	AirMana -= AirManaCost;
-	//	UGameplayStatics::PlaySound2D(this, AirGunSound);
-	//}
-	//
+	if (AirSpellCD <= AirTimeSinceSpell && SpellChoosen == 4 && AirMana >= AirManaCost)
+	{
+		GetWorld()->SpawnActor<AAirGun>(AirGun_BP, SpellSpawnLocation, SpellSpawnRotation);
+		AirTimeSinceSpell = 0;
+		AirMana -= AirManaCost;
+		UGameplayStatics::PlaySound2D(this, AirGunSound);
+	}
 }
 
 void AMainCharacter::Dead()

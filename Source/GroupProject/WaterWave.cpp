@@ -4,6 +4,8 @@
 #include "WaterWave.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Enemy.h"
 #include "MainCharacter.h"
 
@@ -21,6 +23,9 @@ AWaterWave::AWaterWave()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
 	Mesh->SetupAttachment(RootComponent);
+
+	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
+	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
 	SpellDuration = 10;
 	Speed = { 50.f, 0.f, 0.f };
@@ -67,6 +72,10 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 		if (Main) //Om det er MainCharacter:
 		{
 			Main->WaterDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
 
@@ -74,6 +83,10 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 		if (Enemy)
 		{
 			Enemy->TakeDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
 	}

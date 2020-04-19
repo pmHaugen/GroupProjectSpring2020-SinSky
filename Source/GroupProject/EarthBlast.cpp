@@ -4,6 +4,8 @@
 #include "EarthBlast.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Enemy.h"
 
@@ -22,6 +24,9 @@ AEarthBlast::AEarthBlast()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EarthBlast Mesh"));
 	Mesh->SetupAttachment(RootComponent);
+
+	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
+	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
 	SpellDuration = 2;
 	Speed = { 10.f, 0.f, 0.f };
@@ -68,6 +73,10 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		if (Main) //Om det er Main:
 		{
 			Main->EarthDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
 
@@ -75,6 +84,10 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		if (Enemy)
 		{
 			Enemy->TakeDamage(Damage);
+			if (OverlapParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+			}
 			Destroy();
 		}
 	}

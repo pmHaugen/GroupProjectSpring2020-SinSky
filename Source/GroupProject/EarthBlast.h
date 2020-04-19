@@ -28,6 +28,12 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Particles")
+	class UParticleSystemComponent* IdleParticlesComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Particles")
+	class UParticleSystem* OverlapParticles;
+
 	UPROPERTY(EditAnywhere)
 	FVector Speed;
 
