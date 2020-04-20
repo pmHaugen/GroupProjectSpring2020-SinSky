@@ -12,17 +12,20 @@
 // Sets default values
 AAirGun::AAirGun()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AAirGun::OnOverlapBegin);
+	//Collider->SetSphereRadius(50.f);
+
+	RootComponent = Collider;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AirGun Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &AAirGun::OnOverlapBegin);
-
-
-	RootComponent = Collider;
+	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
+	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
 	SpellDuration = 2;
 	Speed = { 100.f, 0.f, 0.f };
@@ -43,7 +46,7 @@ void AAirGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Speed += { 1500.f * DeltaTime, 0.f, 0.f };
+	Speed += { 100.f * DeltaTime, 0.f, 0.f };
 
 
 	//Location.Y += (Direction.Y * DeltaTime) * Speed;

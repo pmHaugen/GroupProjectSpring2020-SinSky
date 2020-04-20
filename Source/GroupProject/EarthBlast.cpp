@@ -75,7 +75,7 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			Main->EarthDamage(Damage);
 			if (OverlapParticles)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
 			Destroy();
 		}
@@ -86,7 +86,7 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			Enemy->TakeDamage(Damage);
 			if (OverlapParticles)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
 			Destroy();
 		}

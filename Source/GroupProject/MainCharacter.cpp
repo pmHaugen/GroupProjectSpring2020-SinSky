@@ -88,7 +88,7 @@ AMainCharacter::AMainCharacter()
 	FireMana = 0.f;
 	WaterMana = 0.f;
 	EarthMana = 0.f;
-	AirMana = 100.f;
+	AirMana = 0.f;
 
 
 	FireMaxMana = 200.f;
@@ -96,7 +96,7 @@ AMainCharacter::AMainCharacter()
 	EarthMaxMana = 200.f;
 	AirMaxMana = 200.f;
 
-	ManaRegen = 10.f;
+	ManaRegen = 20.f;
 	SkillPoints = 3.f;
 
 	//Resistance
@@ -109,7 +109,7 @@ AMainCharacter::AMainCharacter()
 	FireManaCost = 60;
 	WaterManaCost = 5;
 	EarthManaCost = 100;
-	AirManaCost = 10;
+	AirManaCost = 100;
 
 	//Upgrade Levels
 	FireLvl = 1.f;
