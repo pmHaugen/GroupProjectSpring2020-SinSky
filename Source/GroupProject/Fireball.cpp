@@ -29,7 +29,7 @@ AFireball::AFireball()
 
 	SpellDuration = 2;
 	Speed = { 100.f, 0.f, 0.f };
-	Damage = 100;
+	Damage = 70;
 }
 
 

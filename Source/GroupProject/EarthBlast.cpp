@@ -30,7 +30,7 @@ AEarthBlast::AEarthBlast()
 
 	SpellDuration = 2;
 	Speed = { 10.f, 0.f, 0.f };
-	Damage = 200;
+	Damage = 0;
 }
 
 // Called when the game starts or when spawned
@@ -66,9 +66,8 @@ void AEarthBlast::Tick(float DeltaTime)
 void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
-	if (OtherActor->IsA(AMainCharacter::StaticClass()))
+	if (OtherActor)
 	{
-
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
 		if (Main) //Om det er Main:
 		{
@@ -88,7 +87,7 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			{
 				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
-			Destroy();
+			//Destroy();
 		}
 	}
 }
