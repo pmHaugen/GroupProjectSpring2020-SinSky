@@ -72,7 +72,7 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
 		if (Main) //Om det er Main:
 		{
-			Main->EarthDamage(Damage);
+			Main->TakeEarthDamage(Damage);
 			if (OverlapParticles)
 			{
 				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
