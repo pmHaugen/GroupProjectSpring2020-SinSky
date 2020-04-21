@@ -93,7 +93,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void TakeDamage(float Damage);
+	void TakeFireDamage(float Damage);
+
+	void TakeWaterDamage(float Damage);
+	
+	void TakeEarthDamage(float Damage);
+
+	void TakeAirDamage(float Damage);
 
 	void Death();
 

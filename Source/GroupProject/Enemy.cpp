@@ -65,7 +65,7 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void AEnemy::TakeDamage(float Damage)
+void AEnemy::TakeFireDamage(float Damage)
 {
 	if (Health - Damage <= 0.f)
 	{
@@ -79,6 +79,53 @@ void AEnemy::TakeDamage(float Damage)
 		Health -= Damage;
 	}
 }
+
+void AEnemy::TakeWaterDamage(float Damage)
+{
+	if (Health - Damage <= 0.f)
+	{
+		Health -= Damage;
+		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+		Kills->KillCount(1.f);
+		Death();
+	}
+	else
+	{
+		Health -= Damage;
+	}
+}
+
+void AEnemy::TakeEarthDamage(float Damage)
+{
+	if (Health - Damage <= 0.f)
+	{
+		Health -= Damage;
+		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+		Kills->KillCount(1.f);
+		Death();
+	}
+	else
+	{
+		Health -= Damage;
+	}
+}
+
+void AEnemy::TakeAirDamage(float Damage)
+{
+	if (Health - Damage <= 0.f)
+	{
+		Health -= Damage;
+		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+		Kills->KillCount(1.f);
+		Death();
+	}
+	else
+	{
+		Health -= Damage;
+	}
+}
+
+
 
 void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
