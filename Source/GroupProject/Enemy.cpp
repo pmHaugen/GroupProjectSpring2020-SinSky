@@ -98,9 +98,10 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 	{
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlapping main!"));
-			MainCharacter->FireDamage(HitDamage);
+		{	
+
+			/**UE_LOG(LogTemp, Warning, TEXT("Overlapping main!"));
+			MainCharacter->FireDamage(HitDamage);*/
 		}
 	}
 }

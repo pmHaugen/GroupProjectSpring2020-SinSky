@@ -17,6 +17,15 @@ enum class EEnemyMovementStatus : uint8
 
 };
 
+UENUM(BlueprintType)
+enum class EEnemyElemtalStatus : uint8
+{
+	EMS_Fire		UMETA(DIsplayName = "FireStatus"),
+	EMS_Water		UMETA(DisplayName = "WaterStatus"),
+	EMS_Earth		UMETA(DisplayName = "EarthStatus"),
+	EMS_Air			UMETA(DisplayName = "AirStatus")
+};
+
 UCLASS()
 class GROUPPROJECT_API AEnemy : public ACharacter
 {
@@ -30,6 +39,11 @@ public:
 	EEnemyMovementStatus EnemyMovementStatus;
 
 	FORCEINLINE void SetEnemyMovementStatus(EEnemyMovementStatus Status) { EnemyMovementStatus = Status; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
+	EEnemyElemtalStatus EnemyElementalStatus;
+
+	FORCEINLINE void SetEnemyElementalStatus(EEnemyElemtalStatus Status) { EnemyElementalStatus = Status; }
 
 	//Follow Player
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
