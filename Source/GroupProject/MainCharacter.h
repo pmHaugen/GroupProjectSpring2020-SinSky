@@ -27,6 +27,7 @@ public:
 	bool bCasting;
 	bool bShowCursor = false;
 
+	void ManaBarColor();
 
 protected:
 	// Called when the game starts or when spawned
@@ -190,6 +191,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MaxSpeed;
 
+	//ManaBarColor
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ManaBar Color")
+	bool bFireEnoughMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ManaBar Color")
+	bool bWaterEnoughMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ManaBar Color")
+	bool bEarthEnoughMana;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ManaBar Color")
+	bool bAirEnoughMana;
 
 	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
 	//-----------------------------------------------------------

@@ -96,7 +96,7 @@ AMainCharacter::AMainCharacter()
 	EarthMaxMana = 200.f;
 	AirMaxMana = 200.f;
 
-	ManaRegen = 20.f;
+	ManaRegen = 10.f;
 	SkillPoints = 3.f;
 
 	//Resistance
@@ -109,11 +109,18 @@ AMainCharacter::AMainCharacter()
 	FireManaCost = 60;
 	WaterManaCost = 5;
 	EarthManaCost = 100;
-	AirManaCost = 100;
+	AirManaCost = 200;
 
 	//Upgrade Levels
 	FireLvl = 1.f;
 	WaterLvl = 1.f;
+
+	//Mana bar Color
+	bFireEnoughMana = false;
+	bWaterEnoughMana = false;
+	bEarthEnoughMana = false;
+	bAirEnoughMana = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -190,6 +197,10 @@ void AMainCharacter::Tick(float DeltaTime)
 			MaxSpeed = 400.f;
 		}
 	}
+
+	//ManaBarColor
+	ManaBarColor();
+
 	if (Health <= 0)
 	{
 		Dead();
@@ -455,5 +466,43 @@ void AMainCharacter::Regeneration(float HealthRegenerationRate, float ManaRegene
 		{
 			AirMana = AirMaxMana;
 		}
+	}
+}
+
+void AMainCharacter::ManaBarColor()
+{
+	if (FireMana >= FireManaCost)
+	{
+		bFireEnoughMana = true;
+	}
+	else
+	{
+		bFireEnoughMana = false;
+	}
+	if (WaterMana >= WaterManaCost)
+	{
+		bWaterEnoughMana = true;
+	}
+	else
+	{
+		bWaterEnoughMana = false;
+	}
+	if (EarthMana >= EarthManaCost)
+	{
+		bEarthEnoughMana = true;
+	}
+	else
+	{
+		bEarthEnoughMana = false;
+	}
+	if (AirMana >= AirManaCost)
+	{
+		bAirEnoughMana = true;
+		//UE_LOG(LogTemp, Warning, TEXT("True"));
+	}
+	else
+	{
+		bAirEnoughMana = false;
+		//UE_LOG(LogTemp, Warning, TEXT("false"));
 	}
 }

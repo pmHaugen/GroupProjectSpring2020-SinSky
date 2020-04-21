@@ -28,7 +28,7 @@ AAirGun::AAirGun()
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
 	SpellDuration = 2;
-	Speed = { 100.f, 0.f, 0.f };
+	Speed = { 3500.f, 0.f, 0.f };
 	Damage = 100;
 }
 
@@ -46,7 +46,7 @@ void AAirGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Speed += { 100.f * DeltaTime, 0.f, 0.f };
+	Speed += { 1000.f * DeltaTime, 0.f, 0.f };
 
 
 	//Location.Y += (Direction.Y * DeltaTime) * Speed;
