@@ -23,12 +23,12 @@ void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Actor_1) //&& Actor_2 && Actor_3 && Actor_4) //Add more actors when nececcary
+	if (Actor_1 && Actor_2 && Actor_3 && Actor_4) //Add more actors when nececcary
 	{
 		SpawnArray.Add(Actor_1);
-		/**SpawnArray.Add(Actor_2);
+		SpawnArray.Add(Actor_2);
 		SpawnArray.Add(Actor_3);
-		SpawnArray.Add(Actor_4);*/
+		SpawnArray.Add(Actor_4);
 
 	}
 }

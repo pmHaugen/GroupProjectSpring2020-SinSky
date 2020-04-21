@@ -22,14 +22,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_1;
 
-	/**UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_2;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_3;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
-	TSubclassOf<AActor> Actor_4;*/
+	TSubclassOf<AActor> Actor_4;
 
 	TArray<TSubclassOf<AActor>> SpawnArray;
 
