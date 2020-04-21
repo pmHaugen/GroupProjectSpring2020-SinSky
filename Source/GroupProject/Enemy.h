@@ -81,6 +81,22 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
 	float HitDamage;
 
+	/**
+	*****Enemy Resistance Properties
+	*/
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category ="ResistanceProperties")
+	float HighResistance;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ResistanceProperties")
+	float LowResistance;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ResistanceProperties")
+	float NoResistance;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
+	float DamageGiven;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -100,6 +116,8 @@ public:
 	void TakeEarthDamage(float Damage);
 
 	void TakeAirDamage(float Damage);
+
+	void DamageTaken(float Amount);
 
 	void Death();
 

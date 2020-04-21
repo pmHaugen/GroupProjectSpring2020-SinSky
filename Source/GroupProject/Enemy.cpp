@@ -30,11 +30,18 @@ AEnemy::AEnemy()
 	Health = 130;
 
 	HitDamage = 150;
+	DamageGiven = 0;
 
 	bFireStatus = false;
 	bWaterStatus = false;
 	bEarthStatus = false;
 	bAirStatus = false;
+
+	HighResistance = 0.35;
+	LowResistance = 0.7;
+	NoResistance = 1;
+
+
 }
 
 // Called when the game starts or when spawned
@@ -69,61 +76,93 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::TakeFireDamage(float Damage)
 {
-	if (Health - Damage <= 0.f)
+	switch (EnemyElementalStatus)
 	{
-		Health -= Damage;
-		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		Kills->KillCount(1.f);
-		Death();
-	}
-	else
-	{
-		Health -= Damage;
+	case EEnemyElementalStatus::EES_Fire:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Water:
+		DamageGiven = Damage * HighResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Earth:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Air:
+		DamageGiven = Damage * NoResistance;
+		DamageTaken(DamageGiven);
+		break;
 	}
 }
 
 void AEnemy::TakeWaterDamage(float Damage)
 {
-	if (Health - Damage <= 0.f)
+	switch (EnemyElementalStatus)
 	{
-		Health -= Damage;
-		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		Kills->KillCount(1.f);
-		Death();
-	}
-	else
-	{
-		Health -= Damage;
+	case EEnemyElementalStatus::EES_Fire:
+		DamageGiven = Damage * NoResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Water:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Earth:
+		DamageGiven = Damage * HighResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Air:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
 	}
 }
 
 void AEnemy::TakeEarthDamage(float Damage)
 {
-	if (Health - Damage <= 0.f)
+	switch (EnemyElementalStatus)
 	{
-		Health -= Damage;
-		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		Kills->KillCount(1.f);
-		Death();
-	}
-	else
-	{
-		Health -= Damage;
+	case EEnemyElementalStatus::EES_Fire:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Water:
+		DamageGiven = Damage * NoResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Earth:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Air:
+		DamageGiven = Damage * HighResistance;
+		DamageTaken(DamageGiven);
+		break;
 	}
 }
 
 void AEnemy::TakeAirDamage(float Damage)
 {
-	if (Health - Damage <= 0.f)
+	switch (EnemyElementalStatus)
 	{
-		Health -= Damage;
-		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		Kills->KillCount(1.f);
-		Death();
-	}
-	else
-	{
-		Health -= Damage;
+	case EEnemyElementalStatus::EES_Fire:
+		DamageGiven = Damage * HighResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Water:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Earth:
+		DamageGiven = Damage * NoResistance;
+		DamageTaken(DamageGiven);
+		break;
+	case EEnemyElementalStatus::EES_Air:
+		DamageGiven = Damage * LowResistance;
+		DamageTaken(DamageGiven);
+		break;
 	}
 }
 
@@ -223,6 +262,22 @@ void AEnemy::GetEnemyElementalStatus()
 	case EEnemyElementalStatus::EES_Air:
 		bAirStatus = true;
 		break;
+	}
+}
+
+void AEnemy::DamageTaken(float Amount)
+{
+
+	if (Health - Amount <= 0.f)
+	{
+		Health -= Amount;
+		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+		Kills->KillCount(1.f);
+		Death();
+	}
+	else
+	{
+		Health -= Amount;
 	}
 }
 
