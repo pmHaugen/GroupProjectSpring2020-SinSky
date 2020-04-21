@@ -81,6 +81,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
 	float HitDamage;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
+	float DamageGiven;
+
 	/**
 	*****Enemy Resistance Properties
 	*/
@@ -94,8 +97,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ResistanceProperties")
 	float NoResistance;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
-	float DamageGiven;
 
 
 protected:

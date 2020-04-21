@@ -267,7 +267,7 @@ void AEnemy::GetEnemyElementalStatus()
 
 void AEnemy::DamageTaken(float Amount)
 {
-
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken: %f"), Amount);
 	if (Health - Amount <= 0.f)
 	{
 		Health -= Amount;
