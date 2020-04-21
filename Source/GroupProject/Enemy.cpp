@@ -30,6 +30,11 @@ AEnemy::AEnemy()
 	Health = 130;
 
 	HitDamage = 150;
+
+	bFireStatus = false;
+	bWaterStatus = false;
+	bEarthStatus = false;
+	bAirStatus = false;
 }
 
 // Called when the game starts or when spawned
@@ -94,14 +99,35 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 
 void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	
 	if (OtherActor)
 	{
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{	
+			if (bFireStatus)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
+				MainCharacter->FireDamage(HitDamage);
+			}
 
-			/**UE_LOG(LogTemp, Warning, TEXT("Overlapping main!"));
-			MainCharacter->FireDamage(HitDamage);*/
+			if (bWaterStatus)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
+				MainCharacter->WaterDamage(HitDamage);
+			}
+
+			if (bEarthStatus)
+			{ 
+				UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
+				MainCharacter->EarthDamage(HitDamage);
+			}
+			
+			if (bAirStatus)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
+				MainCharacter->AirDamage(HitDamage);
+			}
 		}
 	}
 }
@@ -130,5 +156,24 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 void AEnemy::Death()
 {
 	Destroy();
+}
+
+void AEnemy::GetEnemyElementalStatus()
+{
+	switch (EnemyElementalStatus)
+	{
+	case EEnemyElementalStatus::EES_Fire:
+		bFireStatus = true;
+		break;
+	case EEnemyElementalStatus::EES_Water:
+		bWaterStatus = true;
+		break;
+	case EEnemyElementalStatus::EES_Earth:
+		bEarthStatus = true;
+		break;
+	case EEnemyElementalStatus::EES_Air:
+		bAirStatus = true;
+		break;
+	}
 }
 

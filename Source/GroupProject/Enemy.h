@@ -18,12 +18,14 @@ enum class EEnemyMovementStatus : uint8
 };
 
 UENUM(BlueprintType)
-enum class EEnemyElemtalStatus : uint8
+enum class EEnemyElementalStatus : uint8
 {
-	EMS_Fire		UMETA(DIsplayName = "FireStatus"),
-	EMS_Water		UMETA(DisplayName = "WaterStatus"),
-	EMS_Earth		UMETA(DisplayName = "EarthStatus"),
-	EMS_Air			UMETA(DisplayName = "AirStatus")
+	EES_Fire		UMETA(DIsplayName = "FireStatus"),
+	EES_Water		UMETA(DisplayName = "WaterStatus"),
+	EES_Earth		UMETA(DisplayName = "EarthStatus"),
+	EES_Air			UMETA(DisplayName = "AirStatus"),
+
+	EES_MAX			UMETA(DisplayName ="DefaultMAX")
 };
 
 UCLASS()
@@ -40,10 +42,20 @@ public:
 
 	FORCEINLINE void SetEnemyMovementStatus(EEnemyMovementStatus Status) { EnemyMovementStatus = Status; }
 
+	/**
+	******Enemy ElementalStatus
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
-	EEnemyElemtalStatus EnemyElementalStatus;
+	EEnemyElementalStatus EnemyElementalStatus;
 
-	FORCEINLINE void SetEnemyElementalStatus(EEnemyElemtalStatus Status) { EnemyElementalStatus = Status; }
+	FORCEINLINE void SetEnemyElementalStatus(EEnemyElementalStatus Status) { EnemyElementalStatus = Status; }
+
+	void GetEnemyElementalStatus();
+
+	bool bFireStatus;
+	bool bWaterStatus;
+	bool bEarthStatus;
+	bool bAirStatus; 
 
 	//Follow Player
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
