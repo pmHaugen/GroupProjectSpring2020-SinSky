@@ -83,7 +83,7 @@ void AAirGun::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
 		{
-			Enemy->TakeDamage(Damage);
+			Enemy->TakeAirDamage(Damage);
 			if (OverlapParticles)
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
