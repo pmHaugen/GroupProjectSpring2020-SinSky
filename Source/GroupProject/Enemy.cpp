@@ -278,6 +278,7 @@ void AEnemy::DamageTaken(float Amount)
 	else
 	{
 		Health -= Amount;
+		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
 	}
 }
 
