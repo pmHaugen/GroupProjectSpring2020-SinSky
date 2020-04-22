@@ -56,6 +56,8 @@ public:
 
 	void GetSpawnerDifficultyStatus();
 
+	//class AEnemy* Difficulty;
+
 
 
 protected:

@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "AIController.h"
 
+
 // Sets default values
 AEnemySpawner::AEnemySpawner()
 {
@@ -16,6 +17,9 @@ AEnemySpawner::AEnemySpawner()
 
 	SpawningBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SpawningBox"));
 
+	bEasy = false;
+	bMedium = false;
+	bHard = false;
 }
 
 // Called when the game starts or when spawned
@@ -94,24 +98,28 @@ TSubclassOf<AActor> AEnemySpawner::GetSpawnActor()
 
 void AEnemySpawner::GetSpawnerDifficultyStatus()
 {
-
 	/**
 	******* NEEDED FIX
 	*/
 	//AEnemy& Enemy = Cast<AEnemy>(Enemy);
 	//AEnemy* Difficulty = Cast<AEnemy::SetEnemyDifficultyStatus>(Enemy);
-
+	//AEnemy* Difficulty = Cast<AEnemy>(Difficulty);
 	switch (SpawnerDifficultyStatus)
 	{
 	case ESpawnerDifficultyStatus::SDS_Easy:
 		//AEnemy::SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
 		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
+		//Difficulty->SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
+		bEasy = true;
 		break;
 	case ESpawnerDifficultyStatus::SDS_Medium:
-		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
+		//Difficulty->SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
+		bMedium = true;
 		break;
 	case ESpawnerDifficultyStatus::SDS_Hard:
 		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
+		//Difficulty->SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
+		bHard = true;
 		break;
 	}
 }

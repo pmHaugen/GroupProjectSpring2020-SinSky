@@ -8,6 +8,7 @@
 #include "Fireball.h"
 #include "WaterWave.h"
 #include "MyPlayerController.h"
+#include "EnemySpawner.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -63,7 +64,7 @@ void AEnemy::BeginPlay()
 
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
-	UE_LOG(LogTemp, Warning, TEXT("Difficulti is Easy: %b, Medium: %b, Hard: %b"), bEasy, bMedium, bHard);
+	
 }
 
 // Called every frame
@@ -301,6 +302,46 @@ void AEnemy::GetEnemyDifficultyStatus()
 	case EEnemyDifficultyStatus::EDS_Hard:
 		bHard = true;
 		break;
+	}
+
+	/**if (bEasy)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy"));
+	}
+
+	if (bMedium)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium"));
+	}
+
+	if (bHard)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Difficulty is Hard"));
+	}*/
+}
+
+void AEnemy::GetSpawnerValues(UClass* Actor)
+{
+	AEnemySpawner* difficulty = Cast<AEnemySpawner>(Actor);
+
+	difficulty->GetSpawnerDifficultyStatus();
+
+	if (difficulty)
+	{
+		if (difficulty->bEasy)
+		{
+			UE_LOG(LogTemp,Warning,TEXT("EasyDifficulty!"))
+		}
+
+		if (difficulty->bMedium)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("MediumDifficulty!"))
+		}
+
+		if (difficulty->bHard)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("HardDifficulty!"))
+		}
 	}
 }
 

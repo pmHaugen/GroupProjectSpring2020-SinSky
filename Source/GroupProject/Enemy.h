@@ -122,6 +122,7 @@ public:
 
 	void GetEnemyDifficultyStatus();
 
+	void GetSpawnerValues(UClass* Actor);
 
 protected:
 	// Called when the game starts or when spawned
