@@ -41,6 +41,10 @@ AEnemy::AEnemy()
 	LowResistance = 0.7;
 	NoResistance = 1;
 
+	bEasy = false;
+	bMedium = false;
+	bHard = false;
+
 
 }
 
@@ -58,6 +62,8 @@ void AEnemy::BeginPlay()
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapEnd);
 
 	GetEnemyElementalStatus();
+	GetEnemyDifficultyStatus();
+	UE_LOG(LogTemp, Warning, TEXT("Difficulti is Easy: %b, Medium: %b, Hard: %b"), bEasy, bMedium, bHard);
 }
 
 // Called every frame
@@ -279,6 +285,22 @@ void AEnemy::DamageTaken(float Amount)
 	{
 		Health -= Amount;
 		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
+	}
+}
+
+void AEnemy::GetEnemyDifficultyStatus()
+{
+	switch (EnemyDifficultyStatus)
+	{
+	case EEnemyDifficultyStatus::EDS_Easy:
+		bEasy = true;
+		break;
+	case EEnemyDifficultyStatus::EDS_Medium:
+		bMedium = true;
+		break;
+	case EEnemyDifficultyStatus::EDS_Hard:
+		bHard = true;
+		break;
 	}
 }
 

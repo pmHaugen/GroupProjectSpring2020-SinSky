@@ -20,12 +20,22 @@ enum class EEnemyMovementStatus : uint8
 UENUM(BlueprintType)
 enum class EEnemyElementalStatus : uint8
 {
-	EES_Fire		UMETA(DIsplayName = "FireStatus"),
+	EES_Fire		UMETA(DisplayName = "FireStatus"),
 	EES_Water		UMETA(DisplayName = "WaterStatus"),
 	EES_Earth		UMETA(DisplayName = "EarthStatus"),
 	EES_Air			UMETA(DisplayName = "AirStatus"),
 
 	EES_MAX			UMETA(DisplayName ="DefaultMAX")
+};
+
+UENUM(BlueprintType)
+enum class EEnemyDifficultyStatus : uint8
+{
+	EDS_Easy	UMETA(DisplayName = "Easy"),
+	EDS_Medium	UMETA(DisplayName = "Medium"),
+	EDS_Hard	UMETA(DisplayName = "Hard"),
+
+	EDS_MAX		UMETA(DisplayName= "DefaultMax")
 };
 
 UCLASS()
@@ -97,6 +107,20 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ResistanceProperties")
 	float NoResistance;
 
+	/**
+	*****Enemy Difficulty
+	*/
+
+	bool bEasy;
+	bool bMedium;
+	bool bHard;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
+	EEnemyDifficultyStatus EnemyDifficultyStatus;
+
+	FORCEINLINE void SetEnemyDifficultyStatus(EEnemyDifficultyStatus Status) { EnemyDifficultyStatus = Status; }
+
+	void GetEnemyDifficultyStatus();
 
 
 protected:
