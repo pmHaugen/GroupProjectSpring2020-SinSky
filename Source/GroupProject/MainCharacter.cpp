@@ -100,10 +100,10 @@ AMainCharacter::AMainCharacter()
 	SkillPoints = 3.f;
 
 	//Resistance
-	FireResistance = -10.f;
-	WaterResistance = -10.f;
-	EarthResistance = -10.f;
-	AirResistance = -10.f;
+	FireResistance = 0.90f;
+	WaterResistance = 0.90f;
+	EarthResistance = 0.90f;
+	AirResistance = 0.90f;
 
 	//Cost
 	FireManaCost = 60;
@@ -383,40 +383,40 @@ void AMainCharacter::OpenTalentMenu()
 //Getting Attacked
 void AMainCharacter::FireDamage(float Damage)
 {
-	if (Health - Damage <= 0.f)
-	{
-		Health -= Damage;
-		Dead();
-	}
-	else
-	{
-		Health -= Damage;
-		UE_LOG(LogTemp, Warning, TEXT("CurrentHealth is %f"), Health);
-	}
-	/**------Borrowing this function for Enemy Damage!§-------
+	//if (Health - Damage <= 0.f)
+	//{
+	//	Health -= Damage;
+	//	Dead();
+	//}
+	//else
+	//{
+	//	Health -= Damage;
+	//	UE_LOG(LogTemp, Warning, TEXT("CurrentHealth is %f"), Health);
+	//}
+	//------Borrowing this function for Enemy Damage!§-------
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
-	Damage -= FireResistance;
+	Damage *= FireResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
-	Health -= Damage;*/
+	Health -= Damage;
 }
 void AMainCharacter::WaterDamage(float Damage)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
-	Damage -= WaterResistance;
+	Damage *= WaterResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
 	Health -= Damage;
 }
 void AMainCharacter::EarthDamage(float Damage)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
-	Damage -= EarthResistance;
+	Damage *= EarthResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
 	Health -= Damage;
 }
 void AMainCharacter::AirDamage(float Damage)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage Before Resistance:  %f!"), Damage);
-	Damage -= AirResistance;
+	Damage *= AirResistance;
 	UE_LOG(LogTemp, Warning, TEXT("Damage taken:  %f!"), Damage);
 	Health -= Damage;
 }
