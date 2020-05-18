@@ -71,12 +71,17 @@ public:
 
 	FORCEINLINE void SetBossElementalStatus(EBossElementalStatus Status) { BossElementalStatus = Status; }
 
-	void GetBossElementalStatus();
+	//void GetBossElementalStatus();
 
 	bool bFire;
 	bool bWater;
 	bool bEarth;
 	bool bAir;
+
+	bool bFireStatus;
+	bool bWaterStatus;
+	bool bEarthStatus;
+	bool bAirStatus;
 
 	/**
 	*****Boss Properties
@@ -120,7 +125,7 @@ public:
 
 	FORCEINLINE void SetEnemyDifficultyStatus(EBossDifficultyStatus Status) { BossDifficultyStatus = Status; }
 
-	void GetBossDifficultyStatus();
+	//void GetBossDifficultyStatus();
 
 protected:
 	// Called when the game starts or when spawned
