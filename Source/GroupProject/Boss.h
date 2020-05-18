@@ -70,6 +70,8 @@ public:
 	EBossElementalStatus BossElementalStatus;
 
 	FORCEINLINE void SetBossElementalStatus(EBossElementalStatus Status) { BossElementalStatus = Status; }
+	
+	void RandomElementalStatus();
 
 	//void GetBossElementalStatus();
 

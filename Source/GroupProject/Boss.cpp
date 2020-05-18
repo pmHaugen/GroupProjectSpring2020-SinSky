@@ -6,6 +6,8 @@
 #include "AiController.h"
 #include "MainCharacter.h"
 #include "MyPlayerController.h"
+#include "Enemy.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ABoss::ABoss()
@@ -24,8 +26,8 @@ ABoss::ABoss()
 
 	bOverLappingCombatSphere = false;
 
-	MaxHealth = 150;
-	Health = 130;
+	MaxHealth = 1500;
+	Health = 1000;
 
 	HitDamage = 150;
 	DamageGiven = 0;
@@ -57,7 +59,6 @@ void ABoss::BeginPlay()
 
 	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapEnd);
-
 	
 }
 
@@ -73,6 +74,19 @@ void ABoss::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABoss::RandomElementalStatus()
+{
+	int32 Type;
+	int32 Max = 4;
+	Type = UKismetMathLibrary::RandomInteger(Max);
+
+	if (Type == 0 && !bFireStatus)
+	{
+		EBossElementalStatus::BES_Fire;
+		bFireStatus = true;
+	}
 }
 
 void ABoss::TakeFireDamage(float Damage)

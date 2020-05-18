@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "Enemy.h"
 #include "AIController.h"
+#include "Boss.h"
 
 // Sets default values
 AEnemySpawner::AEnemySpawner()
@@ -68,10 +69,21 @@ void AEnemySpawner::SpawnActor_Implementation(UClass* ToSpawn, const FVector& Lo
 			{
 				Enemy->SpawnDefaultController();
 
-				AAIController* AICOnt = Cast<AAIController>(Enemy->GetController());
-				if (AICOnt)
+				AAIController* AICont = Cast<AAIController>(Enemy->GetController());
+				if (AICont)
 				{
-					Enemy->AIController = AICOnt;
+					Enemy->AIController = AICont;
+				}
+			}
+			ABoss* Boss = Cast<ABoss>(Actor);
+			if (Boss)
+			{
+				Boss->SpawnDefaultController();
+
+				AAIController* AICont = Cast<AAIController>(Boss->GetController());
+				if (AICont)
+				{
+					Boss->AIController = AICont;
 				}
 			}
 		}
