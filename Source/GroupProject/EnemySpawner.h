@@ -42,6 +42,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_4;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Spawning")
+	TSubclassOf<AActor> Actor_5;
+
 	TArray<TSubclassOf<AActor>> SpawnArray;
 
 	//Difficulty on spawn

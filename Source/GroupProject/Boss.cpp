@@ -29,7 +29,7 @@ ABoss::ABoss()
 	MaxHealth = 1500;
 	Health = 1000;
 
-	HitDamage = 150;
+	HitDamage = 1;
 	DamageGiven = 0;
 
 	bFireStatus = false;
@@ -59,6 +59,8 @@ void ABoss::BeginPlay()
 
 	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapEnd);
+
+	SetBossElementalStatus(EBossElementalStatus::BES_Fire);
 	
 }
 
@@ -66,6 +68,7 @@ void ABoss::BeginPlay()
 void ABoss::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 
 }
 
@@ -76,18 +79,6 @@ void ABoss::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ABoss::RandomElementalStatus()
-{
-	int32 Type;
-	int32 Max = 4;
-	Type = UKismetMathLibrary::RandomInteger(Max);
-
-	if (Type == 0 && !bFireStatus)
-	{
-		EBossElementalStatus::BES_Fire;
-		bFireStatus = true;
-	}
-}
 
 void ABoss::TakeFireDamage(float Damage)
 {
@@ -195,6 +186,20 @@ void ABoss::DamageTaken(float Amount)
 	{
 		Health -= Amount;
 		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
+
+		if (Health <= Health * 0.75f)
+		{
+			SetBossElementalStatus(EBossElementalStatus::BES_Water);
+			UE_LOG(LogTemp, Warning, TEXT("Water!"));
+		}
+		else if (Health <= Health * 0.5)
+		{
+			SetBossElementalStatus(EBossElementalStatus::BES_Air);
+		}
+		else if (Health <= Health * 0.25)
+		{
+			SetBossElementalStatus(EBossElementalStatus::BES_Earth);
+		}
 	}
 }
 

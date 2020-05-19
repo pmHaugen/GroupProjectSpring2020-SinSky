@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 // Sets default values
 AFireball::AFireball()
@@ -90,6 +91,13 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
+			Destroy();
+		}
+
+		ABoss* Boss = Cast<ABoss>(OtherActor);
+		if (Boss)
+		{
+			Boss->TakeFireDamage(Damage);
 			Destroy();
 		}
 

@@ -29,7 +29,7 @@ enum class EBossElementalStatus : uint8
 };
 
 UENUM(BlueprintType)
-enum class EBossDifficultyStatus :uint8
+enum class EBossDifficultyStatus : uint8
 {
 	BDS_Easy	UMETA(DisplayName = "Easy"),
 	BDS_Medium	UMETA(DisplayName = "Medium"),
@@ -70,8 +70,6 @@ public:
 	EBossElementalStatus BossElementalStatus;
 
 	FORCEINLINE void SetBossElementalStatus(EBossElementalStatus Status) { BossElementalStatus = Status; }
-	
-	void RandomElementalStatus();
 
 	//void GetBossElementalStatus();
 
@@ -122,10 +120,10 @@ public:
 	bool bMedium;
 	bool bHard;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DifficultyStatus")
 	EBossDifficultyStatus BossDifficultyStatus;
 
-	FORCEINLINE void SetEnemyDifficultyStatus(EBossDifficultyStatus Status) { BossDifficultyStatus = Status; }
+	FORCEINLINE void SetBossDifficultyStatus(EBossDifficultyStatus Status) { BossDifficultyStatus = Status; }
 
 	//void GetBossDifficultyStatus();
 
