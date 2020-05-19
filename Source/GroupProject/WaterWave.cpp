@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Enemy.h"
 #include "MainCharacter.h"
+#include "Boss.h"
 
 // Sets default values
 AWaterWave::AWaterWave()
@@ -87,6 +88,13 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
+			Destroy();
+		}
+
+		ABoss* Boss = Cast<ABoss>(OtherActor);
+		if (Boss)
+		{
+			Boss->TakeWaterDamage(Damage);
 			Destroy();
 		}
 	}

@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 // Sets default values
 AAirGun::AAirGun()
@@ -88,6 +89,13 @@ void AAirGun::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
+			Destroy();
+		}
+
+		ABoss* Boss = Cast<ABoss>(OtherActor);
+		if (Boss)
+		{
+			Boss->TakeAirDamage(Damage);
 			Destroy();
 		}
 	}
