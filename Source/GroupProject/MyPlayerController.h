@@ -31,7 +31,11 @@ public:
 
 	void KillCount(float Amount);
 
+	void BossKillCount(float Amount);
+
 	float Kills;
+
+	float BossKills;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")

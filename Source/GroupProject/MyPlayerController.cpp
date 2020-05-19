@@ -7,6 +7,8 @@
 AMyPlayerController::AMyPlayerController()
 {
 	Kills = 0;
+
+	BossKills = 0;
 }
 void AMyPlayerController::BeginPlay()
 {
