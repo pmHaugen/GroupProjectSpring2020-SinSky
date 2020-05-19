@@ -26,7 +26,7 @@ ABoss::ABoss()
 
 	bOverLappingCombatSphere = false;
 
-	MaxHealth = 1500;
+	MaxHealth = 1000;
 	Health = 1000;
 
 	HitDamage = 1;
@@ -187,18 +187,20 @@ void ABoss::DamageTaken(float Amount)
 		Health -= Amount;
 		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
 
-		if (Health <= Health * 0.75f)
+		if (Health - Amount <= MaxHealth * 0.75f && Health > MaxHealth * 0.5f)
 		{
 			SetBossElementalStatus(EBossElementalStatus::BES_Water);
-			UE_LOG(LogTemp, Warning, TEXT("Water!"));
+			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, Watertype"), Health);
 		}
-		else if (Health <= Health * 0.5)
+		else if (Health <= MaxHealth * 0.5 && Health > MaxHealth * 0.25f)
 		{
 			SetBossElementalStatus(EBossElementalStatus::BES_Air);
+			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, AirType"), Health);
 		}
-		else if (Health <= Health * 0.25)
+		else if (Health <= MaxHealth * 0.25)
 		{
 			SetBossElementalStatus(EBossElementalStatus::BES_Earth);
+			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, EarthType"), Health);
 		}
 	}
 }
