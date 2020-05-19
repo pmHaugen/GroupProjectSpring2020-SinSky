@@ -179,7 +179,7 @@ void ABoss::DamageTaken(float Amount)
 	{
 		Health -= Amount;
 		AMyPlayerController* Kills = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		Kills->KillCount(1.f);
+		Kills->BossKillCount(1.f);
 		Death();
 	}
 	else

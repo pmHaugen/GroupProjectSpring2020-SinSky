@@ -42,6 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_4;
 
+	//In case of boss
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_5;
 

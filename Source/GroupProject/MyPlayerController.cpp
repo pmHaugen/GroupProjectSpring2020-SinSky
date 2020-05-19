@@ -60,3 +60,9 @@ void AMyPlayerController::KillCount(float Amount)
 	//put if statements here.
 }
 
+void AMyPlayerController::BossKillCount(float Amount)
+{
+	BossKills += Amount;
+	UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills arer %f"), BossKills);
+}
+
