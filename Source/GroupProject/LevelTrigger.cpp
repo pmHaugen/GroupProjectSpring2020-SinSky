@@ -44,12 +44,13 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 {
 	if (OtherActor)
 	{
+		//If main overlaps and the level is declared cleared from Playercontroller the map will change.
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
 		if (Main)
 		{
 			AMyPlayerController* Clear = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 			Clear->bIsLevelCleared();
-			if (Clear)
+			if (Clear->bLevelCleared)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
 				//Main->NextLevel(NextLevelName);

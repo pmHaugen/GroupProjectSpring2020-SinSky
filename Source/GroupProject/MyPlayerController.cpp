@@ -93,7 +93,12 @@ bool AMyPlayerController::bIsLevelCleared()
 {
 	if (FoesAlive == FoesDefeated)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("All Enemies Defeated"));
 		bLevelCleared = true;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
 	}
 	return bLevelCleared;
 }
