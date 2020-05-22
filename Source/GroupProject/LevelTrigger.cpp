@@ -55,6 +55,11 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
 				//Main->NextLevel(NextLevelName);
 			}
+			else
+			{
+				//Notify the player that there are still enemies left
+				UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
+			}
 		}
 	}
 }

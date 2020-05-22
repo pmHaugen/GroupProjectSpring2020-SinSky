@@ -33,7 +33,6 @@ void AEnemySpawner::BeginPlay()
 		SpawnArray.Add(Actor_5);
 
 	}
-	//GetSpawnerDifficultyStatus();
 }
 
 // Called every frame
@@ -105,26 +104,3 @@ TSubclassOf<AActor> AEnemySpawner::GetSpawnActor()
 	}
 }
 
-/**void AEnemySpawner::GetSpawnerDifficultyStatus()
-{
-
-	/**
-	******* NEEDED FIX
-	*/
-	//AEnemy& Enemy = Cast<AEnemy>(Enemy);
-	//AEnemy* Difficulty = Cast<AEnemy::SetEnemyDifficultyStatus>(Enemy);
-/**
-	switch (SpawnerDifficultyStatus)
-	{
-	case ESpawnerDifficultyStatus::SDS_Easy:
-		//AEnemy::SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
-		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
-		break;
-	case ESpawnerDifficultyStatus::SDS_Medium:
-		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
-		break;
-	case ESpawnerDifficultyStatus::SDS_Hard:
-		//Enemy.SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
-		break;
-	}
-}*/

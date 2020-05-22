@@ -54,6 +54,9 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AMyPlayerController* Alive = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	Alive->FoesAliveCount(1.f);
+
 	AIController = Cast<AAIController>(GetController());
 
 	AgroSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::AgroSphereOnOverlapBegin);
@@ -64,10 +67,8 @@ void AEnemy::BeginPlay()
 
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
-	//"MyCharacter's Bool is %s" UE_LOG(YourLog,Warning,TEXT("MyCharacter's Bool is %s"), (MyCharacter->MyBool ? TEXT("True") : TEXT("False")));
+
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
-	AMyPlayerController* Alive = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	Alive->FoesAliveCount(1.f);
 }
 
 // Called every frame
@@ -312,17 +313,5 @@ void AEnemy::GetEnemyDifficultyStatus()
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
 		bHard = true;
 	}
-	/**switch (EnemyDifficultyStatus)
-	{
-	case EEnemyDifficultyStatus::EDS_Easy:
-		bEasy = true;
-		break;
-	case EEnemyDifficultyStatus::EDS_Medium:
-		bMedium = true;
-		break;
-	case EEnemyDifficultyStatus::EDS_Hard:
-		bHard = true;
-		break;
-	}*/
 }
 
