@@ -206,6 +206,8 @@ public:
 
 	void OpenTalentMenu();
 
+	void NextLevel(FName LevelName);
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
