@@ -33,9 +33,21 @@ public:
 
 	void BossKillCount(float Amount);
 
+	void FoesAliveCount(float Amount);
+
+	void FoesDefeatedCount(float Amount);
+
+	void IsLevelCleared();
+
 	float Kills;
 
 	float BossKills;
+
+	float FoesAlive;
+
+	float FoesDefeated;
+
+	bool bLevelCleared;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")

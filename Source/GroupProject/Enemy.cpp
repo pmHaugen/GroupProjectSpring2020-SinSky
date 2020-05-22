@@ -26,8 +26,9 @@ AEnemy::AEnemy()
 
 	bOverLappingCombatSphere= false;
 
+	//Reduced Health for testing.
 	MaxHealth = 150;
-	Health = 130;
+	Health = 30;
 
 	HitDamage = 150;
 	DamageGiven = 0;
@@ -63,7 +64,9 @@ void AEnemy::BeginPlay()
 
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
-	UE_LOG(LogTemp, Warning, TEXT("Difficulti is Easy: %b, Medium: %b, Hard: %b"), bEasy, bMedium, bHard);
+	//UE_LOG(LogTemp, Warning, TEXT("Difficulti is Easy: %b, Medium: %b, Hard: %b"), bEasy, bMedium, bHard);
+	AMyPlayerController* Alive = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	Alive->FoesAliveCount(1.f);
 }
 
 // Called every frame
@@ -273,7 +276,7 @@ void AEnemy::GetEnemyElementalStatus()
 
 void AEnemy::DamageTaken(float Amount)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage taken: %f"), Amount);
+	//UE_LOG(LogTemp, Warning, TEXT("Damage taken: %f"), Amount);
 	if (Health - Amount <= 0.f)
 	{
 		Health -= Amount;

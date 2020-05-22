@@ -9,6 +9,12 @@ AMyPlayerController::AMyPlayerController()
 	Kills = 0;
 
 	BossKills = 0;
+
+	FoesAlive = 0;
+
+	FoesDefeated = 0;
+
+	bLevelCleared = false;
 }
 void AMyPlayerController::BeginPlay()
 {
@@ -59,6 +65,8 @@ void AMyPlayerController::KillCount(float Amount)
 	Kills += Amount;
 	UE_LOG(LogTemp, Warning, TEXT("The amount of kills are %f"), Kills);
 
+	FoesDefeatedCount(Amount);
+
 	//put if statements here.
 }
 
@@ -66,5 +74,26 @@ void AMyPlayerController::BossKillCount(float Amount)
 {
 	BossKills += Amount;
 	UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills arer %f"), BossKills);
+}
+
+void AMyPlayerController::FoesAliveCount(float Amount)
+{
+	FoesAlive += Amount;
+	UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
+}
+
+void AMyPlayerController::FoesDefeatedCount(float Amount)
+{
+	FoesDefeated += Amount;
+	UE_LOG(LogTemp, Warning, TEXT("Enemies Defeated: %f"), FoesDefeated);
+	UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
+}
+
+void AMyPlayerController::IsLevelCleared()
+{
+	if (FoesAlive == FoesDefeated)
+	{
+		bLevelCleared = true;
+	}
 }
 
