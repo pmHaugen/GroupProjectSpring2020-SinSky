@@ -37,7 +37,7 @@ public:
 
 	void FoesDefeatedCount(float Amount);
 
-	void IsLevelCleared();
+	bool bIsLevelCleared();
 
 	float Kills;
 

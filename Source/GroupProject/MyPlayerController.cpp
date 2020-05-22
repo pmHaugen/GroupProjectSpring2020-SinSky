@@ -89,11 +89,12 @@ void AMyPlayerController::FoesDefeatedCount(float Amount)
 	UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
 }
 
-void AMyPlayerController::IsLevelCleared()
+bool AMyPlayerController::bIsLevelCleared()
 {
 	if (FoesAlive == FoesDefeated)
 	{
 		bLevelCleared = true;
 	}
+	return bLevelCleared;
 }
 

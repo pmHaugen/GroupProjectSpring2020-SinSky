@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/BillboardComponent.h"
 #include "MainCharacter.h"
+#include "MyPlayerController.h"
 
 // Sets default values
 ALevelTrigger::ALevelTrigger()
@@ -46,7 +47,13 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
 		if (Main)
 		{
-			Main->NextLevel(NextLevelName);
+			AMyPlayerController* Clear = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+			Clear->bIsLevelCleared();
+			if (Clear)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
+				//Main->NextLevel(NextLevelName);
+			}
 		}
 	}
 }
