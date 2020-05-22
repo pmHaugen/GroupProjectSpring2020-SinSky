@@ -15,6 +15,10 @@ AMyPlayerController::AMyPlayerController()
 	FoesDefeated = 0;
 
 	bLevelCleared = false;
+
+	bEasy = false;
+	bMedium = false;
+	bHard = false;
 }
 void AMyPlayerController::BeginPlay()
 {
@@ -101,5 +105,24 @@ bool AMyPlayerController::bIsLevelCleared()
 		UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
 	}
 	return bLevelCleared;
+}
+
+bool AMyPlayerController::bGetGameDifficulty()
+{
+	switch (GameDifficulty)
+	{
+	case EGameDifficultyStatus::GDS_Easy:
+		bEasy = true;
+		break;
+	case EGameDifficultyStatus::GDS_Medium:
+		bMedium = true;
+		break;
+	case EGameDifficultyStatus::GDS_Hard:
+		bHard = true;
+		break;
+	case EGameDifficultyStatus::GDS_MAX:
+		break;
+	}
+	return bEasy, bMedium, bHard;
 }
 

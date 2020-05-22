@@ -6,6 +6,15 @@
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
+UENUM(BlueprintType)
+enum class EGameDifficultyStatus : uint8
+{
+	GDS_Easy	UMETA(DisplayName = "Easy"),
+	GDS_Medium	UMETA(DisplayName = "Medium"),
+	GDS_Hard	UMETA(DisplayName = "Hard"),
+
+	GDS_MAX		UMETA(DisplayName = "DefaultMax")
+};
 /**
  * 
  */
@@ -29,25 +38,31 @@ public:
 
 	void OpenSkillMenu();
 
+
+	//Functions used by Enemy
 	void KillCount(float Amount);
-
 	void BossKillCount(float Amount);
-
 	void FoesAliveCount(float Amount);
-
 	void FoesDefeatedCount(float Amount);
-
 	bool bIsLevelCleared();
 
 	float Kills;
-
 	float BossKills;
-
 	float FoesAlive;
-
 	float FoesDefeated;
-
 	bool bLevelCleared;
+
+	//Difficulty
+
+	EGameDifficultyStatus GameDifficulty;
+
+	FORCEINLINE void SetGameDifficultyStatus(EGameDifficultyStatus Status) { GameDifficulty = Status; }
+
+	bool bEasy;
+	bool bMedium;
+	bool bHard;
+
+	bool bGetGameDifficulty();
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")

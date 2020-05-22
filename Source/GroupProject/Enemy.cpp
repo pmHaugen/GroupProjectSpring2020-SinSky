@@ -64,7 +64,8 @@ void AEnemy::BeginPlay()
 
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
-	//UE_LOG(LogTemp, Warning, TEXT("Difficulti is Easy: %b, Medium: %b, Hard: %b"), bEasy, bMedium, bHard);
+	//"MyCharacter's Bool is %s" UE_LOG(YourLog,Warning,TEXT("MyCharacter's Bool is %s"), (MyCharacter->MyBool ? TEXT("True") : TEXT("False")));
+	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
 	AMyPlayerController* Alive = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 	Alive->FoesAliveCount(1.f);
 }
@@ -293,7 +294,25 @@ void AEnemy::DamageTaken(float Amount)
 
 void AEnemy::GetEnemyDifficultyStatus()
 {
-	switch (EnemyDifficultyStatus)
+	AMyPlayerController* Difficulty = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	Difficulty->bIsLevelCleared();
+
+	if (Difficulty->bEasy)
+	{
+		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
+		bEasy = true;
+	}
+	else if (Difficulty->bMedium)
+	{
+		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
+		bMedium = true;
+	}
+	else if (Difficulty->bHard)
+	{
+		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
+		bHard = true;
+	}
+	/**switch (EnemyDifficultyStatus)
 	{
 	case EEnemyDifficultyStatus::EDS_Easy:
 		bEasy = true;
@@ -304,6 +323,6 @@ void AEnemy::GetEnemyDifficultyStatus()
 	case EEnemyDifficultyStatus::EDS_Hard:
 		bHard = true;
 		break;
-	}
+	}*/
 }
 

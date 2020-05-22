@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "EnemySpawner.generated.h"
 
-UENUM(BlueprintType)
+/**UENUM(BlueprintType)
 enum class ESpawnerDifficultyStatus : uint8
 {
 	SDS_Easy	UMETA(DisplayName = "Easy"),
@@ -14,7 +14,7 @@ enum class ESpawnerDifficultyStatus : uint8
 	SDS_Hard	UMETA(DisplayName = "Hard"),
 
 	SDS_MAX		UMETA(DisplayName = "DefaultMax")
-};
+};*/
 
 UCLASS()
 class GROUPPROJECT_API AEnemySpawner : public AActor
@@ -48,17 +48,17 @@ public:
 
 	TArray<TSubclassOf<AActor>> SpawnArray;
 
-	//Difficulty on spawn
+	/**Difficulty on spawn
 	bool bEasy;
 	bool bMedium;
 	bool bHard;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DifficultyStatus")
 	ESpawnerDifficultyStatus SpawnerDifficultyStatus;
 
 	FORCEINLINE void SetSpanwerDifficultyStatus(ESpawnerDifficultyStatus Status) { SpawnerDifficultyStatus = Status; }
 
-	void GetSpawnerDifficultyStatus();
+	void GetSpawnerDifficultyStatus();*/
 
 
 
