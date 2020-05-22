@@ -4,6 +4,7 @@
 #include "LevelTrigger.h"
 #include "Components/BoxComponent.h"
 #include "Components/BillboardComponent.h"
+#include "MainCharacter.h"
 
 // Sets default values
 ALevelTrigger::ALevelTrigger()
@@ -16,6 +17,9 @@ ALevelTrigger::ALevelTrigger()
 
 	Billboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("Billboard"));
 	Billboard->SetupAttachment(GetRootComponent());
+
+	//To be changed!
+	NextLevelName = "StartLevel";
 
 }
 
@@ -37,7 +41,14 @@ void ALevelTrigger::Tick(float DeltaTime)
 
 void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
+	if (OtherActor)
+	{
+		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
+		if (Main)
+		{
+			Main->NextLevel(NextLevelName);
+		}
+	}
 }
 
 
