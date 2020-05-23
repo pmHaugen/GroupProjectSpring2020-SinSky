@@ -77,7 +77,7 @@ void AMyPlayerController::KillCount(float Amount)
 void AMyPlayerController::BossKillCount(float Amount)
 {
 	BossKills += Amount;
-	UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills arer %f"), BossKills);
+	UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills are %f"), BossKills);
 }
 
 void AMyPlayerController::FoesAliveCount(float Amount)

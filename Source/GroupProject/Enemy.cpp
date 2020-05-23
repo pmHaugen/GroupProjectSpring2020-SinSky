@@ -70,6 +70,7 @@ void AEnemy::BeginPlay()
 	GetEnemyDifficultyStatus();
 
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
+	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium: %s"), (bMedium ? TEXT("TRUE") : TEXT("FALSE")));
 }
 
 // Called every frame
@@ -326,7 +327,7 @@ void AEnemy::DamageTaken(float Amount)
 void AEnemy::GetEnemyDifficultyStatus()
 {
 	AMyPlayerController* Difficulty = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	Difficulty->bIsLevelCleared();
+	Difficulty->bGetGameDifficulty();
 
 	if (Difficulty->bEasy)
 	{
