@@ -71,6 +71,7 @@ void AEnemy::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium: %s"), (bMedium ? TEXT("TRUE") : TEXT("FALSE")));
+	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Hard: %s"), (bHard ? TEXT("TRUE") : TEXT("FALSE")));
 }
 
 // Called every frame
