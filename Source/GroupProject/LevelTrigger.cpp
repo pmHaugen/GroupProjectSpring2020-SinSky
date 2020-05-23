@@ -61,6 +61,16 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 					LevelArray.Add(Level_3);
 					LevelArray.Add(Level_4);
 					LevelArray.Add(Level_5);
+					/**
+
+					Problems.....
+					
+					LevelArray::ToString;
+
+					NextLevelName = LevelArray;
+
+					Main->NextLevel(NextLevelName);
+					*/
 				}
 			}
 			else
