@@ -54,6 +54,14 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 			{
 				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
 				//Main->NextLevel(NextLevelName);
+				if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
+				{
+					LevelArray.Add(Level_1);
+					LevelArray.Add(Level_2);
+					LevelArray.Add(Level_3);
+					LevelArray.Add(Level_4);
+					LevelArray.Add(Level_5);
+				}
 			}
 			else
 			{
@@ -61,6 +69,20 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 				UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
 			}
 		}
+	}
+}
+
+TAssetPtr<UWorld> ALevelTrigger::GetLevel()
+{
+	if (LevelArray.Num() > 0)
+	{
+		int32 Selection = FMath::RandRange(0, LevelArray.Num() - 1);
+
+		return LevelArray[Selection];
+	}
+	else
+	{
+		return nullptr;
 	}
 }
 
