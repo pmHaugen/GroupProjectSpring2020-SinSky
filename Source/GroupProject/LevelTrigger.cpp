@@ -6,6 +6,7 @@
 #include "Components/BillboardComponent.h"
 #include "MainCharacter.h"
 #include "MyPlayerController.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 ALevelTrigger::ALevelTrigger()
@@ -54,24 +55,39 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 			{
 				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
 				//Main->NextLevel(NextLevelName);
-				if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
+
+				//Preferred way
+				/**if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
 				{
 					LevelArray.Add(Level_1);
 					LevelArray.Add(Level_2);
 					LevelArray.Add(Level_3);
 					LevelArray.Add(Level_4);
 					LevelArray.Add(Level_5);
-					/**
 
-					Problems.....
-					
-					LevelArray::ToString;
+					FString LevelName(GetLevel);
 
-					NextLevelName = LevelArray;
+					FName NewLevelName(*LevelName);
 
-					Main->NextLevel(NextLevelName);
-					*/
+					Main->NextLevel();
+				}*/
+
+
+				//Working way
+				/**int32 Level = FMath::RandRange(1, 2);
+
+				if (Level ==1)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Random 1"));
+					NextLevelName = "BossTestingLevel";
 				}
+				if (Level == 2)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Random 2"));
+					NextLevelName = "StartLevel";
+				}
+				Main->NextLevel(NextLevelName);*/
+
 			}
 			else
 			{
