@@ -8,6 +8,7 @@
 #include "Fireball.h"
 #include "WaterWave.h"
 #include "MyPlayerController.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -193,7 +194,18 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 
 void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
+			if (AIController)
+			{
+				AIController->StopMovement();
+			}
+		}
+	}
 }
 
 void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -204,6 +216,8 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{	
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+
 			if (bFireStatus)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
@@ -233,7 +247,15 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 
 void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
+			MoveToTarget(MainCharacter);
+		}
+	}
 }
 
 void AEnemy::MoveToTarget(AMainCharacter* Target)
@@ -249,6 +271,14 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 		FNavPathSharedPtr NavPath;
 
 		AIController->MoveTo(MoveRequest, &NavPath);
+
+		auto PathPoints = NavPath->GetPathPoints();
+		for (auto Point : PathPoints)
+		{
+			FVector Location = Point.Location;
+
+			UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
+		}
 	}
 }
 
@@ -303,12 +333,12 @@ void AEnemy::GetEnemyDifficultyStatus()
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
 		bEasy = true;
 	}
-	else if (Difficulty->bMedium)
+	if (Difficulty->bMedium)
 	{
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
 		bMedium = true;
 	}
-	else if (Difficulty->bHard)
+	if (Difficulty->bHard)
 	{
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
 		bHard = true;
