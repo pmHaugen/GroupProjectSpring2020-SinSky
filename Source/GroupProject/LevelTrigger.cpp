@@ -87,8 +87,11 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 				{
 					UE_LOG(LogTemp, Warning, TEXT("Random 2"));
 					NextLevelName = "StartLevel";
-				}
-				Main->NextLevel(NextLevelName);*/
+				}*/
+
+				LevelSelection();
+
+				Main->NextLevel(NextLevelName);
 
 			}
 			else
@@ -122,6 +125,7 @@ void ALevelTrigger::LevelSelection()
 	if (World)
 	{
 		FString CurrentLevel = World->GetMapName();
+		FName CurrentLevelName(*CurrentLevel);
 
 		if (CurrentLevel == "StartLevel")
 		{
@@ -133,13 +137,15 @@ void ALevelTrigger::LevelSelection()
 				break;
 			case 2:
 				NextLevelName = "AirLevel";
+				break;
 			case 3:
 				NextLevelName = "FireLevel";
+				break;
 			case 4:
 				NextLevelName = "EarthLevel";
+				break;
 			case 5:
 				NextLevelName = "WaterLevel";
-			default:
 				break;
 			}
 		}
