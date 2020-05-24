@@ -116,7 +116,34 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 
 void ALevelTrigger::LevelSelection()
 {
+	int32 Level;
 
+	UWorld*World = GetWorld();
+	if (World)
+	{
+		FString CurrentLevel = World->GetMapName();
+
+		if (CurrentLevel == "StartLevel")
+		{
+			Level = FMath::RandRange(1, 5);
+			switch (Level)
+			{
+			case 1: 
+				NextLevelName = "BossTestingLevel";
+				break;
+			case 2:
+				NextLevelName = "AirLevel";
+			case 3:
+				NextLevelName = "FireLevel";
+			case 4:
+				NextLevelName = "EarthLevel";
+			case 5:
+				NextLevelName = "WaterLevel";
+			default:
+				break;
+			}
+		}
+	}
 }
 
 
