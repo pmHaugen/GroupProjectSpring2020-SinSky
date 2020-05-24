@@ -25,7 +25,7 @@ public:
 
 	//Selection of levels can be done in blueprints.
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
+	/**UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
 	TAssetPtr<UWorld> Level_1;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
@@ -40,7 +40,7 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
 	TAssetPtr<UWorld> Level_5;
 
-	TArray<TAssetPtr<UWorld>> LevelArray;
+	TArray<TAssetPtr<UWorld>> LevelArray;*/
 
 protected:
 	// Called when the game starts or when spawned
