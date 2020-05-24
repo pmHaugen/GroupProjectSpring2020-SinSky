@@ -23,6 +23,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevelName;
 
+	FName LevelName = "AirLevel";
+
 	//Selection of levels can be done in blueprints.
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
