@@ -66,7 +66,7 @@ AMainCharacter::AMainCharacter()
 	WaterSpellCD = { 0.1f };
 	WaterTimeSinceSpell = { 0 };
 
-	EarthSpellCD = { 1.f };
+	EarthSpellCD = { 2.f };
 	EarthTimeSinceSpell = { 0 };
 
 	AirSpellCD = { 1.f };
@@ -85,16 +85,15 @@ AMainCharacter::AMainCharacter()
 	MaxHealth = 500.f;
 	HealthRegen = 2.f;
 
-	FireMana = 0.f;
-	WaterMana = 0.f;
-	EarthMana = 0.f;
-	AirMana = 0.f;
-
-
 	FireMaxMana = 200.f;
 	WaterMaxMana = 200.f;
 	EarthMaxMana = 200.f;
 	AirMaxMana = 200.f;
+
+	FireMana = FireMaxMana;
+	WaterMana = WaterMaxMana;
+	EarthMana = EarthMaxMana;
+	AirMana = AirMaxMana;
 
 	ManaRegen = 8.f;
 	SkillPoints = 3.f;
@@ -106,10 +105,10 @@ AMainCharacter::AMainCharacter()
 	AirResistance = 0.90f;
 
 	//Cost
-	FireManaCost = 60;
+	FireManaCost = 50;
 	WaterManaCost = 5;
-	EarthManaCost = 130;
-	AirManaCost = 200;
+	EarthManaCost = 50;
+	AirManaCost = 50;
 
 	//Upgrade Levels
 	FireLvl = 1.f;

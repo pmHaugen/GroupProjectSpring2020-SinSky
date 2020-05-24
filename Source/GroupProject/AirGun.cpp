@@ -30,7 +30,7 @@ AAirGun::AAirGun()
 
 	SpellDuration = 2;
 	Speed = { 3500.f, 0.f, 0.f };
-	Damage = 300;
+	Damage = 60;
 }
 
 // Called when the game starts or when spawned

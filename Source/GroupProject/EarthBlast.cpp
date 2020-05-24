@@ -31,7 +31,7 @@ AEarthBlast::AEarthBlast()
 
 	SpellDuration = 2;
 	Speed = { 10.f, 0.f, 0.f };
-	Damage = 0;
+	Damage = 50;
 }
 
 // Called when the game starts or when spawned
