@@ -21,7 +21,7 @@ ALevelTrigger::ALevelTrigger()
 	Billboard->SetupAttachment(GetRootComponent());
 
 	//To be changed!
-	NextLevelName = "StartLevel";
+	//NextLevelName = "StartLevel";
 
 }
 
@@ -91,7 +91,7 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 
 				LevelSelection();
 
-				Main->NextLevel(NextLevelName);
+				//Main->NextLevel(NextLevelName);
 
 			}
 			else
@@ -127,25 +127,25 @@ void ALevelTrigger::LevelSelection()
 		FString CurrentLevel = World->GetMapName();
 		FName CurrentLevelName(*CurrentLevel);
 
-		if (CurrentLevel == "StartLevel")
+		if (CurrentLevelName != NextLevelName)
 		{
 			Level = FMath::RandRange(1, 5);
 			switch (Level)
 			{
 			case 1: 
-				NextLevelName = "BossTestingLevel";
+				NextLevelName = "StartLevel";
 				break;
 			case 2:
-				NextLevelName = "AirLevel";
+				NextLevelName = "StartLevel";
 				break;
 			case 3:
-				NextLevelName = "FireLevel";
+				NextLevelName = "Startlevel";
 				break;
 			case 4:
-				NextLevelName = "EarthLevel";
+				NextLevelName = "StartLevel";
 				break;
 			case 5:
-				NextLevelName = "WaterLevel";
+				NextLevelName = "StartLevel";
 				break;
 			}
 		}

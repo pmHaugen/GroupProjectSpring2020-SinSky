@@ -20,7 +20,7 @@ public:
 
 	class UBillboardComponent* Billboard;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LevelSelect")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevelName;
 
 	//Selection of levels can be done in blueprints.
