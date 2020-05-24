@@ -57,7 +57,7 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 				//Main->NextLevel(NextLevelName);
 
 				//Preferred way
-				if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
+				/**if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
 				{
 					LevelArray.Add(Level_1);
 					LevelArray.Add(Level_2);
@@ -100,7 +100,7 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 	}
 }
 
-TAssetPtr<UWorld> ALevelTrigger::GetLevel()
+/**TAssetPtr<UWorld> ALevelTrigger::GetLevel()
 {
 	if (LevelArray.Num() > 0)
 	{
@@ -112,6 +112,11 @@ TAssetPtr<UWorld> ALevelTrigger::GetLevel()
 	{
 		return nullptr;
 	}
+}*/
+
+void ALevelTrigger::LevelSelection()
+{
+
 }
 
 
