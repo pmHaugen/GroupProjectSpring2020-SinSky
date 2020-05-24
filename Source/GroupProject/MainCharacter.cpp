@@ -509,15 +509,15 @@ void AMainCharacter::ManaBarColor()
 void AMainCharacter::NextLevel(FName LevelName)
 {
 	UWorld* World = GetWorld();
-	if (World)
+	/**if (World)
 	{
 		FString CurrentLevel = World->GetMapName();
 
 		//Using operator overload to return a C- style string which can be used to initialize FName
 		FName CurrentLevelName(*CurrentLevel);
 		if (CurrentLevelName != LevelName)
-		{
+		{*/
 			UGameplayStatics::OpenLevel(World, LevelName);
-		}
-	}
+		/**}
+	}*/
 }
