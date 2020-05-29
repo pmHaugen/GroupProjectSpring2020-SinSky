@@ -207,11 +207,11 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			/**if (MainCharacter->CombatTarget == this)
+			if (MainCharacter->CombatTarget == this)
 			{
 				MainCharacter->SetCombatTarget(nullptr);
 				MainCharacter->SetHasCombatTarget(false);
-			}*/
+			}
 			if (MainCharacter->PlayerController)
 			{
 				MainCharacter->PlayerController->HideEnemyHealthBar();

@@ -210,8 +210,15 @@ void ABoss::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 	if (OtherActor)
 	{
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		
 		if (MainCharacter)
 		{
+			MainCharacter->SetBossTarget(this);
+			MainCharacter->SetHasCombatTarget(true);
+			if (MainCharacter->PlayerController)
+			{
+				MainCharacter->PlayerController->DisplayBossHealthBar();
+			}
 			MoveToTarget(MainCharacter);
 		}
 	}
@@ -224,6 +231,15 @@ void ABoss::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponen
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			if (MainCharacter->BossTarget == this)
+			{
+				MainCharacter->SetCombatTarget(nullptr);
+				MainCharacter->SetHasCombatTarget(false);
+			}
+			if (MainCharacter->PlayerController)
+			{
+				MainCharacter->PlayerController->HideBossHealthBar();
+			}
 			SetBossMovementStatus(EBossMovementStatus::BMS_Idle);
 			if (AIController)
 			{

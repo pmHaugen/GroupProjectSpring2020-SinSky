@@ -31,7 +31,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	class AEnemy* CombatTarget;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	class ABoss* BossTarget;
+
 	FORCEINLINE void SetCombatTarget(AEnemy* Target) { CombatTarget = Target; }
+
+	FORCEINLINE void SetBossTarget(ABoss* Target) { BossTarget = Target; }
 
 	//------
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")

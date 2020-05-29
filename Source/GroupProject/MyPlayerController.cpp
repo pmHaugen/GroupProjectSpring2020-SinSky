@@ -53,6 +53,17 @@ void AMyPlayerController::BeginPlay()
 		FVector2D Alignment(0.f, 0.f);
 		EnemyHealthBar->SetAlignmentInViewport(Alignment);
 	}
+	if (WBossHealthBar)
+	{
+		BossHealthBar = CreateWidget<UUserWidget>(this, WBossHealthBar);
+		if (BossHealthBar)
+		{
+			BossHealthBar->AddToViewport();
+			BossHealthBar->SetVisibility(ESlateVisibility::Hidden);
+		}
+		FVector2D Alignment(0.f, 0.f);
+		BossHealthBar->SetAlignmentInViewport(Alignment);
+	}
 }
 
 void AMyPlayerController::OpenSkillMenu()
@@ -152,6 +163,24 @@ void AMyPlayerController::HideEnemyHealthBar()
 	}
 }
 
+void AMyPlayerController::DisplayBossHealthBar()
+{
+	if (BossHealthBar)
+	{
+		bEnemyHealthBarVisible = true;
+		BossHealthBar->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AMyPlayerController::HideBossHealthBar()
+{
+	if (BossHealthBar)
+	{
+		bEnemyHealthBarVisible = false;
+		EnemyHealthBar->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
 void AMyPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -167,5 +196,17 @@ void AMyPlayerController::Tick(float DeltaTime)
 
 		EnemyHealthBar->SetPositionInViewport(PositionInVeiwport);
 		EnemyHealthBar->SetDesiredSizeInViewport(SizeInVeiwport);
+	}
+	if (BossHealthBar)
+	{
+		FVector2D PositionInVeiwport;
+		ProjectWorldLocationToScreen(BossLocation, PositionInVeiwport);
+		PositionInVeiwport.Y -= 85.f;
+		PositionInVeiwport.X -= 60.f;
+
+		FVector2D SizeInVeiwport = FVector2D(200.f, 15.f);
+
+		BossHealthBar->SetPositionInViewport(PositionInVeiwport);
+		BossHealthBar->SetDesiredSizeInViewport(SizeInVeiwport);
 	}
 }

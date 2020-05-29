@@ -44,12 +44,28 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* EnemyHealthBar;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<UUserWidget> WBossHealthBar;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* BossHealthBar;
+
 	bool bEnemyHealthBarVisible;
 
 	void DisplayEnemyHealthBar();
 	void HideEnemyHealthBar();
 
+	void DisplayBossHealthBar();
+	void HideBossHealthBar();
+
 	FVector EnemyLocation;
+
+	FVector BossLocation;
+
+	bool bVisibleEnemy;
+	bool bVisibleBoss;
+
+	//------
 
 	void OpenSkillMenu();
 

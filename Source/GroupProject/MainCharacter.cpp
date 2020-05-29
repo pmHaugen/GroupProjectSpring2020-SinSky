@@ -19,6 +19,7 @@
 #include "Sound/SoundCue.h"
 #include "MyPlayerController.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 
 // Sets default values
@@ -216,6 +217,14 @@ void AMainCharacter::Tick(float DeltaTime)
 		if (PlayerController)
 		{
 			PlayerController->EnemyLocation = CombatTargetLocation;
+		}
+	}
+	if (BossTarget)
+	{
+		CombatTargetLocation = BossTarget->GetActorLocation();
+		if (PlayerController)
+		{
+			PlayerController->BossLocation = CombatTargetLocation;
 		}
 	}
 }
