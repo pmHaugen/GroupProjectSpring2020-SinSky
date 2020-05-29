@@ -41,6 +41,18 @@ void AMyPlayerController::BeginPlay()
 	}
 	HUDTalentTree->AddToViewport();
 	HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
+
+	if (WEnemyHealthBar)
+	{
+		EnemyHealthBar = CreateWidget<UUserWidget>(this, WEnemyHealthBar);
+		if (EnemyHealthBar)
+		{
+			EnemyHealthBar->AddToViewport();
+			EnemyHealthBar->SetVisibility(ESlateVisibility::Hidden);
+		}
+		FVector2D Alignment(0.f, 0.f);
+		EnemyHealthBar->SetAlignmentInViewport(Alignment);
+	}
 }
 
 void AMyPlayerController::OpenSkillMenu()
@@ -122,3 +134,38 @@ bool AMyPlayerController::bGetGameDifficulty()
 	return bEasy, bMedium, bHard;
 }
 
+void AMyPlayerController::DisplayEnemyHealthBar()
+{
+	if (EnemyHealthBar)
+	{
+		bEnemyHealthBarVisible = true;
+		EnemyHealthBar->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AMyPlayerController::HideEnemyHealthBar()
+{
+	if (EnemyHealthBar)
+	{
+		bEnemyHealthBarVisible = false;
+		EnemyHealthBar->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AMyPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (EnemyHealthBar)
+	{
+		FVector2D PositionInVeiwport;
+		ProjectWorldLocationToScreen(EnemyLocation, PositionInVeiwport);
+		PositionInVeiwport.Y -= 85.f;
+		PositionInVeiwport.X -= 60.f;
+
+		FVector2D SizeInVeiwport = FVector2D(200.f, 15.f);
+
+		EnemyHealthBar->SetPositionInViewport(PositionInVeiwport);
+		EnemyHealthBar->SetDesiredSizeInViewport(SizeInVeiwport);
+	}
+}

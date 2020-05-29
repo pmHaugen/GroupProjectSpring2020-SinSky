@@ -18,6 +18,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "MyPlayerController.h"
+#include "Enemy.h"
 
 
 // Sets default values
@@ -120,6 +121,9 @@ AMainCharacter::AMainCharacter()
 	bEarthEnoughMana = false;
 	bAirEnoughMana = false;
 
+	//Enemy HealthBar
+	bHasCombatTarget = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -131,6 +135,7 @@ void AMainCharacter::BeginPlay()
 	
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
+	PlayerController = Cast<AMyPlayerController>(GetController());
 }
 
 // Called every frame
@@ -203,6 +208,15 @@ void AMainCharacter::Tick(float DeltaTime)
 	if (Health <= 0)
 	{
 		Dead();
+	}
+
+	if (CombatTarget)
+	{
+		CombatTargetLocation = CombatTarget->GetActorLocation();
+		if (PlayerController)
+		{
+			PlayerController->EnemyLocation = CombatTargetLocation;
+		}
 	}
 }
 
@@ -509,15 +523,8 @@ void AMainCharacter::ManaBarColor()
 void AMainCharacter::NextLevel(FName LevelName)
 {
 	UWorld* World = GetWorld();
-	/**if (World)
+	if (World)
 	{
-		FString CurrentLevel = World->GetMapName();
-
-		//Using operator overload to return a C- style string which can be used to initialize FName
-		FName CurrentLevelName(*CurrentLevel);
-		if (CurrentLevelName != LevelName)
-		{*/
-			UGameplayStatics::OpenLevel(World, LevelName);
-		/**}
-	}*/
+		UGameplayStatics::OpenLevel(World, LevelName);
+	}
 }

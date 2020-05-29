@@ -189,6 +189,12 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			MainCharacter->SetCombatTarget(this);
+			MainCharacter->SetHasCombatTarget(true);
+			if (MainCharacter->PlayerController)
+			{
+				MainCharacter->PlayerController->DisplayEnemyHealthBar();
+			}
 			MoveToTarget(MainCharacter);
 		}
 	}
@@ -201,6 +207,15 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			/**if (MainCharacter->CombatTarget == this)
+			{
+				MainCharacter->SetCombatTarget(nullptr);
+				MainCharacter->SetHasCombatTarget(false);
+			}*/
+			if (MainCharacter->PlayerController)
+			{
+				MainCharacter->PlayerController->HideEnemyHealthBar();
+			}
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
 			if (AIController)
 			{
