@@ -191,10 +191,8 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		{
 			MainCharacter->SetCombatTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
-			if (MainCharacter->PlayerController)
-			{
-				MainCharacter->PlayerController->DisplayEnemyHealthBar();
-			}
+			MainCharacter->UpdateCombatTarget();
+
 			MoveToTarget(MainCharacter);
 		}
 	}
@@ -212,10 +210,9 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 				MainCharacter->SetCombatTarget(nullptr);
 				MainCharacter->SetHasCombatTarget(false);
 			}
-			if (MainCharacter->PlayerController)
-			{
-				MainCharacter->PlayerController->HideEnemyHealthBar();
-			}
+
+			MainCharacter->UpdateCombatTarget();
+
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
 			if (AIController)
 			{
@@ -234,6 +231,7 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 		if (MainCharacter)
 		{	
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+			bOverLappingCombatSphere = true;
 
 			if (bFireStatus)
 			{
@@ -258,6 +256,7 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
 				MainCharacter->AirDamage(HitDamage);
 			}
+			MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
@@ -269,8 +268,10 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			bOverLappingCombatSphere = false;
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 			MoveToTarget(MainCharacter);
+			MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
