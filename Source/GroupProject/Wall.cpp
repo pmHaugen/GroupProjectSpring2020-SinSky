@@ -2,7 +2,7 @@
 
 
 #include "Wall.h"
-#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -11,9 +11,9 @@ AWall::AWall()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AWall::OnOverlapBegin);
-	Collider->SetSphereRadius(50.f);
+
 
 	RootComponent = Collider;
 

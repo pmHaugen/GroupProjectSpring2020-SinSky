@@ -16,7 +16,7 @@ public:
 	AWall();
 
 	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* Collider;
+	class UBoxComponent* Collider;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
