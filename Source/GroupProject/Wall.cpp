@@ -3,6 +3,7 @@
 
 #include "Wall.h"
 
+
 // Sets default values
 AWall::AWall()
 {
@@ -25,3 +26,8 @@ void AWall::Tick(float DeltaTime)
 
 }
 
+//void AWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+
+	//if (OtherActor)
+	//{

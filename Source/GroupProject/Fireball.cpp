@@ -9,6 +9,7 @@
 #include "MainCharacter.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "Wall.h"
 
 // Sets default values
 AFireball::AFireball()
@@ -98,6 +99,11 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		if (Boss)
 		{
 			Boss->TakeFireDamage(Damage);
+			Destroy();
+		}
+		AWall* Wall = Cast<AWall>(OtherActor);
+		if (Wall)
+		{
 			Destroy();
 		}
 
