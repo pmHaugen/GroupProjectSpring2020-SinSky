@@ -22,27 +22,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevelName;
-
-	//Selection of levels can be done in blueprints.
-
-	/**UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
-	TAssetPtr<UWorld> Level_1;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
-	TAssetPtr<UWorld> Level_2;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
-	TAssetPtr<UWorld> Level_3;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
-	TAssetPtr<UWorld> Level_4;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "LevelSelect")
-	TAssetPtr<UWorld> Level_5;
-
-	TArray<TAssetPtr<UWorld>> LevelArray;*/
+	
+	FName NextLevel;
 
 	void LevelSelection();
+
+	bool bCanSwitchLevel;
 
 protected:
 	// Called when the game starts or when spawned
@@ -54,8 +39,4 @@ public:
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	/**UFUNCTION(BlueprintPure, Category = "Spawning")
-	TAssetPtr<UWorld> GetLevel();*/
-
 };

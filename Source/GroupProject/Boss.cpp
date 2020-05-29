@@ -219,7 +219,18 @@ void ABoss::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 
 void ABoss::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			SetBossMovementStatus(EBossMovementStatus::BMS_Idle);
+			if (AIController)
+			{
+				AIController->StopMovement();
+			}
+		}
+	}
 }
 
 void ABoss::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -230,27 +241,29 @@ void ABoss::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			SetBossMovementStatus(EBossMovementStatus::BMS_Attacking);
+
 			if (bFireStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
 				MainCharacter->FireDamage(HitDamage);
 			}
 
 			if (bWaterStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
 				MainCharacter->WaterDamage(HitDamage);
 			}
 
 			if (bEarthStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
 				MainCharacter->EarthDamage(HitDamage);
 			}
 
 			if (bAirStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
 				MainCharacter->AirDamage(HitDamage);
 			}
 		}
@@ -259,7 +272,15 @@ void ABoss::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 
 void ABoss::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			SetBossMovementStatus(EBossMovementStatus::BMS_MoveToTarget);
+			MoveToTarget(MainCharacter);
+		}
+	}
 }
 
 void ABoss::MoveToTarget(AMainCharacter* Target)
@@ -275,6 +296,14 @@ void ABoss::MoveToTarget(AMainCharacter* Target)
 		FNavPathSharedPtr NavPath;
 
 		AIController->MoveTo(MoveRequest, &NavPath);
+
+		auto PathPoints = NavPath->GetPathPoints();
+		for (auto Point : PathPoints)
+		{
+			FVector Location = Point.Location;
+
+			//UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
+		}
 	}
 }
 
