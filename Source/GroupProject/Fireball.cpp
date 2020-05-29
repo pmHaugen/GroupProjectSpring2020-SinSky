@@ -73,7 +73,7 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 
 	if (OtherActor)
 	{
-		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
+		/*AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
 		if (Main) //Om det er Main:
 		{
 			Main->FireDamage(Damage);
@@ -82,7 +82,7 @@ void AFireball::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
 			Destroy();
-		}
+		}*/
 
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)

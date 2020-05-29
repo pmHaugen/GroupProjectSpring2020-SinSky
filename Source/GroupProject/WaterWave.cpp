@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "MainCharacter.h"
 #include "Boss.h"
+#include "Wall.h"
 
 // Sets default values
 AWaterWave::AWaterWave()
@@ -70,7 +71,7 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 	if (OtherActor)
 	{
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
-		if (Main) //Om det er MainCharacter:
+		/*if (Main) //Om det er MainCharacter:
 		{
 			Main->WaterDamage(Damage);
 			if (OverlapParticles)
@@ -78,7 +79,7 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
 			Destroy();
-		}
+		}*/
 
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
@@ -95,6 +96,11 @@ void AWaterWave::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 		if (Boss)
 		{
 			Boss->TakeWaterDamage(Damage);
+			Destroy();
+		}
+		AWall* Wall = Cast<AWall>(OtherActor);
+		if (Wall)
+		{
 			Destroy();
 		}
 	}

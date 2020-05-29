@@ -9,6 +9,7 @@
 #include "MainCharacter.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "Wall.h"
 
 // Sets default values
 AAirGun::AAirGun()
@@ -96,6 +97,11 @@ void AAirGun::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 		if (Boss)
 		{
 			Boss->TakeAirDamage(Damage);
+			Destroy();
+		}
+		AWall* Wall = Cast<AWall>(OtherActor);
+		if (Wall)
+		{
 			Destroy();
 		}
 	}

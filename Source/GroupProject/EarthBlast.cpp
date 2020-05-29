@@ -9,6 +9,7 @@
 #include "MainCharacter.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "Wall.h"
 
 
 // Sets default values
@@ -69,7 +70,8 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 	if (OtherActor)
 	{
-		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
+	
+	/*AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
 		if (Main) //Om det er Main:
 		{
 			Main->EarthDamage(Damage);
@@ -78,7 +80,7 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
 			}
 			Destroy();
-		}
+		}*/
 
 		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
 		if (Enemy)
@@ -95,6 +97,11 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		if (Boss)
 		{
 			Boss->TakeEarthDamage(Damage);
+			Destroy();
+		}
+		AWall* Wall = Cast<AWall>(OtherActor);
+		if (Wall)
+		{
 			Destroy();
 		}
 	}
