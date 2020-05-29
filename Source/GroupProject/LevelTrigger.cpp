@@ -23,6 +23,8 @@ ALevelTrigger::ALevelTrigger()
 	//To be changed!
 	//NextLevelName = "StartLevel";
 
+	bCanSwitchLevel = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -54,44 +56,13 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 			if (Clear->bLevelCleared)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
-				//Main->NextLevel(NextLevelName);
-
-				//Preferred way
-				/**if (Level_1 && Level_2 && Level_3 && Level_4 && Level_5)
-				{
-					LevelArray.Add(Level_1);
-					LevelArray.Add(Level_2);
-					LevelArray.Add(Level_3);
-					LevelArray.Add(Level_4);
-					LevelArray.Add(Level_5);
-
-					//FString LevelName(GetLevel);
-
-					LevelName = LevelArray[1];
-
-					//FName NewLevelName(*LevelName);
-
-					Main->NextLevel(LevelName);
-				}
-
-
-				//Working way
-				/**int32 Level = FMath::RandRange(1, 2);
-
-				if (Level ==1)
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Random 1"));
-					NextLevelName = "BossTestingLevel";
-				}
-				if (Level == 2)
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Random 2"));
-					NextLevelName = "StartLevel";
-				}*/
 
 				LevelSelection();
-
-				//Main->NextLevel(NextLevelName);
+				if (bCanSwitchLevel)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Switching level...."));
+					Main->NextLevel(NextLevel);
+				}
 
 			}
 			else
@@ -103,20 +74,6 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 	}
 }
 
-/**TAssetPtr<UWorld> ALevelTrigger::GetLevel()
-{
-	if (LevelArray.Num() > 0)
-	{
-		int32 Selection = FMath::RandRange(0, LevelArray.Num() - 1);
-
-		return LevelArray[Selection];
-	}
-	else
-	{
-		return nullptr;
-	}
-}*/
-
 void ALevelTrigger::LevelSelection()
 {
 	int32 Level;
@@ -127,27 +84,42 @@ void ALevelTrigger::LevelSelection()
 		FString CurrentLevel = World->GetMapName();
 		FName CurrentLevelName(*CurrentLevel);
 
+		Level = FMath::RandRange(1, 5);
+		switch (Level)
+		{
+		case 1:
+			NextLevelName = "UEDPIE_0_FireLevel";
+			NextLevel = "FireLevel";
+			break;
+		case 2:
+			NextLevelName = "UEDPIE_0_WaterLevel";
+			NextLevel = "WaterLevel";
+			break;
+		case 3:
+			NextLevelName = "UEDPIE_0_EarthLevel";
+			NextLevel = "EarthLevel";
+			break;
+		case 4:
+			NextLevelName = "UEDPIE_0_AirLevel";
+			NextLevel = "AirLevel";
+			break;
+		case 5:
+			NextLevelName = "UEDPIE_0_StartLevel";
+			NextLevel = "StartLevel";
+			break;
+		}
+
+		UE_LOG(LogTemp, Warning, TEXT("LevelSwitch %i"), Level);
+		UE_LOG(LogTemp, Warning, TEXT("Current Level %s"), *CurrentLevel);
+
 		if (CurrentLevelName != NextLevelName)
 		{
-			Level = FMath::RandRange(1, 5);
-			switch (Level)
-			{
-			case 1: 
-				NextLevelName = "StartLevel";
-				break;
-			case 2:
-				NextLevelName = "StartLevel";
-				break;
-			case 3:
-				NextLevelName = "Startlevel";
-				break;
-			case 4:
-				NextLevelName = "StartLevel";
-				break;
-			case 5:
-				NextLevelName = "StartLevel";
-				break;
-			}
+			bCanSwitchLevel = true;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No Switch"));
+			LevelSelection();
 		}
 	}
 }

@@ -22,6 +22,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevelName;
+	
+	FName NextLevel;
 
 	//Selection of levels can be done in blueprints.
 
@@ -43,6 +45,8 @@ public:
 	TArray<TAssetPtr<UWorld>> LevelArray;*/
 
 	void LevelSelection();
+
+	bool bCanSwitchLevel;
 
 protected:
 	// Called when the game starts or when spawned
