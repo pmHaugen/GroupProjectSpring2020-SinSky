@@ -115,12 +115,17 @@ public:
 	bool bMedium;
 	bool bHard;
 
+	float DifficultyScaling;
+	float ProgressScaling;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
 	EEnemyDifficultyStatus EnemyDifficultyStatus;
 
 	FORCEINLINE void SetEnemyDifficultyStatus(EEnemyDifficultyStatus Status) { EnemyDifficultyStatus = Status; }
 
 	void GetEnemyDifficultyStatus();
+
+	void GetPlayerProgress();
 
 
 protected:

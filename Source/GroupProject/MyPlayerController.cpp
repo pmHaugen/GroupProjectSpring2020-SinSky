@@ -14,6 +14,10 @@ AMyPlayerController::AMyPlayerController()
 
 	FoesDefeated = 0;
 
+	LevelsCleared = 0;
+
+	Scaling = Kills * 0.2f + BossKills * 0.5f + LevelsCleared * 1.f;
+
 	bLevelCleared = false;
 
 	bEasy = false;

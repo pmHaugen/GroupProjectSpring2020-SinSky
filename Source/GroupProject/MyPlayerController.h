@@ -95,6 +95,11 @@ public:
 
 	bool bGetGameDifficulty();
 
+	//Progress
+	float Scaling;
+
+	float LevelsCleared;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	bool bIsVisible;

@@ -27,9 +27,11 @@ AEnemy::AEnemy()
 
 	bOverLappingCombatSphere= false;
 
-	//Reduced Health for testing.
-	MaxHealth = 150;
-	Health = 30;
+	DifficultyScaling = 1;
+	ProgressScaling = 1;
+
+	MaxHealth = 100*DifficultyScaling*ProgressScaling;
+	Health = MaxHealth;
 
 	HitDamage = 150;
 	DamageGiven = 0;
@@ -68,6 +70,7 @@ void AEnemy::BeginPlay()
 
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
+	GetPlayerProgress();
 
 	/**UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium: %s"), (bMedium ? TEXT("TRUE") : TEXT("FALSE")));
@@ -349,6 +352,7 @@ void AEnemy::GetEnemyDifficultyStatus()
 	if (Difficulty->bEasy)
 	{
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Easy);
+		DifficultyScaling = 0.5f;
 		bEasy = true;
 	}
 	if (Difficulty->bMedium)
@@ -359,7 +363,14 @@ void AEnemy::GetEnemyDifficultyStatus()
 	if (Difficulty->bHard)
 	{
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Hard);
+		DifficultyScaling = 1.5f;
 		bHard = true;
 	}
+}
+
+void AEnemy::GetPlayerProgress()
+{
+	AMyPlayerController* Progress = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	ProgressScaling = Progress->Scaling +1.f;
 }
 
