@@ -83,23 +83,23 @@ void AMyPlayerController::BossKillCount(float Amount)
 void AMyPlayerController::FoesAliveCount(float Amount)
 {
 	FoesAlive += Amount;
-	UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
+	//UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
 }
 
 void AMyPlayerController::FoesDefeatedCount(float Amount)
 {
 	FoesDefeated += Amount;
-	UE_LOG(LogTemp, Warning, TEXT("Enemies Defeated: %f"), FoesDefeated);
-	UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
+	//UE_LOG(LogTemp, Warning, TEXT("Enemies Defeated: %f"), FoesDefeated);
+	//UE_LOG(LogTemp, Warning, TEXT("Enemies alive: %f"), FoesAlive - FoesDefeated);
 }
 
 bool AMyPlayerController::bIsLevelCleared()
 {
-	//if (FoesAlive > FoesDefeated)
-	//{
-		UE_LOG(LogTemp, Warning, TEXT("All Enemies Defeated"));
+	if (FoesAlive == FoesDefeated)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("All Enemies Defeated"));
 		bLevelCleared = true;
-	//}
+	}
 	return bLevelCleared;
 }
 

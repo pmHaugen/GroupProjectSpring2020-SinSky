@@ -118,7 +118,6 @@ void ALevelTrigger::LevelSelection()
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("No Switch"));
 			LevelSelection();
 		}
 	}

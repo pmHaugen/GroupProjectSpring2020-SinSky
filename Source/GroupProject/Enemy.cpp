@@ -69,9 +69,9 @@ void AEnemy::BeginPlay()
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
 
-	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
+	/**UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium: %s"), (bMedium ? TEXT("TRUE") : TEXT("FALSE")));
-	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Hard: %s"), (bHard ? TEXT("TRUE") : TEXT("FALSE")));
+	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Hard: %s"), (bHard ? TEXT("TRUE") : TEXT("FALSE")));*/
 }
 
 // Called every frame
@@ -222,25 +222,25 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 
 			if (bFireStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
 				MainCharacter->FireDamage(HitDamage);
 			}
 
 			if (bWaterStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
 				MainCharacter->WaterDamage(HitDamage);
 			}
 
 			if (bEarthStatus)
 			{ 
-				UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
 				MainCharacter->EarthDamage(HitDamage);
 			}
 			
 			if (bAirStatus)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
+				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
 				MainCharacter->AirDamage(HitDamage);
 			}
 		}
@@ -279,7 +279,7 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 		{
 			FVector Location = Point.Location;
 
-			UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
+			//UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
 		}
 	}
 }
@@ -321,7 +321,7 @@ void AEnemy::DamageTaken(float Amount)
 	else
 	{
 		Health -= Amount;
-		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
+		//UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
 	}
 }
 
