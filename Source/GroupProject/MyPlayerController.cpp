@@ -23,6 +23,13 @@ AMyPlayerController::AMyPlayerController()
 	bEasy = false;
 	bMedium = false;
 	bHard = false;
+
+	XPoints = 0;
+	XPointsDifference = 0;
+	MaxXp = 0;
+	XpToken = 0;
+	PlayerLevel = 0;
+
 }
 void AMyPlayerController::BeginPlay()
 {
@@ -212,5 +219,35 @@ void AMyPlayerController::Tick(float DeltaTime)
 
 		BossHealthBar->SetPositionInViewport(PositionInVeiwport);
 		BossHealthBar->SetDesiredSizeInViewport(SizeInVeiwport);
+	}
+}
+
+void AMyPlayerController::AquireXp(float Amount)
+{
+	XPoints += Amount;
+
+	if (XPoints >= MaxXp)
+	{
+		CalculateXp();
+	}
+}
+
+void AMyPlayerController::CalculateXp()
+{
+	XPointsDifference = XPoints - MaxXp;
+	XPoints = 0;
+	
+	PlayerLevel += 1;
+
+	MaxXp = PlayerLevel * 35 + 100;
+
+	XpToken += 1;
+
+	XPoints += XPointsDifference;
+	XPointsDifference = 0;
+
+	if (XPoints >= MaxXp)
+	{
+		CalculateXp();
 	}
 }

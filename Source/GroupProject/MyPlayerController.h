@@ -100,7 +100,20 @@ public:
 
 	float LevelsCleared;
 
+	//XP
+	float XPoints;
+	float XPointsDifference;
+	float MaxXp;
 
+	float XpToken;
+
+	float PlayerLevel;
+
+	void AquireXp(float Amount);
+
+	void CalculateXp();
+
+	//--------
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	bool bIsVisible;
 	
