@@ -30,8 +30,8 @@ AEnemy::AEnemy()
 	DifficultyScaling = 1;
 	ProgressScaling = 1;
 
-	MaxHealth = 100*DifficultyScaling*ProgressScaling;
-	Health = MaxHealth;
+	MaxHealth = 1;
+	Health = 1;
 
 	HitDamage = 150;
 	DamageGiven = 0;
@@ -71,6 +71,8 @@ void AEnemy::BeginPlay()
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
 	GetPlayerProgress();
+	MaxHealth = 100 * DifficultyScaling * ProgressScaling;
+	Health = MaxHealth;
 
 	/**UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
 	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Medium: %s"), (bMedium ? TEXT("TRUE") : TEXT("FALSE")));
@@ -329,7 +331,7 @@ void AEnemy::GetEnemyElementalStatus()
 
 void AEnemy::DamageTaken(float Amount)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Damage taken: %f"), Amount);
+	UE_LOG(LogTemp, Warning, TEXT("Damage taken: %f"), Amount);
 	if (Health - Amount <= 0.f)
 	{
 		Health -= Amount;
@@ -340,7 +342,7 @@ void AEnemy::DamageTaken(float Amount)
 	else
 	{
 		Health -= Amount;
-		//UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
+		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
 	}
 }
 

@@ -82,10 +82,10 @@ public:
 	*****Enemy Properties
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
 	float MaxHealth;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyProperties")
 	float Health;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyProperties")
