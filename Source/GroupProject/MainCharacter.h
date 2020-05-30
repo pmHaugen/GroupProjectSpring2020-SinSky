@@ -225,6 +225,13 @@ public:
 	bool bAirEnoughMana;
 
 	void Regeneration(float HealthRegenerationRate, float RegenerationRate, float Time);
+
+	//Experience
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Experience")
+	float XPoints;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Experience")
+	float MaxXPoints;
 	//-----------------------------------------------------------
 
 	void OpenTalentMenu();

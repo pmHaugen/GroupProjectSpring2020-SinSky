@@ -307,6 +307,8 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 
 void AEnemy::Death()
 {
+	AMyPlayerController* XpTrack = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	XpTrack->AquireXp(15);
 	Destroy();
 }
 

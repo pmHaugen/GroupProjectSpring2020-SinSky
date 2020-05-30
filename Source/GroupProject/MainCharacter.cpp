@@ -126,6 +126,10 @@ AMainCharacter::AMainCharacter()
 	//Enemy HealthBar
 	bHasCombatTarget = false;
 
+	//Experience
+	XPoints = 0;
+	MaxXPoints = 0;
+
 }
 
 // Called when the game starts or when spawned
@@ -630,4 +634,18 @@ void AMainCharacter::LoadGame(bool SetPosition)
 		SetActorRotation(LoadGameInstance->CharacterStats.Rotation);
 
 	}*/
+}
+
+void AMainCharacter::GetPlayerExperience()
+{
+	XPoints = PlayerController->XPoints;
+	MaxXPoints = PlayerController->MaxXp;
+
+
+	/**
+	Implement me!
+	*
+	SkillPoints = PlayerController->XpToken;
+	*
+	*/
 }
