@@ -77,6 +77,7 @@ public:
 	void FoesDefeatedCount(float Amount);
 	bool bIsLevelCleared();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Kills")
 	float Kills;
 	float BossKills;
 	float FoesAlive;
