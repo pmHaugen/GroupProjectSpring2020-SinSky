@@ -16,7 +16,7 @@ AMyPlayerController::AMyPlayerController()
 
 	LevelsCleared = 0;
 
-	Scaling = Kills * 0.2f + BossKills * 0.5f + LevelsCleared * 1.f;
+	Scaling = Kills * 0.02f + BossKills * 0.5f + LevelsCleared * 1.f;
 
 	bLevelCleared = false;
 

@@ -27,8 +27,8 @@ AEnemy::AEnemy()
 
 	bOverLappingCombatSphere= false;
 
-	DifficultyScaling = 1;
-	ProgressScaling = 1;
+	DifficultyScaling = 0;
+	ProgressScaling = 0;
 
 	MaxHealth = 1;
 	Health = 1;
