@@ -49,7 +49,6 @@ AEnemy::AEnemy()
 	bMedium = false;
 	bHard = false;
 
-
 }
 
 // Called when the game starts or when spawned

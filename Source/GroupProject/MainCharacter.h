@@ -232,6 +232,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Experience")
 	float MaxXPoints;
+
+	void GetPlayerExperience();
 	//-----------------------------------------------------------
 
 	void OpenTalentMenu();
