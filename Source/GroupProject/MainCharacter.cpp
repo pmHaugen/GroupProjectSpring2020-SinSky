@@ -20,6 +20,7 @@
 #include "MyPlayerController.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "GameSaver.h"
 
 
 // Sets default values
@@ -584,4 +585,49 @@ void AMainCharacter::UpdateCombatTarget()
 		SetCombatTarget(ClosestEnemy);
 		bHasCombatTarget = true;
 	}
+}
+
+void AMainCharacter::SaveGame()
+{
+	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	SaveStats->CharacterSave.SkillPoints = SkillPoints;
+	SaveStats->CharacterSave.MaxHealth = MaxHealth;
+	SaveStats->CharacterSave.FireLvl = FireLvl;
+	SaveStats->CharacterSave.WaterLvl = WaterLvl;
+	SaveStats->CharacterSave.EarthLvl = EarthLvl;
+	SaveStats->CharacterSave.AirLvl = AirLvl;
+	SaveStats->CharacterSave.RegenLvl = RegenLvl;
+	SaveStats->CharacterSave.ManaRegenLvl = ManaRegenLvl;
+
+	//SaveStats->CharacterSave.Location = GetActorLocation();
+	//SaveStat->CharacterStats.Rotation = GetActorRotation();
+
+	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
+	
+}
+
+void AMainCharacter::LoadGame(bool SetPosition)
+{
+	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
+	
+	SkillPoints  = LoadStats->CharacterSave.SkillPoints;
+	MaxHealth	 = LoadStats->CharacterSave.MaxHealth;
+	FireLvl		 = LoadStats->CharacterSave.FireLvl;
+	WaterLvl	 = LoadStats->CharacterSave.WaterLvl;
+	EarthLvl	 = LoadStats->CharacterSave.EarthLvl;
+	AirLvl		 = LoadStats->CharacterSave.AirLvl;
+	RegenLvl	 = LoadStats->CharacterSave.RegenLvl;
+	ManaRegenLvl = LoadStats->CharacterSave.ManaRegenLvl;
+
+
+
+	/*if (SetPosition)
+	{
+		SetActorLocation(LoadGameInstance->CharacterStats.Location);
+		SetActorRotation(LoadGameInstance->CharacterStats.Rotation);
+
+	}*/
 }
