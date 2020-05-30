@@ -62,7 +62,7 @@ AMainCharacter::AMainCharacter()
 
 	SpellChoosen = 1.f;
 
-	FireSpellCD = { 0.8f };
+	FireSpellCD = { 0.8f }; //0.8
 	FireTimeSinceSpell = { 0 };
 
 
@@ -232,6 +232,7 @@ void AMainCharacter::Tick(float DeltaTime)
 			PlayerController->BossLocation = CombatTargetLocation;
 		}
 	}
+	GetPlayerExperience();
 }
 
 // Called to bind functionality to input
@@ -590,7 +591,7 @@ void AMainCharacter::UpdateCombatTarget()
 		bHasCombatTarget = true;
 	}
 }
-
+/*
 void AMainCharacter::SaveGame()
 {
 	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
@@ -633,19 +634,14 @@ void AMainCharacter::LoadGame(bool SetPosition)
 		SetActorLocation(LoadGameInstance->CharacterStats.Location);
 		SetActorRotation(LoadGameInstance->CharacterStats.Rotation);
 
-	}*/
+	}
 }
-
+*/
 void AMainCharacter::GetPlayerExperience()
 {
 	XPoints = PlayerController->XPoints;
 	MaxXPoints = PlayerController->MaxXp;
 
-
-	/**
-	Implement me!
-	*
 	SkillPoints = PlayerController->XpToken;
-	*
-	*/
+
 }

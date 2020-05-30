@@ -361,6 +361,7 @@ void AEnemy::GetEnemyDifficultyStatus()
 	if (Difficulty->bMedium)
 	{
 		SetEnemyDifficultyStatus(EEnemyDifficultyStatus::EDS_Medium);
+		DifficultyScaling = 1.f;
 		bMedium = true;
 	}
 	if (Difficulty->bHard)
@@ -374,6 +375,9 @@ void AEnemy::GetEnemyDifficultyStatus()
 void AEnemy::GetPlayerProgress()
 {
 	AMyPlayerController* Progress = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	Progress->SetScaling();
 	ProgressScaling = Progress->Scaling +1.f;
+	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
 }
 

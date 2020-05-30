@@ -16,7 +16,8 @@ AMyPlayerController::AMyPlayerController()
 
 	LevelsCleared = 0;
 
-	Scaling = Kills * 0.02f + BossKills * 0.5f + LevelsCleared * 1.f;
+	Scaling = 0;
+		//Kills * 0.02f + BossKills * 0.5f + LevelsCleared * 1.f;
 
 	bLevelCleared = false;
 
@@ -26,7 +27,7 @@ AMyPlayerController::AMyPlayerController()
 
 	XPoints = 0;
 	XPointsDifference = 0;
-	MaxXp = 0;
+	MaxXp = 1;
 	XpToken = 0;
 	PlayerLevel = 0;
 
@@ -250,4 +251,10 @@ void AMyPlayerController::CalculateXp()
 	{
 		CalculateXp();
 	}
+}
+void AMyPlayerController::SetScaling()
+{
+	Scaling = (Kills * 0.02) + (BossKills * 0.5) + (LevelsCleared * 1);
+	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), Scaling);
+	UE_LOG(LogTemp, Warning, TEXT("Kills Scaling: %f"), Kills);
 }

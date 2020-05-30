@@ -100,6 +100,8 @@ public:
 
 	float LevelsCleared;
 
+	void SetScaling();
+
 	//XP
 	float XPoints;
 	float XPointsDifference;
