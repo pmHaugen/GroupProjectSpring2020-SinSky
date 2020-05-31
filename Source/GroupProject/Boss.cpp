@@ -26,8 +26,8 @@ ABoss::ABoss()
 
 	bOverLappingCombatSphere = false;
 
-	MaxHealth = 1000;
-	Health = 1000;
+	MaxHealth = 1;
+	Health = 1;
 
 	HitDamage = 1;
 	DamageGiven = 0;
@@ -61,6 +61,12 @@ void ABoss::BeginPlay()
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapEnd);
 
 	SetBossElementalStatus(EBossElementalStatus::BES_Fire);
+
+	GetBossDifficultyStatus();
+	GetPlayerProgress();
+
+	MaxHealth = 250 * DifficultyScaling * ProgressScaling;
+	Health = MaxHealth;
 	
 }
 
@@ -328,4 +334,36 @@ void ABoss::Death()
 	Destroy();
 }
 
+void ABoss::GetBossDifficultyStatus()
+{
+	AMyPlayerController* Difficulty = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	Difficulty->bGetGameDifficulty();
 
+	if (Difficulty->bEasy)
+	{
+		SetBossDifficultyStatus(EBossDifficultyStatus::BDS_Easy);
+		DifficultyScaling = 0.5f;
+		bEasy = true;
+	}
+	if (Difficulty->bMedium)
+	{
+		SetBossDifficultyStatus(EBossDifficultyStatus::BDS_Medium);
+		DifficultyScaling = 1.f;
+		bMedium = true;
+	}
+	if (Difficulty->bHard)
+	{
+		SetBossDifficultyStatus(EBossDifficultyStatus::BDS_Hard);
+		DifficultyScaling = 1.5f;
+		bHard = true;
+	}
+}
+
+void ABoss::GetPlayerProgress()
+{
+	AMyPlayerController* Progress = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	Progress->SetScaling();
+	ProgressScaling = Progress->Scaling + 1.f;
+	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
+}

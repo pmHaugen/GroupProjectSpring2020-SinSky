@@ -120,12 +120,17 @@ public:
 	bool bMedium;
 	bool bHard;
 
+	float DifficultyScaling;
+	float ProgressScaling;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DifficultyStatus")
 	EBossDifficultyStatus BossDifficultyStatus;
 
 	FORCEINLINE void SetBossDifficultyStatus(EBossDifficultyStatus Status) { BossDifficultyStatus = Status; }
 
-	//void GetBossDifficultyStatus();
+	void GetBossDifficultyStatus();
+
+	void GetPlayerProgress();
 
 protected:
 	// Called when the game starts or when spawned
