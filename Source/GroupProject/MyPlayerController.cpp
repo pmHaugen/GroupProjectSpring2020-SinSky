@@ -76,6 +76,15 @@ void AMyPlayerController::BeginPlay()
 		FVector2D Alignment(0.f, 0.f);
 		BossHealthBar->SetAlignmentInViewport(Alignment);
 	}
+	if (WPauseMenu)
+	{
+		PauseMenu = CreateWidget<UUserWidget>(this, WPauseMenu);
+		if (PauseMenu)
+		{
+			PauseMenu->AddToViewport();
+			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
 }
 
 void AMyPlayerController::OpenSkillMenu()
@@ -257,4 +266,44 @@ void AMyPlayerController::SetScaling()
 	Scaling = (Kills * 0.02) + (BossKills * 0.5) + (LevelsCleared * 1);
 	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), Scaling);
 	UE_LOG(LogTemp, Warning, TEXT("Kills Scaling: %f"), Kills);
+}
+
+//Pause Menu//
+void AMyPlayerController::ShowPauseMenu()
+{
+	if (PauseMenu)
+	{
+		bPauseMenuVisible = true;
+		PauseMenu->SetVisibility(ESlateVisibility::Visible);
+		FInputModeGameOnly InputModeGameOnly;
+
+		bShowMouseCursor = true;
+	}
+}
+
+void AMyPlayerController::RemovePauseMenu()
+{
+	if (PauseMenu)
+	{
+		FInputModeGameOnly InputModeGameOnly;
+
+		SetInputMode(InputModeGameOnly);
+
+		bShowMouseCursor = false;
+		bPauseMenuVisible = false;
+	}
+}
+
+
+void AMyPlayerController::TogglePauseMenu()
+{
+	if (bPauseMenuVisible)
+	{
+		RemovePauseMenu();
+	}
+	else
+	{
+		ShowPauseMenu();
+	}
+
 }

@@ -255,6 +255,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AMainCharacter::Pause);
+	PlayerInputComponent->BindAction("Pause", IE_Released, this, &AMainCharacter::ReleasePauseButton);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -288,6 +290,22 @@ void AMainCharacter::Dash()
 		TimeSinceDash = 0;
 		MaxSpeed = 5000;
 	}
+}
+
+void AMainCharacter::Pause()
+{
+	bPause = true;
+
+	if (PlayerController)
+	{
+		PlayerController->TogglePauseMenu();
+		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+	}
+}
+
+void AMainCharacter::ReleasePauseButton()
+{
+	bPause = false;
 }
 
 void AMainCharacter::CastSpell()

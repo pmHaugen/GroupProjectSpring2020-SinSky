@@ -237,6 +237,9 @@ public:
 	//-----------------------------------------------------------
 
 	void OpenTalentMenu();
+	void Pause();
+	void ReleasePauseButton();
+	bool bPause;
 
 	void NextLevel(FName LevelName);
 
