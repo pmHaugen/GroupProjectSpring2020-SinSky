@@ -238,7 +238,8 @@ public:
 
 	void OpenTalentMenu();
 	void Pause();
-	void ReleasePauseButton();
+	UFUNCTION(BlueprintCallable)
+	void ResumeButton();
 	bool bPause;
 
 	void NextLevel(FName LevelName);
@@ -250,11 +251,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	TSubclassOf<AEnemy> EnemyFilter;
-/*
+
 	UFUNCTION(BlueprintCallable)
 	void SaveGame();
 
 	UFUNCTION(BlueprintCallable)
 	void LoadGame(bool SetPosition);
-	*/
+
 };

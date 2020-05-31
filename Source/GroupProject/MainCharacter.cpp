@@ -150,7 +150,8 @@ void AMainCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
-
+	if (!bPause)
+	{
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
 	SetActorLocation(NewLocation);
@@ -167,23 +168,28 @@ void AMainCharacter::Tick(float DeltaTime)
 	//Cursor location updates:
 
 
-		FVector CursorLocation = Hit.Location;
-		//UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
 
-		//Set cursor location above ground a little
-		TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 30.f);
 
-		//Calculating direction
-	    NewDirectionToCursor = TempLocation - GetActorLocation();
-		NewDirectionToCursor.Z = 0.f;
-		NewDirectionToCursor.Normalize();
-		SetActorRotation(NewDirectionToCursor.Rotation());
-		
-		//Cursor location updates:
-		FVector CursorFV = Hit.ImpactNormal;
-		FRotator CursorR = CursorFV.Rotation();
-		CursorToWorld->SetWorldLocation(Hit.Location);
-		CursorToWorld->SetWorldRotation(CursorR);
+
+			FVector CursorLocation = Hit.Location;
+			//UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
+
+			//Set cursor location above ground a little
+			TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 30.f);
+
+			//Calculating direction
+			NewDirectionToCursor = TempLocation - GetActorLocation();
+			NewDirectionToCursor.Z = 0.f;
+			NewDirectionToCursor.Normalize();
+			SetActorRotation(NewDirectionToCursor.Rotation());
+
+			//Cursor location updates:
+
+			FVector CursorFV = Hit.ImpactNormal;
+			FRotator CursorR = CursorFV.Rotation();
+			CursorToWorld->SetWorldLocation(Hit.Location);
+			CursorToWorld->SetWorldRotation(CursorR);
+		}
 		//End Mouse
 
 		//Spell Casting
@@ -206,7 +212,7 @@ void AMainCharacter::Tick(float DeltaTime)
 			bDash = false;
 			MaxSpeed = 400.f;
 		}
-	}
+	
 
 	//ManaBarColor
 	ManaBarColor();
@@ -233,6 +239,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		}
 	}
 	GetPlayerExperience();
+	}
 }
 
 // Called to bind functionality to input
@@ -242,8 +249,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-
+	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	//InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);// old without the ability to hold for fire
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::StartSpell);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMainCharacter::StopSpell);
@@ -256,7 +262,6 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AMainCharacter::Pause);
-	PlayerInputComponent->BindAction("Pause", IE_Released, this, &AMainCharacter::ReleasePauseButton);
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -267,7 +272,11 @@ void AMainCharacter::MoveForward(float Value)
 	//Rotation.Pitch = 0.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
-	CurrentVelocity.X = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+
+	if (!bPause)
+	{
+		CurrentVelocity.X = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+	}
 }
 
 void AMainCharacter::MoveSideways(float Value)
@@ -279,7 +288,10 @@ void AMainCharacter::MoveSideways(float Value)
 	//Rotation.Yaw += 90.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
-	CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+	if (!bPause)
+	{
+		CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+	}
 }
 
 void AMainCharacter::Dash()
@@ -294,17 +306,24 @@ void AMainCharacter::Dash()
 
 void AMainCharacter::Pause()
 {
-	bPause = true;
-
-	if (PlayerController)
+	if (PlayerController && !bPause)
 	{
 		PlayerController->TogglePauseMenu();
 		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+		bPause = true;
 	}
+	else if (PlayerController && bPause)
+	{
+		PlayerController->TogglePauseMenu();
+		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+		bPause = false;
+	}
+
 }
 
-void AMainCharacter::ReleasePauseButton()
+void AMainCharacter::ResumeButton()
 {
+	PlayerController->TogglePauseMenu();
 	bPause = false;
 }
 
@@ -315,7 +334,7 @@ void AMainCharacter::CastSpell()
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
 
-	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost)
+	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost && !bPause)
 	{
 		if (FireLvl == 1)
 		{
@@ -609,7 +628,7 @@ void AMainCharacter::UpdateCombatTarget()
 		bHasCombatTarget = true;
 	}
 }
-/*
+
 void AMainCharacter::SaveGame()
 {
 	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
@@ -623,8 +642,8 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterSave.RegenLvl = RegenLvl;
 	SaveStats->CharacterSave.ManaRegenLvl = ManaRegenLvl;
 
-	//SaveStats->CharacterSave.Location = GetActorLocation();
-	//SaveStat->CharacterStats.Rotation = GetActorRotation();
+	SaveStats->CharacterSave.Location = GetActorLocation();
+	SaveStats->CharacterSave.Rotation = GetActorRotation();
 
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 	
@@ -635,26 +654,26 @@ void AMainCharacter::LoadGame(bool SetPosition)
 	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
 
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
-	
-	SkillPoints  = LoadStats->CharacterSave.SkillPoints;
-	MaxHealth	 = LoadStats->CharacterSave.MaxHealth;
-	FireLvl		 = LoadStats->CharacterSave.FireLvl;
-	WaterLvl	 = LoadStats->CharacterSave.WaterLvl;
-	EarthLvl	 = LoadStats->CharacterSave.EarthLvl;
-	AirLvl		 = LoadStats->CharacterSave.AirLvl;
-	RegenLvl	 = LoadStats->CharacterSave.RegenLvl;
+
+	SkillPoints = LoadStats->CharacterSave.SkillPoints;
+	MaxHealth = LoadStats->CharacterSave.MaxHealth;
+	FireLvl = LoadStats->CharacterSave.FireLvl;
+	WaterLvl = LoadStats->CharacterSave.WaterLvl;
+	EarthLvl = LoadStats->CharacterSave.EarthLvl;
+	AirLvl = LoadStats->CharacterSave.AirLvl;
+	RegenLvl = LoadStats->CharacterSave.RegenLvl;
 	ManaRegenLvl = LoadStats->CharacterSave.ManaRegenLvl;
 
 
 
-	/*if (SetPosition)
+	if (SetPosition)
 	{
-		SetActorLocation(LoadGameInstance->CharacterStats.Location);
-		SetActorRotation(LoadGameInstance->CharacterStats.Rotation);
+		SetActorLocation(LoadStats->CharacterSave.Location);
+		SetActorRotation(LoadStats->CharacterSave.Rotation);
 
 	}
 }
-*/
+
 void AMainCharacter::GetPlayerExperience()
 {
 	XPoints = PlayerController->XPoints;

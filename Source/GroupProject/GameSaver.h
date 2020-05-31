@@ -30,6 +30,11 @@ struct FCharacterStats
 	float RegenLvl;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float ManaRegenLvl;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	FVector Location;
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	FRotator Rotation;
 };
 UCLASS()
 class GROUPPROJECT_API UGameSaver : public USaveGame

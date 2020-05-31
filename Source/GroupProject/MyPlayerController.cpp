@@ -96,6 +96,8 @@ void AMyPlayerController::OpenSkillMenu()
 			if (HUDTalentTree)
 			{
 				HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+				FInputModeUIOnly InputModeUIOnly;
+				SetInputMode(InputModeUIOnly);
 			}
 		}
 		if (!bIsVisible)
@@ -275,7 +277,8 @@ void AMyPlayerController::ShowPauseMenu()
 	{
 		bPauseMenuVisible = true;
 		PauseMenu->SetVisibility(ESlateVisibility::Visible);
-		FInputModeGameOnly InputModeGameOnly;
+		FInputModeGameAndUI InputModeGameAndUI;
+		SetInputMode(InputModeGameAndUI);
 
 		bShowMouseCursor = true;
 	}
@@ -291,6 +294,7 @@ void AMyPlayerController::RemovePauseMenu()
 
 		bShowMouseCursor = false;
 		bPauseMenuVisible = false;
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
