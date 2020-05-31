@@ -55,7 +55,7 @@ public:
 	/**
 	******Enemy ElementalStatus
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ElementalStatus")
 	EEnemyElementalStatus EnemyElementalStatus;
 
 	FORCEINLINE void SetEnemyElementalStatus(EEnemyElementalStatus Status) { EnemyElementalStatus = Status; }

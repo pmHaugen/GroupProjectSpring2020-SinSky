@@ -23,7 +23,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
+	/**UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
 	TSubclassOf<AActor> Actor_2;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning")
@@ -34,7 +34,7 @@ public:
 
 	//In case of boss
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Spawning")
-	TSubclassOf<AActor> Actor_5;
+	TSubclassOf<AActor> Actor_5;*/
 
 	TArray<TSubclassOf<AActor>> SpawnArray;
 

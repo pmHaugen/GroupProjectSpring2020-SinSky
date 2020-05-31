@@ -313,18 +313,29 @@ void AEnemy::Death()
 
 void AEnemy::GetEnemyElementalStatus()
 {
-	switch (EnemyElementalStatus)
+	int32 Status;
+
+	Status = FMath::RandRange(1, 4);
+	switch (Status)
 	{
-	case EEnemyElementalStatus::EES_Fire:
+	case 1:
+		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Fire);
+		UE_LOG(LogTemp, Warning, TEXT("Fire"));
 		bFireStatus = true;
 		break;
-	case EEnemyElementalStatus::EES_Water:
+	case 2: 
+		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Water);
+		UE_LOG(LogTemp, Warning, TEXT("Water"));
 		bWaterStatus = true;
 		break;
-	case EEnemyElementalStatus::EES_Earth:
+	case 3:
+		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Earth);
+		UE_LOG(LogTemp, Warning, TEXT("Earth"));
 		bEarthStatus = true;
 		break;
-	case EEnemyElementalStatus::EES_Air:
+	case 4:
+		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Air);
+		UE_LOG(LogTemp, Warning, TEXT("Air"));
 		bAirStatus = true;
 		break;
 	}
