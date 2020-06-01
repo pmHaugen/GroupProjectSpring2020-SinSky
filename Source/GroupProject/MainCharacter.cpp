@@ -144,7 +144,7 @@ void AMainCharacter::BeginPlay()
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	LoadGame(true);
+	//LoadGame(true);
 }
 
 // Called every frame
