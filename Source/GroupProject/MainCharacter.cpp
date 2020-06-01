@@ -142,6 +142,7 @@ void AMainCharacter::BeginPlay()
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	//PlayerController->LoadStats();
 }
 
 // Called every frame
@@ -633,8 +634,10 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterSave.RegenLvl = RegenLvl;
 	SaveStats->CharacterSave.ManaRegenLvl = ManaRegenLvl;
 
-	SaveStats->CharacterSave.Location = GetActorLocation();
-	SaveStats->CharacterSave.Rotation = GetActorRotation();
+	//SaveStats->CharacterSave.Location = GetActorLocation();
+	//SaveStats->CharacterSave.Rotation = GetActorRotation();
+
+	PlayerController->SaveStats();
 
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 	
@@ -655,14 +658,14 @@ void AMainCharacter::LoadGame(bool SetPosition)
 	RegenLvl = LoadStats->CharacterSave.RegenLvl;
 	ManaRegenLvl = LoadStats->CharacterSave.ManaRegenLvl;
 
+	PlayerController->LoadStats();
 
+	//if (SetPosition)
+	//{
+		//SetActorLocation(LoadStats->CharacterSave.Location);
+		//SetActorRotation(LoadStats->CharacterSave.Rotation);
 
-	if (SetPosition)
-	{
-		SetActorLocation(LoadStats->CharacterSave.Location);
-		SetActorRotation(LoadStats->CharacterSave.Rotation);
-
-	}
+	//}
 }
 
 void AMainCharacter::GetPlayerExperience()

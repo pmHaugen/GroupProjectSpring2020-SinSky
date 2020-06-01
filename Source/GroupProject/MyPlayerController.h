@@ -136,7 +136,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	bool bIsVisible;
 	
-
+	//Saving
+	void SaveStats();
+	void LoadStats();
 
 protected:
 	virtual void BeginPlay() override;

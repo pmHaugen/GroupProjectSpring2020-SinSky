@@ -3,6 +3,8 @@
 
 #include "MyPlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameSaver.h"
 
 AMyPlayerController::AMyPlayerController()
 {
@@ -86,6 +88,7 @@ void AMyPlayerController::BeginPlay()
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Kills: %f"), Kills);
 }
 
 void AMyPlayerController::ToggleSkillMenu()
@@ -325,4 +328,23 @@ void AMyPlayerController::TogglePauseMenu()
 		ShowPauseMenu();
 	}
 
+}
+
+void AMyPlayerController::SaveStats()
+{
+	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	SaveStats->CharacterSave.Kills = Kills;
+	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
+	UE_LOG(LogTemp, Warning, TEXT("Saved kills: %f"), Kills);
+}
+
+void AMyPlayerController::LoadStats()
+{
+	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
+
+	Kills = LoadStats->CharacterSave.Kills;
+	UE_LOG(LogTemp, Warning, TEXT("Loaded kills: %f"), Kills);
 }
