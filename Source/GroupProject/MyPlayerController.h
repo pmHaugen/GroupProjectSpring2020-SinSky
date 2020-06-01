@@ -137,7 +137,9 @@ public:
 	bool bIsVisible;
 	
 	//Saving
+	UFUNCTION(BlueprintCallable)
 	void SaveStats();
+	UFUNCTION(BlueprintCallable)
 	void LoadStats();
 
 protected:

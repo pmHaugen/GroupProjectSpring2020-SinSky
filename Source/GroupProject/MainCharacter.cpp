@@ -626,15 +626,20 @@ void AMainCharacter::SaveGame()
 
 	SaveStats->CharacterStats.SkillPoints = SkillPoints;
 	SaveStats->CharacterStats.MaxHealth = MaxHealth;
+	SaveStats->CharacterStats.Health = Health;
 	SaveStats->CharacterStats.FireLvl = FireLvl;
 	SaveStats->CharacterStats.WaterLvl = WaterLvl;
 	SaveStats->CharacterStats.EarthLvl = EarthLvl;
 	SaveStats->CharacterStats.AirLvl = AirLvl;
 	SaveStats->CharacterStats.RegenLvl = RegenLvl;
 	SaveStats->CharacterStats.ManaRegenLvl = ManaRegenLvl;
+	SaveStats->CharacterStats.FireMana = FireMana;
+	SaveStats->CharacterStats.WaterMana = WaterMana;
+	SaveStats->CharacterStats.EarthMana = EarthMana;
+	SaveStats->CharacterStats.AirMana = AirMana;
 
-	//SaveStats->CharacterStats.Location = GetActorLocation();
-	//SaveStats->CharacterStats.Rotation = GetActorRotation();
+	SaveStats->CharacterStats.Location = GetActorLocation();
+	SaveStats->CharacterStats.Rotation = GetActorRotation();
 
 	PlayerController->SaveStats();
 
@@ -650,6 +655,11 @@ void AMainCharacter::LoadGame(bool SetPosition)
 
 	SkillPoints = LoadStats->CharacterStats.SkillPoints;
 	MaxHealth = LoadStats->CharacterStats.MaxHealth;
+	Health = LoadStats->CharacterStats.Health;
+	FireMana = LoadStats->CharacterStats.FireMana;
+	WaterMana = LoadStats->CharacterStats.WaterMana;
+	EarthMana = LoadStats->CharacterStats.EarthMana;
+	AirMana = LoadStats->CharacterStats.AirMana;
 	FireLvl = LoadStats->CharacterStats.FireLvl;
 	WaterLvl = LoadStats->CharacterStats.WaterLvl;
 	EarthLvl = LoadStats->CharacterStats.EarthLvl;
@@ -657,12 +667,19 @@ void AMainCharacter::LoadGame(bool SetPosition)
 	RegenLvl = LoadStats->CharacterStats.RegenLvl;
 	ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
 
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Health: %f"), Health);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded FireMana: %f"), FireMana);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded RegenLvl: %f"), RegenLvl);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded skillpoints: %f"), SkillPoints);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Manaregenlvl: %f"), ManaRegenLvl);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Skillpoints: %f"), SkillPoints);
+
 	PlayerController->LoadStats();
 
 	if (SetPosition)
 	{
-	//	SetActorLocation(LoadStats->CharacterStats.Location);
-	//	SetActorRotation(LoadStats->CharacterStats.Rotation);
+		SetActorLocation(LoadStats->CharacterStats.Location);
+		SetActorRotation(LoadStats->CharacterStats.Rotation);
 	}
 }
 

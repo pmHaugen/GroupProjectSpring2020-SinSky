@@ -17,6 +17,8 @@ struct FCharacterStats
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float MaxHealth;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float Health;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float SkillPoints;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float FireLvl;
@@ -32,6 +34,14 @@ struct FCharacterStats
 	float ManaRegenLvl;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float Kills;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float FireMana;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float WaterMana;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float EarthMana;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float AirMana;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	FVector Location;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
