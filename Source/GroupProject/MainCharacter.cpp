@@ -141,7 +141,7 @@ void AMainCharacter::BeginPlay()
 	
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
-	PlayerController = Cast<AMyPlayerController>(GetController());
+	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
 }
 
 // Called every frame
@@ -308,15 +308,18 @@ void AMainCharacter::Pause()
 {
 	if (PlayerController && !bPause)
 	{
-		PlayerController->TogglePauseMenu();
-		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
 		bPause = true;
+		PlayerController->TogglePauseMenu();
+
+		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+		
 	}
 	else if (PlayerController && bPause)
 	{
+		bPause = false;
 		PlayerController->TogglePauseMenu();
 		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
-		bPause = false;
+		
 	}
 
 }

@@ -60,6 +60,7 @@ public:
 	void RemovePauseMenu();
 	void TogglePauseMenu();
 	bool bPauseMenuVisible;
+	bool bPause = false;
 
 	bool bEnemyHealthBarVisible;
 
@@ -124,6 +125,8 @@ public:
 	float XpToken;
 
 	float PlayerLevel;
+
+	
 
 	void AquireXp(float Amount);
 
