@@ -676,11 +676,12 @@ void AMainCharacter::GetPlayerExperience()
 }
 void AMainCharacter::LevelUpFire()
 {
-	if (SkillPoints >= 1)
+	if (SkillPoints >= 1.f)
 	{
-		SkillPoints -= 1;
+		SkillPoints -= 1.f;
 		FireLvl += 1;
 		UpdateSpellStats();
+		PlayerController->XpToken -= 1.f;
 	}
 	else
 	{
@@ -697,6 +698,7 @@ void AMainCharacter::LevelUpWater()
 		WaterLvl += 1;
 	}
 	UpdateSpellStats();
+	PlayerController->XpToken -= 1.f;
 }
 
 void AMainCharacter::LevelUpEarth()
@@ -707,6 +709,7 @@ void AMainCharacter::LevelUpEarth()
 		EarthLvl += 1;
 	}
 	UpdateSpellStats();
+	PlayerController->XpToken -= 1.f;
 }
 
 void AMainCharacter::LevelUpAir()
@@ -717,6 +720,7 @@ void AMainCharacter::LevelUpAir()
 		AirLvl += 1;
 	}
 	UpdateSpellStats();
+	PlayerController->XpToken -= 1.f;
 }
 void AMainCharacter::UpdateSpellStats()
 {

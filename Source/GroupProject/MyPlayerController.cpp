@@ -29,7 +29,7 @@ AMyPlayerController::AMyPlayerController()
 
 	XPoints = 0;
 	XPointsDifference = 0;
-	MaxXp = 1;
+	MaxXp = MaxXp = PlayerLevel * 35 + 100;
 	XpToken = 0;
 	PlayerLevel = 0;
 	bIsVisible = false;
@@ -111,6 +111,7 @@ void AMyPlayerController::OpenSkillMenu()
 		HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
 		FInputModeGameAndUI InputModeGameAndUI;
 		SetInputMode(InputModeGameAndUI);
+		UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller open: %f"), XpToken);
 
 		bShowMouseCursor = true;
 	}
@@ -123,6 +124,7 @@ void AMyPlayerController::RemoveSkillMenu()
 		HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
 		FInputModeGameOnly InputModeGameOnly;
 		SetInputMode(InputModeGameOnly);
+		UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller remove: %f"), XpToken);
 
 		bShowMouseCursor = false;
 	}
@@ -275,6 +277,8 @@ void AMyPlayerController::CalculateXp()
 
 	XPoints += XPointsDifference;
 	XPointsDifference = 0;
+
+	UE_LOG(LogTemp, Warning, TEXT("Calculate XP"));
 
 	if (XPoints >= MaxXp)
 	{
