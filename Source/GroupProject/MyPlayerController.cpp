@@ -29,7 +29,7 @@ AMyPlayerController::AMyPlayerController()
 
 	XPoints = 0;
 	XPointsDifference = 0;
-	MaxXp = 1;
+	MaxXp = 100;
 	XpToken = 0;
 	PlayerLevel = 0;
 	bIsVisible = false;
