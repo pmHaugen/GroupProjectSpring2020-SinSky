@@ -17,8 +17,8 @@ AWall::AWall()
 
 	RootComponent = Collider;
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+//	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Fireball Mesh"));
+//	Mesh->SetupAttachment(RootComponent);
 
 }
 
