@@ -114,14 +114,16 @@ AMainCharacter::AMainCharacter()
 	AirManaCost = 50;
 
 	//Upgrade Levels
-	FireLvl = 1.f;
+	FireLvl  = 1.f;
 	WaterLvl = 1.f;
+	EarthLvl = 1.f;
+	AirLvl   = 1.f;
 
 	//Mana bar Color
-	bFireEnoughMana = false;
+	bFireEnoughMana  = false;
 	bWaterEnoughMana = false;
 	bEarthEnoughMana = false;
-	bAirEnoughMana = false;
+	bAirEnoughMana   = false;
 
 	//Enemy HealthBar
 	bHasCombatTarget = false;
@@ -677,26 +679,48 @@ void AMainCharacter::GetPlayerExperience()
 }
 void AMainCharacter::LevelUpFire()
 {
-	if (SkillPoints >= 1)
-	{
-		SkillPoints -= 1;
+	//if (SkillPoints >= 1)
+	//{
+	//	SkillPoints -= 1;
 		FireLvl += 1;
-	}
-	FireSpellCD = 0.f;
-	FireMana = 1000000.f;
+	//}
+	UpdateSpellStats();
 }
 
 void AMainCharacter::LevelUpWater()
 {
-
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
+		WaterLvl += 1;
+	}
+	UpdateSpellStats();
 }
 
 void AMainCharacter::LevelUpEarth()
 {
-
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
+		EarthLvl += 1;
+	}
+	UpdateSpellStats();
 }
 
 void AMainCharacter::LevelUpAir()
 {
-
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
+		AirLvl += 1;
+	}
+	UpdateSpellStats();
+}
+void AMainCharacter::UpdateSpellStats()
+{
+	if (FireSpellCD >= 0.1f)
+	{
+		FireSpellCD = 1.f - (FireLvl / 10);
+	}
+	
 }

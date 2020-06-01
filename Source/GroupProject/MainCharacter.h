@@ -270,4 +270,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LevelUpAir();
 
+	void UpdateSpellStats();
+
 };
