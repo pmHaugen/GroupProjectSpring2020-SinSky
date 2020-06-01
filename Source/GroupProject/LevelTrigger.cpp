@@ -63,7 +63,6 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 					UE_LOG(LogTemp, Warning, TEXT("Switching level...."));
 					Main->NextLevel(NextLevel);
 					Clear->LevelsCleared += 1;
-					Clear->SaveStats();
 					//Main->NextLevel("StartLevel");
 				}
 

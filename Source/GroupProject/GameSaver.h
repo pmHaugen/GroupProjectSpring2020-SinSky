@@ -49,6 +49,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	uint32 UserIndex;
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FCharacterStats CharacterSave;
+	FCharacterStats CharacterStats;
 	
 };

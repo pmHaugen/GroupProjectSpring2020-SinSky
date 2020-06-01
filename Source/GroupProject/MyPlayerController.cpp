@@ -334,7 +334,7 @@ void AMyPlayerController::SaveStats()
 {
 	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
 
-	SaveStats->CharacterSave.Kills = Kills;
+	SaveStats->CharacterStats.Kills = Kills;
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 	UE_LOG(LogTemp, Warning, TEXT("Saved kills: %f"), Kills);
 }
@@ -345,6 +345,6 @@ void AMyPlayerController::LoadStats()
 
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
-	Kills = LoadStats->CharacterSave.Kills;
+	Kills = LoadStats->CharacterStats.Kills;
 	UE_LOG(LogTemp, Warning, TEXT("Loaded kills: %f"), Kills);
 }

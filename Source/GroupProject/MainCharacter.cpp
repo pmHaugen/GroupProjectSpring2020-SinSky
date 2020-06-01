@@ -625,17 +625,17 @@ void AMainCharacter::SaveGame()
 {
 	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
 
-	SaveStats->CharacterSave.SkillPoints = SkillPoints;
-	SaveStats->CharacterSave.MaxHealth = MaxHealth;
-	SaveStats->CharacterSave.FireLvl = FireLvl;
-	SaveStats->CharacterSave.WaterLvl = WaterLvl;
-	SaveStats->CharacterSave.EarthLvl = EarthLvl;
-	SaveStats->CharacterSave.AirLvl = AirLvl;
-	SaveStats->CharacterSave.RegenLvl = RegenLvl;
-	SaveStats->CharacterSave.ManaRegenLvl = ManaRegenLvl;
+	SaveStats->CharacterStats.SkillPoints = SkillPoints;
+	SaveStats->CharacterStats.MaxHealth = MaxHealth;
+	SaveStats->CharacterStats.FireLvl = FireLvl;
+	SaveStats->CharacterStats.WaterLvl = WaterLvl;
+	SaveStats->CharacterStats.EarthLvl = EarthLvl;
+	SaveStats->CharacterStats.AirLvl = AirLvl;
+	SaveStats->CharacterStats.RegenLvl = RegenLvl;
+	SaveStats->CharacterStats.ManaRegenLvl = ManaRegenLvl;
 
-	//SaveStats->CharacterSave.Location = GetActorLocation();
-	//SaveStats->CharacterSave.Rotation = GetActorRotation();
+	SaveStats->CharacterStats.Location = GetActorLocation();
+	SaveStats->CharacterStats.Rotation = GetActorRotation();
 
 	PlayerController->SaveStats();
 
@@ -649,23 +649,22 @@ void AMainCharacter::LoadGame(bool SetPosition)
 
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
-	SkillPoints = LoadStats->CharacterSave.SkillPoints;
-	MaxHealth = LoadStats->CharacterSave.MaxHealth;
-	FireLvl = LoadStats->CharacterSave.FireLvl;
-	WaterLvl = LoadStats->CharacterSave.WaterLvl;
-	EarthLvl = LoadStats->CharacterSave.EarthLvl;
-	AirLvl = LoadStats->CharacterSave.AirLvl;
-	RegenLvl = LoadStats->CharacterSave.RegenLvl;
-	ManaRegenLvl = LoadStats->CharacterSave.ManaRegenLvl;
+	SkillPoints = LoadStats->CharacterStats.SkillPoints;
+	MaxHealth = LoadStats->CharacterStats.MaxHealth;
+	FireLvl = LoadStats->CharacterStats.FireLvl;
+	WaterLvl = LoadStats->CharacterStats.WaterLvl;
+	EarthLvl = LoadStats->CharacterStats.EarthLvl;
+	AirLvl = LoadStats->CharacterStats.AirLvl;
+	RegenLvl = LoadStats->CharacterStats.RegenLvl;
+	ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
 
 	PlayerController->LoadStats();
 
-	//if (SetPosition)
-	//{
-		//SetActorLocation(LoadStats->CharacterSave.Location);
-		//SetActorRotation(LoadStats->CharacterSave.Rotation);
-
-	//}
+	if (SetPosition)
+	{
+		SetActorLocation(LoadStats->CharacterStats.Location);
+		SetActorRotation(LoadStats->CharacterStats.Rotation);
+	}
 }
 
 void AMainCharacter::GetPlayerExperience()
