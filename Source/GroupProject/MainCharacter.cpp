@@ -419,30 +419,18 @@ void AMainCharacter::SpellFour()
 
 void AMainCharacter::OpenTalentMenu()
 {
-	AMyPlayerController* MenuController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	MenuController->OpenSkillMenu();
-
-	if (bShowCursor == true)
+	if (PlayerController && !bPause)
 	{
-		APlayerController* PC = Cast<APlayerController>(GetController());
-		if (PC)
-		{
-			PC->bShowMouseCursor = true;
-			PC->bEnableClickEvents = true;
-			PC->bEnableMouseOverEvents = true;
-		}
+		PlayerController->ToggleSkillMenu();
+		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+		bPause = true;
 	}
-	if (bShowCursor == false) 
+	else if (PlayerController && bPause)
 	{
-		APlayerController* PC = Cast<APlayerController>(GetController());
-		if (PC)
-		{
-			PC->bShowMouseCursor = false;
-			PC->bEnableClickEvents = false;
-			PC->bEnableMouseOverEvents = false;
-		}
+		PlayerController->ToggleSkillMenu();
+		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
+		bPause = false;
 	}
-	bShowCursor = !bShowCursor;
 }
 
 //Getting Attacked

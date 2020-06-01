@@ -78,7 +78,9 @@ public:
 
 	//------
 
+	void ToggleSkillMenu();
 	void OpenSkillMenu();
+	void RemoveSkillMenu();
 
 
 	//Functions used by Enemy

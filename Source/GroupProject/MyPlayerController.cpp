@@ -30,6 +30,7 @@ AMyPlayerController::AMyPlayerController()
 	MaxXp = 1;
 	XpToken = 0;
 	PlayerLevel = 0;
+	bIsVisible = false;
 
 }
 void AMyPlayerController::BeginPlay()
@@ -87,27 +88,41 @@ void AMyPlayerController::BeginPlay()
 	}
 }
 
-void AMyPlayerController::OpenSkillMenu()
+void AMyPlayerController::ToggleSkillMenu()
 {
 		UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
-
 		if (bIsVisible)
 		{
-			if (HUDTalentTree)
-			{
-				HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
-				FInputModeUIOnly InputModeUIOnly;
-				SetInputMode(InputModeUIOnly);
-			}
+			RemoveSkillMenu();
 		}
-		if (!bIsVisible)
+		else
 		{
-			if (HUDTalentTree)
-			{
-				HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
-			}
+			OpenSkillMenu();
 		}
-	bIsVisible = !bIsVisible;
+}
+void AMyPlayerController::OpenSkillMenu()
+{
+	if (HUDTalentTree)
+	{
+		bIsVisible = true;
+		HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
+		FInputModeGameAndUI InputModeGameAndUI;
+		SetInputMode(InputModeGameAndUI);
+
+		bShowMouseCursor = true;
+	}
+}
+void AMyPlayerController::RemoveSkillMenu() 
+{
+	if (HUDTalentTree)
+	{
+		bIsVisible = false;
+		HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
+		FInputModeGameOnly InputModeGameOnly;
+		SetInputMode(InputModeGameOnly);
+
+		bShowMouseCursor = false;
+	}
 }
 
 void AMyPlayerController::KillCount(float Amount)
@@ -288,13 +303,13 @@ void AMyPlayerController::RemovePauseMenu()
 {
 	if (PauseMenu)
 	{
-		FInputModeGameOnly InputModeGameOnly;
-
-		SetInputMode(InputModeGameOnly);
-
-		bShowMouseCursor = false;
 		bPauseMenuVisible = false;
 		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+		FInputModeGameOnly InputModeGameOnly;
+		SetInputMode(InputModeGameOnly);
+
+
+		bShowMouseCursor = false;
 	}
 }
 
