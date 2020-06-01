@@ -30,11 +30,11 @@ struct FCharacterStats
 	float RegenLvl;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float ManaRegenLvl;
-	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float Kills;
-	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	FVector Location;
-	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	FRotator Rotation;
 };
 UCLASS()
