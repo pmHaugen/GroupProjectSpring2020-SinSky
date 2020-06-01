@@ -258,4 +258,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadGame(bool SetPosition);
 
+	UFUNCTION(BlueprintCallable)
+	void LevelUpFire();
+
+	UFUNCTION(BlueprintCallable)
+	void LevelUpWater();
+
+	UFUNCTION(BlueprintCallable)
+	void LevelUpEarth();
+
+	UFUNCTION(BlueprintCallable)
+	void LevelUpAir();
+
 };

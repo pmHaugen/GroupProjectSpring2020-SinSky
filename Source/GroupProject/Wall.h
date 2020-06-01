@@ -18,8 +18,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* Collider;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
+//	UPROPERTY(VisibleAnywhere)
+//	UStaticMeshComponent* Mesh;
 
 protected:
 	// Called when the game starts or when spawned

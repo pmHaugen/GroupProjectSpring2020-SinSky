@@ -347,7 +347,7 @@ void AMainCharacter::CastSpell()
 			FireMana -= FireManaCost;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
 		}
-		if (FireLvl == 2)
+		if (FireLvl == 10)
 		{
 			GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
 			FireTimeSinceSpell = 0;
@@ -364,7 +364,7 @@ void AMainCharacter::CastSpell()
 			WaterMana -= WaterManaCost;
 			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 		}
-		if (WaterLvl == 2)
+		if (WaterLvl == 10)
 		{
 			GetWorld()->SpawnActor<AWaterWave>(WaterWaveLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
 			WaterTimeSinceSpell = 0;
@@ -673,5 +673,30 @@ void AMainCharacter::GetPlayerExperience()
 	MaxXPoints = PlayerController->MaxXp;
 
 	SkillPoints = PlayerController->XpToken;
+
+}
+void AMainCharacter::LevelUpFire()
+{
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
+		FireLvl += 1;
+	}
+	FireSpellCD = 0.f;
+	FireMana = 1000000.f;
+}
+
+void AMainCharacter::LevelUpWater()
+{
+
+}
+
+void AMainCharacter::LevelUpEarth()
+{
+
+}
+
+void AMainCharacter::LevelUpAir()
+{
 
 }
