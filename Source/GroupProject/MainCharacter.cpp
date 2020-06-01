@@ -144,7 +144,7 @@ void AMainCharacter::BeginPlay()
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	//PlayerController->LoadStats();
+	LoadGame(true);
 }
 
 // Called every frame
@@ -252,8 +252,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveSideways", this, &AMainCharacter::MoveSideways);
-	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	//InputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::CastSpell);// old without the ability to hold for fire
+
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMainCharacter::StartSpell);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMainCharacter::StopSpell);
 
@@ -342,7 +341,7 @@ void AMainCharacter::CastSpell()
 
 	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost && !bPause)
 	{
-		if (FireLvl == 1)
+		if (FireLvl < 10)
 		{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 			FireTimeSinceSpell = 0;
@@ -428,13 +427,11 @@ void AMainCharacter::OpenTalentMenu()
 	if (PlayerController && !bPause)
 	{
 		PlayerController->ToggleSkillMenu();
-		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
 		bPause = true;
 	}
 	else if (PlayerController && bPause)
 	{
 		PlayerController->ToggleSkillMenu();
-		UE_LOG(LogTemp, Warning, TEXT("Pause menu"));
 		bPause = false;
 	}
 }
@@ -636,8 +633,8 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterStats.RegenLvl = RegenLvl;
 	SaveStats->CharacterStats.ManaRegenLvl = ManaRegenLvl;
 
-	SaveStats->CharacterStats.Location = GetActorLocation();
-	SaveStats->CharacterStats.Rotation = GetActorRotation();
+	//SaveStats->CharacterStats.Location = GetActorLocation();
+	//SaveStats->CharacterStats.Rotation = GetActorRotation();
 
 	PlayerController->SaveStats();
 
@@ -664,8 +661,8 @@ void AMainCharacter::LoadGame(bool SetPosition)
 
 	if (SetPosition)
 	{
-		SetActorLocation(LoadStats->CharacterStats.Location);
-		SetActorRotation(LoadStats->CharacterStats.Rotation);
+	//	SetActorLocation(LoadStats->CharacterStats.Location);
+	//	SetActorRotation(LoadStats->CharacterStats.Rotation);
 	}
 }
 
@@ -679,12 +676,17 @@ void AMainCharacter::GetPlayerExperience()
 }
 void AMainCharacter::LevelUpFire()
 {
-	//if (SkillPoints >= 1)
-	//{
-	//	SkillPoints -= 1;
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
 		FireLvl += 1;
-	//}
-	UpdateSpellStats();
+		UpdateSpellStats();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("To skill points"));
+	}
+
 }
 
 void AMainCharacter::LevelUpWater()
@@ -721,6 +723,8 @@ void AMainCharacter::UpdateSpellStats()
 	if (FireSpellCD >= 0.1f)
 	{
 		FireSpellCD = 1.f - (FireLvl / 10);
+		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), FireSpellCD);
 	}
+	FireMaxMana = 200 + (FireLvl * 10);
 	
 }
