@@ -35,6 +35,8 @@ struct FCharacterStats
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float Kills;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float TestingStat;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float FireMana;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float WaterMana;

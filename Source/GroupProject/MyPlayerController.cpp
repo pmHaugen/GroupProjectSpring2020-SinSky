@@ -337,18 +337,25 @@ void AMyPlayerController::TogglePauseMenu()
 void AMyPlayerController::SaveStats()
 {
 	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
-
-	SaveStats->CharacterStats.Kills = Kills;
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
+	SaveStats->CharacterStats.Kills = Kills;
+	SaveStats->CharacterStats.TestingStat = testingstat;
+
+
+
 	UE_LOG(LogTemp, Warning, TEXT("Saved kills: %f"), Kills);
 }
 
 void AMyPlayerController::LoadStats()
 {
 	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
-
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
 	Kills = LoadStats->CharacterStats.Kills;
+	testingstat = LoadStats->CharacterStats.TestingStat;
+
+
 	UE_LOG(LogTemp, Warning, TEXT("Loaded kills: %f"), Kills);
+	UE_LOG(LogTemp, Warning, TEXT("testingstat: %f"), testingstat);
+
 }

@@ -126,7 +126,7 @@ public:
 
 	float PlayerLevel;
 
-	
+	float testingstat = 10;
 
 	void AquireXp(float Amount);
 

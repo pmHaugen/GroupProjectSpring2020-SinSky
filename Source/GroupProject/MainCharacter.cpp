@@ -638,6 +638,8 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterStats.EarthMana = EarthMana;
 	SaveStats->CharacterStats.AirMana = AirMana;
 
+	//SaveStats->CharacterStats.Kills = 10;
+
 	SaveStats->CharacterStats.Location = GetActorLocation();
 	SaveStats->CharacterStats.Rotation = GetActorRotation();
 
@@ -666,7 +668,9 @@ void AMainCharacter::LoadGame(bool SetPosition)
 	AirLvl = LoadStats->CharacterStats.AirLvl;
 	RegenLvl = LoadStats->CharacterStats.RegenLvl;
 	ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
+	//Kills = LoadStats->CharacterStats.Kills;
 
+	UE_LOG(LogTemp, Warning, TEXT("New kill load: %f"), Kills);
 	UE_LOG(LogTemp, Warning, TEXT("Loaded Health: %f"), Health);
 	UE_LOG(LogTemp, Warning, TEXT("Loaded FireMana: %f"), FireMana);
 	UE_LOG(LogTemp, Warning, TEXT("Loaded RegenLvl: %f"), RegenLvl);

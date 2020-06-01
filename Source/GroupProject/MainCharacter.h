@@ -179,6 +179,7 @@ public:
 
 	//--------------------------Stats----------------------------
 
+	float Kills;
 	//Health
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Stats")
 	float Health;
