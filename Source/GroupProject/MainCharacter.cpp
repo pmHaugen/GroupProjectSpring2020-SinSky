@@ -114,10 +114,11 @@ AMainCharacter::AMainCharacter()
 	AirManaCost = 50;
 
 	//Upgrade Levels
-	FireLvl  = 1.f;
-	WaterLvl = 1.f;
-	EarthLvl = 1.f;
-	AirLvl   = 1.f;
+	FireLvl		   = 1.f;
+	WaterLvl	   = 1.f;
+	EarthLvl   	   = 1.f;
+	AirLvl		   = 1.f;
+	HealthRegenLvl = 1.f;
 
 	//Mana bar Color
 	bFireEnoughMana  = false;
@@ -348,7 +349,7 @@ void AMainCharacter::CastSpell()
 			FireMana -= FireManaCost;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
 		}
-		if (FireLvl == 10)
+		if (FireLvl >= 10)
 		{
 			GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
 			FireTimeSinceSpell = 0;
@@ -358,14 +359,14 @@ void AMainCharacter::CastSpell()
 	}
 	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
-		if(WaterLvl == 1)
+		if(WaterLvl < 10)
 		{
 			GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
 			WaterTimeSinceSpell = 0;
 			WaterMana -= WaterManaCost;
 			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
 		}
-		if (WaterLvl == 10)
+		if (WaterLvl >= 10)
 		{
 			GetWorld()->SpawnActor<AWaterWave>(WaterWaveLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
 			WaterTimeSinceSpell = 0;
@@ -726,7 +727,7 @@ void AMainCharacter::LevelUpFire()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("To skill points"));
+		UE_LOG(LogTemp, Warning, TEXT("No skill points"));
 	}
 
 }
@@ -736,10 +737,12 @@ void AMainCharacter::LevelUpWater()
 	if (SkillPoints >= 1)
 	{
 		SkillPoints -= 1;
+		PlayerController->XpToken -= 1.f;
 		WaterLvl += 1;
+		UpdateSpellStats();
 	}
-	UpdateSpellStats();
-	PlayerController->XpToken -= 1.f;
+
+
 }
 
 void AMainCharacter::LevelUpEarth()
@@ -747,10 +750,11 @@ void AMainCharacter::LevelUpEarth()
 	if (SkillPoints >= 1)
 	{
 		SkillPoints -= 1;
+		PlayerController->XpToken -= 1.f;
 		EarthLvl += 1;
+		UpdateSpellStats();
 	}
-	UpdateSpellStats();
-	PlayerController->XpToken -= 1.f;
+
 }
 
 void AMainCharacter::LevelUpAir()
@@ -758,18 +762,52 @@ void AMainCharacter::LevelUpAir()
 	if (SkillPoints >= 1)
 	{
 		SkillPoints -= 1;
+		PlayerController->XpToken -= 1.f;
 		AirLvl += 1;
+		UpdateSpellStats();
 	}
-	UpdateSpellStats();
-	PlayerController->XpToken -= 1.f;
+
+}
+void AMainCharacter::LevelUpRegen()
+{
+	if (SkillPoints >= 1)
+	{
+		SkillPoints -= 1;
+		PlayerController->XpToken -= 1.f;
+		HealthRegenLvl += 1;
+		RegenLvl += 1;
+		UpdateSpellStats();
+	}
+
 }
 void AMainCharacter::UpdateSpellStats()
 {
 	if (FireSpellCD >= 0.1f)
 	{
-		FireSpellCD = 1.f - (FireLvl / 10);
+		FireSpellCD = 2.f - (FireLvl / 10);
 		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), FireSpellCD);
 	}
+	if (WaterSpellCD >= 0.1f)
+	{
+		WaterSpellCD = 1.f - (WaterLvl / 10);
+		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), WaterSpellCD);
+	}
+	if (EarthSpellCD >= 0.1f)
+	{
+		EarthSpellCD = 1.f - (EarthLvl / 10);
+		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), FireSpellCD);
+	}
+	if (AirSpellCD >= 0.1f)
+	{
+		AirSpellCD = 1.f - (AirLvl / 10);
+		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), AirSpellCD);
+	}
 	FireMaxMana = 200 + (FireLvl * 10);
+	WaterMaxMana = 200 + (WaterLvl * 10);
+	EarthMaxMana = 200 + (WaterLvl * 10);
+	AirMaxMana = 200 + (AirLvl * 10);
+
+	HealthRegen = 2 + (HealthRegenLvl*2);
+	ManaRegen = 8 + (RegenLvl*2);
 	
 }

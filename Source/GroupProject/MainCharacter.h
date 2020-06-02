@@ -204,6 +204,9 @@ public:
 	float RegenLvl;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
 	float ManaRegenLvl;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Upgrades")
+	float HealthRegenLvl;
+
 
 	//Defence
 	float FireResistance;
@@ -270,6 +273,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LevelUpAir();
+
+	UFUNCTION(BlueprintCallable)
+	void LevelUpRegen();
 
 	void UpdateSpellStats();
 
