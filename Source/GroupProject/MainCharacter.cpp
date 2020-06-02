@@ -6,6 +6,10 @@
 #include "WaterWave.h"
 #include "EarthBlast.h"
 #include "AirGun.h"
+#include "MyPlayerController.h"
+#include "Enemy.h"
+#include "Boss.h"
+#include "GameSaver.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -17,10 +21,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
-#include "MyPlayerController.h"
-#include "Enemy.h"
-#include "Boss.h"
-#include "GameSaver.h"
+
 
 
 // Sets default values
@@ -162,16 +163,16 @@ void AMainCharacter::Tick(float DeltaTime)
 	PlayerController->PlayerSpeed(CurrentVelocity);
 	SetActorLocation(NewLocation);
 
-	//Mouse:
-	FHitResult Hit;
-	bool HitResult = false;
+		//Mouse:
+		FHitResult Hit;
+		bool HitResult = false;
 
-	//using "ByChannel" to only get the World Static Meshes
-	HitResult = GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_WorldStatic), true, Hit);
+		//using "ByChannel" to only get the World Static Meshes
+		HitResult = GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_WorldStatic), true, Hit);
 
-	if (HitResult)
-	{
-	//Cursor location updates:
+		if (HitResult)
+		{
+			//Cursor location updates:
 
 
 
@@ -218,34 +219,34 @@ void AMainCharacter::Tick(float DeltaTime)
 			bDash = false;
 			MaxSpeed = 400.f;
 		}
-	
 
-	//ManaBarColor
-	ManaBarColor();
 
-	if (Health <= 0)
-	{
-		Dead();
-	}
+		//ManaBarColor
+		ManaBarColor();
 
-	if (CombatTarget)
-	{
-		CombatTargetLocation = CombatTarget->GetActorLocation();
-		if (PlayerController)
+		if (Health <= 0)
 		{
-			PlayerController->EnemyLocation = CombatTargetLocation;
+			Dead();
 		}
-	}
-	if (BossTarget)
-	{
-		CombatTargetLocation = BossTarget->GetActorLocation();
-		if (PlayerController)
+
+		if (CombatTarget)
 		{
-			PlayerController->BossLocation = CombatTargetLocation;
+			CombatTargetLocation = CombatTarget->GetActorLocation();
+			if (PlayerController)
+			{
+				PlayerController->EnemyLocation = CombatTargetLocation;
+			}
 		}
-	}
-	GetPlayerExperience();
-	}
+		if (BossTarget)
+		{
+			CombatTargetLocation = BossTarget->GetActorLocation();
+			if (PlayerController)
+			{
+				PlayerController->BossLocation = CombatTargetLocation;
+			}
+		}
+		GetPlayerExperience();
+	}	
 }
 
 // Called to bind functionality to input
