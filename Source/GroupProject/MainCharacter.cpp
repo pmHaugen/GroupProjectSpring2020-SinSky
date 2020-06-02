@@ -144,7 +144,7 @@ void AMainCharacter::BeginPlay()
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	//LoadGame(true);
+	//LoadGame();
 }
 
 // Called every frame
@@ -622,8 +622,23 @@ void AMainCharacter::UpdateCombatTarget()
 
 void AMainCharacter::SaveGame()
 {
-	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+	float BossKills;
+	float LevelsCleared;
+	float Xpoints;
+	float FoesDefeated;
+	float FoesAlive;
+	float PlayerLevel;
 
+	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+	Kills         = PlayerController->Kills;
+	BossKills     = PlayerController->BossKills;
+	LevelsCleared = PlayerController->LevelsCleared;
+	Xpoints       = PlayerController->XPoints;
+	PlayerLevel   = PlayerController->PlayerLevel;
+	//test if needed
+	FoesDefeated  = PlayerController->FoesDefeated;
+	FoesAlive     = PlayerController->FoesAlive;
+	//
 	SaveStats->CharacterStats.SkillPoints = SkillPoints;
 	SaveStats->CharacterStats.MaxHealth = MaxHealth;
 	SaveStats->CharacterStats.Health = Health;
@@ -637,13 +652,18 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterStats.WaterMana = WaterMana;
 	SaveStats->CharacterStats.EarthMana = EarthMana;
 	SaveStats->CharacterStats.AirMana = AirMana;
+	SaveStats->CharacterStats.Kills = Kills;
+	SaveStats->CharacterStats.BossKills = BossKills;
+	SaveStats->CharacterStats.LevelsCleared = LevelsCleared;
+	SaveStats->CharacterStats.Xpoints = Xpoints;
+	SaveStats->CharacterStats.FoesDefeated = FoesDefeated;
+	SaveStats->CharacterStats.FoesAlive = FoesAlive;
+	SaveStats->CharacterStats.PlayerLevel = PlayerLevel;
 
-	//SaveStats->CharacterStats.Kills = 10;
+	//SaveStats->CharacterStats.Location = GetActorLocation();
+	//SaveStats->CharacterStats.Rotation = GetActorRotation();
 
-	SaveStats->CharacterStats.Location = GetActorLocation();
-	SaveStats->CharacterStats.Rotation = GetActorRotation();
-
-	PlayerController->SaveStats();
+	//PlayerController->SaveStats();
 
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 	
@@ -655,7 +675,7 @@ void AMainCharacter::LoadGame(bool SetPosition)
 
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
-	SkillPoints = LoadStats->CharacterStats.SkillPoints;
+	//SkillPoints = LoadStats->CharacterStats.SkillPoints;
 	MaxHealth = LoadStats->CharacterStats.MaxHealth;
 	Health = LoadStats->CharacterStats.Health;
 	FireMana = LoadStats->CharacterStats.FireMana;
@@ -680,11 +700,11 @@ void AMainCharacter::LoadGame(bool SetPosition)
 
 	PlayerController->LoadStats();
 
-	if (SetPosition)
-	{
-		SetActorLocation(LoadStats->CharacterStats.Location);
-		SetActorRotation(LoadStats->CharacterStats.Rotation);
-	}
+	//if (SetPosition)
+	//{
+	//	SetActorLocation(LoadStats->CharacterStats.Location);
+	//	SetActorRotation(LoadStats->CharacterStats.Rotation);
+	//}
 }
 
 void AMainCharacter::GetPlayerExperience()

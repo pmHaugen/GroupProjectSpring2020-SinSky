@@ -122,11 +122,10 @@ public:
 	float XPointsDifference;
 	float MaxXp;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skillpoints")
 	float XpToken;
 
 	float PlayerLevel;
-
-	float testingstat = 10;
 
 	void AquireXp(float Amount);
 

@@ -35,8 +35,6 @@ struct FCharacterStats
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float Kills;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
-	float TestingStat;
-	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float FireMana;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	float WaterMana;
@@ -48,6 +46,18 @@ struct FCharacterStats
 	FVector Location;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	FRotator Rotation;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float BossKills;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float LevelsCleared;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float Xpoints;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float FoesDefeated;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float FoesAlive;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	float PlayerLevel;
 };
 UCLASS()
 class GROUPPROJECT_API UGameSaver : public USaveGame
