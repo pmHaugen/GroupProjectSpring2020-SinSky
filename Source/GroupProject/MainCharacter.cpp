@@ -396,7 +396,8 @@ void AMainCharacter::CastSpell()
 
 void AMainCharacter::Dead()
 {
-	Destroy();
+	//Destroy();
+	NextLevel("AirLevel");
 }
 
 void AMainCharacter::StartSpell()

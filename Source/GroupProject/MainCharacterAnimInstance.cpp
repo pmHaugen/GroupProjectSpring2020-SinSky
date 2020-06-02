@@ -27,9 +27,9 @@ void UMainCharacterAnimInstance::UpdateAnimationProperties()
 
 	if (Pawn)
 	{
-		/* Hello, I am the only thing that works. BUT I WILL crash the engine!
+		//Hello, I am the only thing that works. BUT I WILL crash the engine!
 		AMyPlayerController* PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		MovementSpeed = PlayerController->CurrentPlayerSpeed;*/
+		MovementSpeed = PlayerController->CurrentPlayerSpeed;
 
 		/**FVector Speed = Pawn->GetVelocity();
 		FVector LateralSpeed = FVector(Speed.X, Speed.Y, 0.f);
@@ -39,6 +39,7 @@ void UMainCharacterAnimInstance::UpdateAnimationProperties()
 
 		if (MainCharacter == nullptr)
 		{
+			MovementSpeed = 0;
 			MainCharacter = Cast<AMainCharacter>(Pawn);
 		}
 	}

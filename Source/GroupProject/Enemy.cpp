@@ -309,6 +309,11 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 			MoveToTarget(MainCharacter);
 			//MainCharacter->UpdateCombatTarget();
+			if (MainCharacter== nullptr)
+			{
+				MoveToTarget(nullptr);
+				SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
+			}
 		}
 	}
 }
@@ -326,14 +331,19 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 		FNavPathSharedPtr NavPath;
 
 		AIController->MoveTo(MoveRequest, &NavPath);
+		if (Target == nullptr)
+		{
+			AIController->StopMovement();
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
+		}
 
-		auto PathPoints = NavPath->GetPathPoints();
+		/*auto PathPoints = NavPath->GetPathPoints();
 		for (auto Point : PathPoints)
 		{
 			FVector Location = Point.Location;
 
 			//UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
-		}
+		}*/
 	}
 }
 
