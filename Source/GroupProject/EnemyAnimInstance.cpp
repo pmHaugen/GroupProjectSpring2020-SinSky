@@ -27,6 +27,8 @@ void UEnemyAnimInstance::UpdateAnimationProperties()
 			FVector LateralSpeed = FVector(Speed.X, Speed.Y, 0.f);
 			MovementSpeed = LateralSpeed.Size();
 
+			UE_LOG(LogTemp, Warning, TEXT("Enemy Movement speed: %f"), MovementSpeed);
+
 			Enemy = Cast<AEnemy>(Pawn);
 		}
 	}
