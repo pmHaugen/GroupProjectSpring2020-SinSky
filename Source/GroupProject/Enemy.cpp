@@ -200,6 +200,7 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			//Redundant, but will cause crash if removed.
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 
 			MoveToTarget(MainCharacter);

@@ -219,6 +219,7 @@ void ABoss::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		
 		if (MainCharacter)
 		{
+			SetBossMovementStatus(EBossMovementStatus::BMS_MoveToTarget);
 			MainCharacter->SetBossTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
 			if (MainCharacter->PlayerController)
