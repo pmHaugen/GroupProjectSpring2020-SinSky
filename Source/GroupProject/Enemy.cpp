@@ -233,6 +233,7 @@ void AEnemy::HPSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("HPSPhereoverlapbegin"));
 			MainCharacter->SetCombatTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
 			MainCharacter->UpdateCombatTarget();
@@ -306,7 +307,7 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 			bOverLappingCombatSphere = false;
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 			MoveToTarget(MainCharacter);
-			MainCharacter->UpdateCombatTarget();
+			//MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
