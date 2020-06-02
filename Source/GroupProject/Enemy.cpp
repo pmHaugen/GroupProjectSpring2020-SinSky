@@ -25,6 +25,10 @@ AEnemy::AEnemy()
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(90.f);
 
+	HPSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HPSphere"));
+	HPSphere->SetupAttachment(GetRootComponent());
+	HPSphere->InitSphereRadius(1000.f);
+
 	bOverLappingCombatSphere= false;
 
 	DifficultyScaling = 0;
@@ -195,11 +199,8 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		{
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 
-			MainCharacter->SetCombatTarget(this);
-			MainCharacter->SetHasCombatTarget(true);
-			MainCharacter->UpdateCombatTarget();
-
 			MoveToTarget(MainCharacter);
+			//MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
@@ -211,19 +212,44 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			if (MainCharacter->CombatTarget == this)
-			{
-				MainCharacter->SetCombatTarget(nullptr);
-				MainCharacter->SetHasCombatTarget(false);
-			}
-
-			MainCharacter->UpdateCombatTarget();
+			//MainCharacter->UpdateCombatTarget();
 
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
 			if (AIController)
 			{
 				AIController->StopMovement();
 			}
+		}
+	}
+}
+
+void AEnemy::HPSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			MainCharacter->SetCombatTarget(this);
+			MainCharacter->SetHasCombatTarget(true);
+			MainCharacter->UpdateCombatTarget();
+		}
+	}
+}
+
+void AEnemy::HPSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor)
+	{
+		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
+		if (MainCharacter)
+		{
+			if (MainCharacter->CombatTarget == this)
+			{
+				MainCharacter->SetCombatTarget(nullptr);
+				MainCharacter->SetHasCombatTarget(false);
+			}
+			MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
@@ -262,7 +288,7 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
 				MainCharacter->AirDamage(HitDamage);
 			}
-			MainCharacter->UpdateCombatTarget();
+			//MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
