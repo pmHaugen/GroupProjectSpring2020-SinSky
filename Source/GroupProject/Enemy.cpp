@@ -71,6 +71,9 @@ void AEnemy::BeginPlay()
 	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapEnd);
 
+	HPSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::HPSphereOnOverlapBegin);
+	HPSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::HPSphereOnOverlapEnd);
+
 	GetEnemyElementalStatus();
 	GetEnemyDifficultyStatus();
 	GetPlayerProgress();
