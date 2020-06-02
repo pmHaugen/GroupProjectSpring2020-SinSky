@@ -263,6 +263,9 @@ public:
 	void LoadGame(bool SetPosition);
 
 	UFUNCTION(BlueprintCallable)
+	void ResetGame();
+
+	UFUNCTION(BlueprintCallable)
 	void LevelUpFire();
 
 	UFUNCTION(BlueprintCallable)
@@ -277,6 +280,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LevelUpRegen();
 
+	UFUNCTION(BlueprintCallable)
 	void UpdateSpellStats();
 
 };

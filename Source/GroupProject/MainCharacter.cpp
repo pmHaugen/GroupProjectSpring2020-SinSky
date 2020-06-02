@@ -66,13 +66,13 @@ AMainCharacter::AMainCharacter()
 	FireTimeSinceSpell = { 0 };
 
 
-	WaterSpellCD = { 0.1f };
+	WaterSpellCD = { 0.5f };
 	WaterTimeSinceSpell = { 0 };
 
-	EarthSpellCD = { 2.f };
+	EarthSpellCD = { 1.5f };
 	EarthTimeSinceSpell = { 0 };
 
-	AirSpellCD = { 1.f };
+	AirSpellCD = { 1.5f };
 	AirTimeSinceSpell = { 0 };
 
 
@@ -145,6 +145,7 @@ void AMainCharacter::BeginPlay()
 	WalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	//RunSpeed = GetCharacterMovement()->MaxCustomMovementSpeed;
 	PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	UpdateSpellStats();
 	//LoadGame();
 }
 
@@ -647,6 +648,7 @@ void AMainCharacter::SaveGame()
 	SaveStats->CharacterStats.WaterLvl = WaterLvl;
 	SaveStats->CharacterStats.EarthLvl = EarthLvl;
 	SaveStats->CharacterStats.AirLvl = AirLvl;
+	SaveStats->CharacterStats.HealthRegenLvl = HealthRegenLvl;
 	SaveStats->CharacterStats.RegenLvl = RegenLvl;
 	SaveStats->CharacterStats.ManaRegenLvl = ManaRegenLvl;
 	SaveStats->CharacterStats.FireMana = FireMana;
@@ -689,6 +691,7 @@ void AMainCharacter::LoadGame(bool SetPosition)
 	AirLvl = LoadStats->CharacterStats.AirLvl;
 	RegenLvl = LoadStats->CharacterStats.RegenLvl;
 	ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
+	HealthRegenLvl = LoadStats->CharacterStats.HealthRegenLvl;
 	//Kills = LoadStats->CharacterStats.Kills;
 
 	UE_LOG(LogTemp, Warning, TEXT("New kill load: %f"), Kills);
@@ -807,7 +810,49 @@ void AMainCharacter::UpdateSpellStats()
 	EarthMaxMana = 200 + (WaterLvl * 10);
 	AirMaxMana = 200 + (AirLvl * 10);
 
-	HealthRegen = 2 + (HealthRegenLvl*2);
-	ManaRegen = 8 + (RegenLvl*2);
+	HealthRegen = 1 + (HealthRegenLvl*2);
+	ManaRegen = 6 + (RegenLvl*2);
 	
+}
+
+void AMainCharacter::ResetGame()
+{
+	float BossKills;
+	float LevelsCleared;
+	float Xpoints;
+	float PlayerLevel;
+
+	Kills = PlayerController->Kills;
+	BossKills = PlayerController->BossKills;
+	LevelsCleared = PlayerController->LevelsCleared;
+	Xpoints = PlayerController->XPoints;
+	PlayerLevel = PlayerController->PlayerLevel;
+
+	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	SaveStats->CharacterStats.SkillPoints = 0;
+	SaveStats->CharacterStats.MaxHealth = 500;
+	SaveStats->CharacterStats.Health = 500;
+	SaveStats->CharacterStats.FireLvl = 1;
+	SaveStats->CharacterStats.WaterLvl = 1;
+	SaveStats->CharacterStats.EarthLvl = 1;
+	SaveStats->CharacterStats.AirLvl = 1;
+	SaveStats->CharacterStats.HealthRegenLvl = 1;
+	SaveStats->CharacterStats.RegenLvl = 1;
+	SaveStats->CharacterStats.ManaRegenLvl = 1;
+	SaveStats->CharacterStats.FireMana = 200;
+	SaveStats->CharacterStats.WaterMana = 200;
+	SaveStats->CharacterStats.EarthMana = 200;
+	SaveStats->CharacterStats.AirMana = 200;
+	SaveStats->CharacterStats.Kills = 0;
+	SaveStats->CharacterStats.BossKills = 0;
+	SaveStats->CharacterStats.LevelsCleared = 0;
+	SaveStats->CharacterStats.Xpoints = 0;
+	SaveStats->CharacterStats.PlayerLevel = 0;
+
+
+	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
+
+	LoadGame(false);
+	PlayerController->LoadStats();
 }
