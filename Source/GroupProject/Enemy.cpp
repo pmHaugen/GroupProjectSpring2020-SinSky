@@ -193,7 +193,7 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
 
 			MainCharacter->SetCombatTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
