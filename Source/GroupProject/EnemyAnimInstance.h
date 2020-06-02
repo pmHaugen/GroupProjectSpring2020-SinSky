@@ -13,10 +13,11 @@ UCLASS()
 class GROUPPROJECT_API UEnemyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+public:
 
-		//use video 66. for reference.
+	//Video 66-67.
 
-	/**virtual void NativeInitializeAnimation() override;
+	virtual void NativeInitializeAnimation() override;
 
 	UFUNCTION(BlueprintCallable, Category = AimationProperties)
 	void UpdateAnimationProperties();
@@ -29,5 +30,4 @@ class GROUPPROJECT_API UEnemyAnimInstance : public UAnimInstance
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement)
 	class AEnemy* Enemy;
-	*/
 };
