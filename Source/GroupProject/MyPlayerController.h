@@ -141,6 +141,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadStats();
 
+	//Movement for animations
+	void PlayerSpeed(FVector Velocity);
+	float CurrentPlayerSpeed;
+
 protected:
 	virtual void BeginPlay() override;
 

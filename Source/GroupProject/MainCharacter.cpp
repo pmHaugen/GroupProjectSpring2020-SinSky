@@ -158,9 +158,10 @@ void AMainCharacter::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("Fire CD %f!"), FireSpellCD);
 	if (!bPause)
 	{
-		//Movement:
-		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
-		SetActorLocation(NewLocation);
+	//Movement:
+	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+	PlayerController->PlayerSpeed(CurrentVelocity);
+	SetActorLocation(NewLocation);
 
 		//Mouse:
 		FHitResult Hit;
