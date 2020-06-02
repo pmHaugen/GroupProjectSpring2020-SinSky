@@ -215,7 +215,7 @@ void AEnemy::AgroSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompone
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			//MainCharacter->UpdateCombatTarget();
+			MainCharacter->UpdateCombatTarget();
 
 			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
 			if (AIController)
@@ -252,8 +252,8 @@ void AEnemy::HPSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent
 			{
 				MainCharacter->SetCombatTarget(nullptr);
 				MainCharacter->SetHasCombatTarget(false);
+				MainCharacter->UpdateCombatTarget();
 			}
-			MainCharacter->UpdateCombatTarget();
 		}
 	}
 }
