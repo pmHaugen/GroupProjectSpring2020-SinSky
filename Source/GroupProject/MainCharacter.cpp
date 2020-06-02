@@ -159,6 +159,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	{
 	//Movement:
 	FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+	PlayerController->PlayerSpeed(CurrentVelocity);
 	SetActorLocation(NewLocation);
 
 	//Mouse:

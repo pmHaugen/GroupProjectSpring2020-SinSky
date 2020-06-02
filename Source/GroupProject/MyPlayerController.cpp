@@ -364,5 +364,9 @@ void AMyPlayerController::LoadStats()
 
 }
 
+void AMyPlayerController::PlayerSpeed(FVector Velocity)
+{
+	CurrentPlayerSpeed = Velocity.Size();
+}
 
 //kill, boss, kills, exp, tokens
