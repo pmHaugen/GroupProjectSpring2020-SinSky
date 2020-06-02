@@ -193,6 +193,8 @@ void AEnemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+
 			MainCharacter->SetCombatTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
 			MainCharacter->UpdateCombatTarget();
@@ -288,7 +290,7 @@ void AEnemy::MoveToTarget(AMainCharacter* Target)
 	{
 		FAIMoveRequest MoveRequest;
 		MoveRequest.SetGoalActor(Target);
-		MoveRequest.SetAcceptanceRadius(5.0f);
+		MoveRequest.SetAcceptanceRadius(50.0f);
 
 		FNavPathSharedPtr NavPath;
 
