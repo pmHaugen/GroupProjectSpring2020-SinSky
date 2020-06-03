@@ -321,6 +321,7 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 
 void AEnemy::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Combatonoverlapbegin"));
 	if (OtherActor)
 	{
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
