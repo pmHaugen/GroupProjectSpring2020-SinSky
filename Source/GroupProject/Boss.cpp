@@ -6,7 +6,6 @@
 #include "AiController.h"
 #include "MainCharacter.h"
 #include "MyPlayerController.h"
-#include "Enemy.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/BoxComponent.h"
 #include "Animation/AnimInstance.h"
