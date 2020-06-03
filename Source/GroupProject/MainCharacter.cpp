@@ -21,6 +21,8 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "Animation/AnimInstance.h"
+#include "Components/SkeletalMeshComponent.h"
 
 
 
@@ -361,6 +363,7 @@ void AMainCharacter::CastSpell()
 
 	FVector SpellSpawnLocation = GetActorLocation() + (GetActorForwardVector() * SpellForwardOffset);
 	FRotator SpellSpawnRotation = GetActorRotation();
+	Attack();
 
 	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost && !bPause)
 	{
@@ -882,4 +885,37 @@ void AMainCharacter::ResetGame()
 
 	LoadGame(false);
 	PlayerController->LoadStats();
+}
+
+void AMainCharacter::Attack()
+{
+	if (!bAttacking)
+	{
+		bAttacking = true;
+
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance && CombatMontage)
+		{
+			int32 Selection = FMath::RandRange(0, 1);
+			switch (Selection)
+			{
+			case 0:
+				AnimInstance->Montage_Play(CombatMontage, 1.f);
+				AnimInstance->Montage_JumpToSection(FName("Attack_1"), CombatMontage);
+				break;
+			case 1:
+				AnimInstance->Montage_Play(CombatMontage, 1.f);
+				AnimInstance->Montage_JumpToSection(FName("Attack_2"), CombatMontage);
+				break;
+
+			default:
+				;
+			}
+		}
+	}
+}
+
+void AMainCharacter::AttackEnd()
+{
+	bAttacking = false;
 }
