@@ -257,11 +257,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	TSubclassOf<AEnemy> EnemyFilter;
 
-	UFUNCTION(BlueprintCallable)
-	void SaveGame();
+	FName NextLevelName;
 
 	UFUNCTION(BlueprintCallable)
-	void LoadGame(bool SetPosition);
+	void SaveGame(bool SaveLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void LoadGame(bool LoadLevel);
 
 	UFUNCTION(BlueprintCallable)
 	void ResetGame();
