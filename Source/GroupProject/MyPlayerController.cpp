@@ -48,6 +48,8 @@ void AMyPlayerController::BeginPlay()
 	{
 		HUDOverlay = CreateWidget<UUserWidget>(this, HUDOverlayAsset);
 	}
+	FInputModeGameOnly InputModeGameOnly;
+	SetInputMode(InputModeGameOnly);
 	HUDOverlay->AddToViewport();
 	HUDOverlay->SetVisibility(ESlateVisibility::Visible);
 

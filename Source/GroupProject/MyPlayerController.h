@@ -30,11 +30,20 @@ public:
 	TSubclassOf<class UUserWidget> HUDOverlayAsset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> HUDOverlayTalentTree;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> WidgetMainMenu;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<UUserWidget> WPauseMenu;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* HUDOverlay;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* HUDTalentTree;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* MainMenu;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* PauseMenu;
+
 
 
 	//Enemy Health Bar
@@ -50,11 +59,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* BossHealthBar;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	TSubclassOf<UUserWidget> WPauseMenu;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	UUserWidget* PauseMenu;
+
+
 
 	void ShowPauseMenu();
 	void RemovePauseMenu();
