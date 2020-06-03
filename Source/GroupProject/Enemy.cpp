@@ -9,6 +9,9 @@
 #include "WaterWave.h"
 #include "MyPlayerController.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Animation/AnimInstance.h"
+#include "Components/BoxComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -24,6 +27,9 @@ AEnemy::AEnemy()
 	CombatSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CombatSphere"));
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(90.f);
+
+	CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CombatCollision"));
+	CombatCollision->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("DuckEnemySocket"));
 
 	HPSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HPSphere"));
 	HPSphere->SetupAttachment(GetRootComponent());
@@ -53,6 +59,9 @@ AEnemy::AEnemy()
 	bMedium = false;
 	bHard = false;
 
+	AttackMinTime = 0.5f;
+	AttackMaxTime = 2.5f;
+
 }
 
 // Called when the game starts or when spawned
@@ -70,6 +79,14 @@ void AEnemy::BeginPlay()
 
 	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatSphereOnOverlapEnd);
+
+	CombatCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::CombatOnOverlapBegin);
+	CombatCollision->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatOnOverlapEnd);
+
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CombatCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	CombatCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	CombatCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
 	HPSphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::HPSphereOnOverlapBegin);
 	HPSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::HPSphereOnOverlapEnd);
@@ -267,32 +284,11 @@ void AEnemy::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{	
-			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+			CombatTarget = MainCharacter;
+			//SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
 			bOverLappingCombatSphere = true;
+			Attack();
 
-			if (bFireStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
-				MainCharacter->FireDamage(HitDamage);
-			}
-
-			if (bWaterStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
-				MainCharacter->WaterDamage(HitDamage);
-			}
-
-			if (bEarthStatus)
-			{ 
-				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
-				MainCharacter->EarthDamage(HitDamage);
-			}
-			
-			if (bAirStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
-				MainCharacter->AirDamage(HitDamage);
-			}
 			//MainCharacter->UpdateCombatTarget();
 		}
 	}
@@ -306,8 +302,12 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 		if (MainCharacter)
 		{
 			bOverLappingCombatSphere = false;
-			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
-			MoveToTarget(MainCharacter);
+			if (EnemyMovementStatus!= EEnemyMovementStatus::EMS_Attacking)
+			{
+				//SetEnemyMovementStatus(EEnemyMovementStatus::EMS_MoveToTarget);
+				MoveToTarget(MainCharacter);
+				CombatTarget = nullptr;
+			}
 			//MainCharacter->UpdateCombatTarget();
 			if (MainCharacter== nullptr)
 			{
@@ -315,6 +315,85 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 				SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Idle);
 			}
 		}
+	}
+}
+
+
+void AEnemy::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor)
+	{
+		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
+		if (Main)
+		{
+			if (bFireStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
+				Main->FireDamage(HitDamage);
+			}
+
+			if (bWaterStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
+				Main->WaterDamage(HitDamage);
+			}
+
+			if (bEarthStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
+				Main->EarthDamage(HitDamage);
+			}
+
+			if (bAirStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
+				Main->AirDamage(HitDamage);
+			}
+		}
+	}
+}
+
+void AEnemy::CombatOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+
+}
+
+
+void AEnemy::ActivateCollision()
+{
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void AEnemy::DeactivateCollision()
+{
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AEnemy::Attack()
+{
+	if (AIController)
+	{
+		AIController->StopMovement();
+		SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+	}
+	if (!bAttacking)
+	{
+		bAttacking = true;
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance)
+		{
+			AnimInstance->Montage_Play(CombatMontage, 1.f);
+			AnimInstance->Montage_JumpToSection(FName("Attack"), CombatMontage);
+		}
+	}
+}
+
+void AEnemy::AttackEnd()
+{
+	bAttacking = false;
+	if (bOverLappingCombatSphere)
+	{
+		Attack();
 	}
 }
 
