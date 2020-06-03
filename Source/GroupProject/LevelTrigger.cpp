@@ -60,7 +60,7 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 				LevelSelection();
 				if (bCanSwitchLevel)
 				{
-					//Main->SaveGame(true);
+					Main->SaveGame();
 					UE_LOG(LogTemp, Warning, TEXT("Switching level...."));
 					Main->NextLevel(NextLevel);
 					Clear->LevelsCleared += 1;

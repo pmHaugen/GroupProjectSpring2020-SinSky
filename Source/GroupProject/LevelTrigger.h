@@ -23,7 +23,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevelName;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LevelSelect")
 	FName NextLevel;
 
 	void LevelSelection();

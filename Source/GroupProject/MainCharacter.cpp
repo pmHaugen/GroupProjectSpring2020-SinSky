@@ -398,9 +398,7 @@ void AMainCharacter::CastSpell()
 void AMainCharacter::Dead()
 {
 	//Destroy();
-	ResetGame();
-	NextLevel("MainMenu");
-
+	NextLevel("AirLevel");
 }
 
 void AMainCharacter::StartSpell()
@@ -571,16 +569,9 @@ void AMainCharacter::ManaBarColor()
 
 void AMainCharacter::NextLevel(FName LevelName)
 {
-	FString MapName = GetWorld()->GetMapName();
-	MapName.RemoveFromStart(GetWorld()->StreamingLevelsPrefix);
-
-	UE_LOG(LogTemp, Warning, TEXT("MapName: %s"), *MapName)
-
 	UWorld* World = GetWorld();
 	if (World)
 	{
-		NextLevelName = LevelName;
-		SaveGame(true);
 		UGameplayStatics::OpenLevel(World, LevelName);
 	}
 }
@@ -633,7 +624,7 @@ void AMainCharacter::UpdateCombatTarget()
 	}
 }
 
-void AMainCharacter::SaveGame(bool SaveLevel)
+void AMainCharacter::SaveGame()
 {
 	float BossKills;
 	float LevelsCleared;
@@ -673,51 +664,53 @@ void AMainCharacter::SaveGame(bool SaveLevel)
 	SaveStats->CharacterStats.FoesDefeated = FoesDefeated;
 	SaveStats->CharacterStats.FoesAlive = FoesAlive;
 	SaveStats->CharacterStats.PlayerLevel = PlayerLevel;
-	
-	//UE_LOG(LogTemp, Warning, TEXT("Saving Level: %f"), NextLevelName);
-	if (SaveLevel)
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("Saving Level: %f"), NextLevelName);
-		SaveStats->CharacterStats.NextLevel = NextLevelName;
-	}
+
 	//SaveStats->CharacterStats.Location = GetActorLocation();
 	//SaveStats->CharacterStats.Rotation = GetActorRotation();
 
 	//PlayerController->SaveStats();
 
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
+	
 }
 
-void AMainCharacter::LoadGame(bool LoadLevel)
+void AMainCharacter::LoadGame(bool SetPosition)
 {
 	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
 
 	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
 	//SkillPoints = LoadStats->CharacterStats.SkillPoints;
-	MaxHealth      = LoadStats->CharacterStats.MaxHealth;
-	Health         = LoadStats->CharacterStats.Health;
-	FireMana       = LoadStats->CharacterStats.FireMana;
-	WaterMana      = LoadStats->CharacterStats.WaterMana;
-	EarthMana      = LoadStats->CharacterStats.EarthMana;
-	AirMana        = LoadStats->CharacterStats.AirMana;
-	FireLvl        = LoadStats->CharacterStats.FireLvl;
-	WaterLvl       = LoadStats->CharacterStats.WaterLvl;
-	EarthLvl       = LoadStats->CharacterStats.EarthLvl;
-	AirLvl         = LoadStats->CharacterStats.AirLvl;
-	RegenLvl	   = LoadStats->CharacterStats.RegenLvl;
-	ManaRegenLvl   = LoadStats->CharacterStats.ManaRegenLvl;
+	MaxHealth = LoadStats->CharacterStats.MaxHealth;
+	Health = LoadStats->CharacterStats.Health;
+	FireMana = LoadStats->CharacterStats.FireMana;
+	WaterMana = LoadStats->CharacterStats.WaterMana;
+	EarthMana = LoadStats->CharacterStats.EarthMana;
+	AirMana = LoadStats->CharacterStats.AirMana;
+	FireLvl = LoadStats->CharacterStats.FireLvl;
+	WaterLvl = LoadStats->CharacterStats.WaterLvl;
+	EarthLvl = LoadStats->CharacterStats.EarthLvl;
+	AirLvl = LoadStats->CharacterStats.AirLvl;
+	RegenLvl = LoadStats->CharacterStats.RegenLvl;
+	ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
 	HealthRegenLvl = LoadStats->CharacterStats.HealthRegenLvl;
-	NextLevelName  = LoadStats->CharacterStats.NextLevel;
+	//Kills = LoadStats->CharacterStats.Kills;
+
+	UE_LOG(LogTemp, Warning, TEXT("New kill load: %f"), Kills);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Health: %f"), Health);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded FireMana: %f"), FireMana);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded RegenLvl: %f"), RegenLvl);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded skillpoints: %f"), SkillPoints);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Manaregenlvl: %f"), ManaRegenLvl);
+	UE_LOG(LogTemp, Warning, TEXT("Loaded Skillpoints: %f"), SkillPoints);
 
 	PlayerController->LoadStats();
 
-	//UE_LOG(LogTemp, Warning, TEXT("loading Level: %f"), NextLevelName);
-	if (LoadLevel)
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("loading Level: %f"), NextLevelName);
-		NextLevel(NextLevelName);
-	}
+	//if (SetPosition)
+	//{
+	//	SetActorLocation(LoadStats->CharacterStats.Location);
+	//	SetActorRotation(LoadStats->CharacterStats.Rotation);
+	//}
 }
 
 void AMainCharacter::GetPlayerExperience()
