@@ -8,6 +8,9 @@
 #include "MyPlayerController.h"
 #include "Enemy.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/BoxComponent.h"
+#include "Animation/AnimInstance.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 ABoss::ABoss()
@@ -23,6 +26,9 @@ ABoss::ABoss()
 	CombatSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CombatSphere"));
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(90.f);
+
+	CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CombatCollision"));
+	CombatCollision->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("DamageSocket"));
 
 	bOverLappingCombatSphere = false;
 
@@ -45,6 +51,9 @@ ABoss::ABoss()
 	bMedium = false;
 	bHard = false;
 
+	AttackMinTime = 0.5f;
+	AttackMaxTime = 2.5f;
+
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +68,14 @@ void ABoss::BeginPlay()
 
 	CombatSphere->OnComponentBeginOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapBegin);
 	CombatSphere->OnComponentEndOverlap.AddDynamic(this, &ABoss::CombatSphereOnOverlapEnd);
+
+	CombatCollision->OnComponentBeginOverlap.AddDynamic(this, &ABoss::CombatOnOverlapBegin);
+	CombatCollision->OnComponentEndOverlap.AddDynamic(this, &ABoss::CombatOnOverlapEnd);
+
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CombatCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	CombatCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	CombatCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
 	SetBossElementalStatus(EBossElementalStatus::BES_Fire);
 
@@ -219,13 +236,12 @@ void ABoss::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		
 		if (MainCharacter)
 		{
-			SetBossMovementStatus(EBossMovementStatus::BMS_MoveToTarget);
-			MainCharacter->SetBossTarget(this);
+			MainCharacter->BossTarget = this;
 			MainCharacter->SetHasCombatTarget(true);
-			if (MainCharacter->PlayerController)
-			{
-				MainCharacter->PlayerController->DisplayBossHealthBar();
-			}
+			MainCharacter->PlayerController->DisplayBossHealthBar();
+			//Keep me or the project will crash
+			SetBossMovementStatus(EBossMovementStatus::BMS_MoveToTarget);
+
 			MoveToTarget(MainCharacter);
 		}
 	}
@@ -264,31 +280,9 @@ void ABoss::CombatSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			SetBossMovementStatus(EBossMovementStatus::BMS_Attacking);
-
-			if (bFireStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
-				MainCharacter->FireDamage(HitDamage);
-			}
-
-			if (bWaterStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
-				MainCharacter->WaterDamage(HitDamage);
-			}
-
-			if (bEarthStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
-				MainCharacter->EarthDamage(HitDamage);
-			}
-
-			if (bAirStatus)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
-				MainCharacter->AirDamage(HitDamage);
-			}
+			CombatTarget = MainCharacter;
+			bOverLappingCombatSphere = true;
+			Attack();
 		}
 	}
 }
@@ -300,9 +294,94 @@ void ABoss::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompon
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			SetBossMovementStatus(EBossMovementStatus::BMS_MoveToTarget);
-			MoveToTarget(MainCharacter);
+			bOverLappingCombatSphere = false;
+			if (BossMovementStatus != EBossMovementStatus::BMS_Attacking)
+			{
+				MoveToTarget(MainCharacter);
+				CombatTarget = nullptr;
+			}
+			if (MainCharacter == nullptr)
+			{
+				MoveToTarget(nullptr);
+				SetBossMovementStatus(EBossMovementStatus::BMS_Idle);
+			}
 		}
+	}
+}
+void ABoss::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor)
+	{
+		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
+		if (Main)
+		{
+			if (bFireStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
+				Main->FireDamage(HitDamage);
+			}
+
+			if (bWaterStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Water Damage!"));
+				Main->WaterDamage(HitDamage);
+			}
+
+			if (bEarthStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Earth Damage!"));
+				Main->EarthDamage(HitDamage);
+			}
+
+			if (bAirStatus)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Air Damage!"));
+				Main->AirDamage(HitDamage);
+			}
+		}
+	}
+}
+
+void ABoss::CombatOnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+
+}
+
+void ABoss::ActivateCollision()
+{
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void ABoss::DeactivateCollision()
+{
+	CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ABoss::Attack()
+{
+	if (AIController)
+	{
+		AIController->StopMovement();
+		SetBossMovementStatus(EBossMovementStatus::BMS_Attacking);
+	}
+	if (!bAttacking)
+	{
+		bAttacking = true;
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance)
+		{
+			AnimInstance->Montage_Play(CombatMontage, 1.f);
+			AnimInstance->Montage_JumpToSection(FName("Attack"), CombatMontage);
+		}
+	}
+}
+
+void ABoss::AttackEnd()
+{
+	bAttacking = false;
+	if (bOverLappingCombatSphere)
+	{
+		Attack();
 	}
 }
 
@@ -320,18 +399,21 @@ void ABoss::MoveToTarget(AMainCharacter* Target)
 
 		AIController->MoveTo(MoveRequest, &NavPath);
 
-		auto PathPoints = NavPath->GetPathPoints();
-		for (auto Point : PathPoints)
+		AIController->MoveTo(MoveRequest, &NavPath);
+		if (Target == nullptr)
 		{
-			FVector Location = Point.Location;
-
-			//UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Red, 10.f, 1.5f);
+			AIController->StopMovement();
+			SetBossMovementStatus(EBossMovementStatus::BMS_Idle);
 		}
 	}
 }
 
 void ABoss::Death()
 {
+	//Change values.
+
+	AMyPlayerController* XpTrack = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+	XpTrack->AquireXp(15);
 	Destroy();
 }
 

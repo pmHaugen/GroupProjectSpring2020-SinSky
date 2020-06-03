@@ -15,7 +15,6 @@ class GROUPPROJECT_API UEnemyAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 public:
 
-	//Video 66-67.
 
 	virtual void NativeInitializeAnimation() override;
 
