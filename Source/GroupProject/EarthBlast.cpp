@@ -70,42 +70,32 @@ void AEarthBlast::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 	if (OtherActor)
 	{
-	
-	/*AMainCharacter* Main = Cast<AMainCharacter>(OtherActor); //Sender til Main. Om det ikke er main sender den NULL
-		if (Main) //Om det er Main:
-		{
-			Main->EarthDamage(Damage);
-			if (OverlapParticles)
+			AEnemy* Enemy = Cast<AEnemy>(OtherActor);
+			if (Enemy)
 			{
-				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+				Enemy->TakeEarthDamage(Damage);
+				if (OverlapParticles)
+				{
+					UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+				}
+				Destroy();
 			}
-			Destroy();
-		}*/
 
-		AEnemy* Enemy = Cast<AEnemy>(OtherActor);
-		if (Enemy)
-		{
-			Enemy->TakeEarthDamage(Damage);
-			if (OverlapParticles)
+			ABoss* Boss = Cast<ABoss>(OtherActor);
+			if (Boss)
 			{
-				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+				Boss->TakeEarthDamage(Damage);
+				Destroy();
 			}
-			Destroy();
-		}
-
-		ABoss* Boss = Cast<ABoss>(OtherActor);
-		if (Boss)
-		{
-			Boss->TakeEarthDamage(Damage);
-			Destroy();
-		}
-		AWall* Wall = Cast<AWall>(OtherActor);
-		if (Wall)
-		{
-			Destroy();
-		}
+			AWall* Wall = Cast<AWall>(OtherActor);
+			if (Wall)
+			{
+				Destroy();
+			}
 	}
 }
+
+
 
 
 

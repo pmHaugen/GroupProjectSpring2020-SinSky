@@ -278,11 +278,13 @@ void AMainCharacter::MoveForward(float Value)
 	//Rotation.Pitch = 0.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
-
+	
 	if (!bPause)
 	{
 		CurrentVelocity.X = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+		AnimSpeedX = CurrentVelocity.X;
 	}
+	
 }
 
 void AMainCharacter::MoveSideways(float Value)
@@ -294,10 +296,19 @@ void AMainCharacter::MoveSideways(float Value)
 	//Rotation.Yaw += 90.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
+	
 	if (!bPause)
 	{
 		CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
+		AnimSpeedY = CurrentVelocity.Y;
 	}
+	
+}
+
+void AMainCharacter::CalculateSpeed()
+{
+	FVector LatheralSpeed = FVector(AnimSpeedX, AnimSpeedY, 0.f);
+	CurrentAnimSpeed = LatheralSpeed.Size();
 }
 
 void AMainCharacter::Dash()

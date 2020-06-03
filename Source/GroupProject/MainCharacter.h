@@ -67,7 +67,15 @@ public:
 
 	void MoveSideways(float Value);
 	void MoveForward(float Value);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Current Speed")
 	FVector CurrentVelocity;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Current Speed")
+	float AnimSpeedX;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Current Speed")
+	float AnimSpeedY;
+
+	float CurrentAnimSpeed;
 
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Shoot") //Bullet Spawning offset
@@ -216,7 +224,7 @@ public:
 	float AirResistance;
 
 	//Movement
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
 	float MaxSpeed;
 
 	//ManaBarColor
@@ -285,5 +293,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateSpellStats();
+
+	void CalculateSpeed();
 
 };

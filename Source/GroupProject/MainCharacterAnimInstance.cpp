@@ -20,27 +20,22 @@ void UMainCharacterAnimInstance::NativeInitializeAnimation()
 
 void UMainCharacterAnimInstance::UpdateAnimationProperties()
 {
-	if (Pawn == nullptr)
-	{
-		Pawn = TryGetPawnOwner();
-	}
-
-	if (Pawn)
-	{
-		//Hello, I am the only thing that works. BUT I WILL crash the engine!
-		//AMyPlayerController* PlayerController = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-		//MovementSpeed = PlayerController->CurrentPlayerSpeed;
-
-		/**FVector Speed = Pawn->GetVelocity();
-		FVector LateralSpeed = FVector(Speed.X, Speed.Y, 0.f);
-		MovementSpeed = LateralSpeed.Size();*/
-
-		//UE_LOG(LogTemp, Warning, TEXT("Movement speed: %f"), MovementSpeed);
-
-		if (MainCharacter == nullptr)
+	
+		if (Pawn == nullptr)
 		{
-			MovementSpeed = 0;
-			MainCharacter = Cast<AMainCharacter>(Pawn);
+			Pawn = TryGetPawnOwner();
+			if (Pawn)
+			{
+				MainCharacter = Cast<AMainCharacter>(Pawn);
+			}
 		}
-	}
+
+		if (Pawn)
+		{
+			MovementSpeed = MainCharacter->CurrentAnimSpeed;
+			UE_LOG(LogTemp, Warning, TEXT("animspeed:  %f!"), MovementSpeed);
+
+			//UE_LOG(LogTemp, Warning, TEXT("Enemy Movement speed: %f"), MovementSpeed);
+		}
+	
 }
