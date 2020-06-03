@@ -79,7 +79,7 @@ AMainCharacter::AMainCharacter()
 
 	//Movement
 	CurrentVelocity = FVector(0.f);
-	MaxSpeed = 400.f;
+	MaxSpeed = 0.f;
 	bDash = false;
 	DashCooldown = 1.f;
 	DashTime = 0.15f;
@@ -217,7 +217,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		if (DashDuration <= 0)
 		{
 			bDash = false;
-			MaxSpeed = 400.f;
+			MaxSpeed = 0.f;
 		}
 
 
@@ -278,13 +278,18 @@ void AMainCharacter::MoveForward(float Value)
 	//Rotation.Pitch = 0.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
-	
+	/*
 	if (!bPause)
 	{
 		CurrentVelocity.X = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
 		AnimSpeedX = CurrentVelocity.X;
 	}
-	
+	*/
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
+
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(Direction, Value+MaxSpeed);
 }
 
 void AMainCharacter::MoveSideways(float Value)
@@ -296,23 +301,24 @@ void AMainCharacter::MoveSideways(float Value)
 	//Rotation.Yaw += 90.f;
 	//Direction = Rotation.Vector();
 	//AddMovementInput(Direction, Value);
-	
+	/*
 	if (!bPause)
 	{
 		CurrentVelocity.Y = FMath::Clamp(Value, -1.f, 1.f) * MaxSpeed;
 		AnimSpeedY = CurrentVelocity.Y;
 	}
-	
+	*/
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
+
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Value+MaxSpeed);
 }
 
-void AMainCharacter::CalculateSpeed()
-{
-	FVector LatheralSpeed = FVector(AnimSpeedX, AnimSpeedY, 0.f);
-	CurrentAnimSpeed = LatheralSpeed.Size();
-}
 
 void AMainCharacter::Dash()
 {
+
 	if (TimeSinceDash >= DashCooldown)
 	{
 		DashDuration = DashTime;
@@ -320,6 +326,7 @@ void AMainCharacter::Dash()
 		TimeSinceDash = 0;
 		MaxSpeed = 5000;
 	}
+
 }
 
 void AMainCharacter::Pause()

@@ -32,8 +32,11 @@ void UMainCharacterAnimInstance::UpdateAnimationProperties()
 
 		if (Pawn)
 		{
-			MovementSpeed = MainCharacter->CurrentAnimSpeed;
-			UE_LOG(LogTemp, Warning, TEXT("animspeed:  %f!"), MovementSpeed);
+		//	MovementSpeed = MainCharacter->CurrentAnimSpeed;
+		//	UE_LOG(LogTemp, Warning, TEXT("animspeed:  %f!"), MovementSpeed);
+			FVector Speed = Pawn->GetVelocity();
+			FVector LateralSpeed = FVector(Speed.X, Speed.Y, 0.f);;
+			MovementSpeed = LateralSpeed.Size();
 
 			//UE_LOG(LogTemp, Warning, TEXT("Enemy Movement speed: %f"), MovementSpeed);
 		}
