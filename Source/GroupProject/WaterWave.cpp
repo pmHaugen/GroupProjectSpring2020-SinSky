@@ -29,9 +29,9 @@ AWaterWave::AWaterWave()
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
-	SpellDuration = 10;
+	SpellDuration = 1;
 	Speed = { 50.f, 0.f, 0.f };
-	Damage = 5;
+	Damage = 20;
 }
 
 // Called when the game starts or when spawned

@@ -29,9 +29,9 @@ AFireball::AFireball()
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
-	SpellDuration = 2;
+	SpellDuration = 1;
 	Speed = { 100.f, 0.f, 0.f };
-	Damage = 70;
+	Damage = 40;
 }
 
 

@@ -133,6 +133,7 @@ public:
 	float DashDuration;
 	float DashTime;
 	float TimeSinceDash;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	bool bDash;
 
 

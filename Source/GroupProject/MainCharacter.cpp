@@ -33,7 +33,7 @@ AMainCharacter::AMainCharacter()
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 2000.f;
+	CameraBoom->TargetArmLength = 1300.f;
 	CameraBoom->bEnableCameraLag = true;
 	CameraBoom->CameraLagSpeed = 40.f; //Doesn't work.
 	CameraBoom->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f)); // Y,Z,X
@@ -305,6 +305,7 @@ void AMainCharacter::Dash()
 	if (TimeSinceDash >= DashCooldown)
 	{
 		DashDuration = DashTime;
+		bDash = true;
 		TimeSinceDash = 0;
 		MaxSpeed = 5000;
 	}
@@ -484,10 +485,8 @@ void AMainCharacter::AirDamage(float Damage)
 
 void AMainCharacter::Regeneration(float HealthRegenerationRate, float ManaRegenerationRate, float Time)
 {
-	if (RegenLvl==2)
-	{
-		HealthRegenerationRate = 50;
-	}
+
+		HealthRegenerationRate = ManaRegen;
 	if (Health <= MaxHealth)
 	{
 		Health += HealthRegenerationRate * Time; //Health per second
@@ -790,7 +789,7 @@ void AMainCharacter::UpdateSpellStats()
 {
 	if (FireSpellCD >= 0.1f)
 	{
-		FireSpellCD = 2.f - (FireLvl / 10);
+		FireSpellCD = 2.f - (FireLvl / 20);
 		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), FireSpellCD);
 	}
 	if (WaterSpellCD >= 0.1f)
@@ -800,12 +799,12 @@ void AMainCharacter::UpdateSpellStats()
 	}
 	if (EarthSpellCD >= 0.1f)
 	{
-		EarthSpellCD = 1.f - (EarthLvl / 10);
+		EarthSpellCD = 2.f - (EarthLvl / 20);
 		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), FireSpellCD);
 	}
 	if (AirSpellCD >= 0.1f)
 	{
-		AirSpellCD = 1.f - (AirLvl / 10);
+		AirSpellCD = 2.f - (AirLvl / 20);
 		UE_LOG(LogTemp, Warning, TEXT("Cooldown:  %f!"), AirSpellCD);
 	}
 	FireMaxMana = 200 + (FireLvl * 10);
