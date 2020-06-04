@@ -172,7 +172,7 @@ bool AMyPlayerController::bIsLevelCleared()
 	return bLevelCleared;
 }
 
-bool AMyPlayerController::bGetGameDifficulty()
+void AMyPlayerController::GetGameDifficulty()
 {
 	switch (GameDifficulty)
 	{
@@ -185,10 +185,7 @@ bool AMyPlayerController::bGetGameDifficulty()
 	case EGameDifficultyStatus::GDS_Hard:
 		bHard = true;
 		break;
-	case EGameDifficultyStatus::GDS_MAX:
-		break;
 	}
-	return bEasy, bMedium, bHard;
 }
 
 void AMyPlayerController::DisplayEnemyHealthBar()

@@ -115,7 +115,7 @@ public:
 	bool bMedium;
 	bool bHard;
 
-	bool bGetGameDifficulty();
+	void GetGameDifficulty();
 
 	//Progress
 	float Scaling;
