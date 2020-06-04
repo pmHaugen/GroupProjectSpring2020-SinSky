@@ -31,7 +31,7 @@ AMyPlayerController::AMyPlayerController()
 	XPointsDifference = 0;
 	MaxXp = 1;
 	//MaxXp = MaxXp = PlayerLevel * 35 + 100;
-	XpToken = 100;
+	XpToken = 0;
 	PlayerLevel = 0;
 	bIsVisible = false;
 

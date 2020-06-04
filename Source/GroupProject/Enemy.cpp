@@ -475,7 +475,7 @@ void AEnemy::DamageTaken(float Amount)
 void AEnemy::GetEnemyDifficultyStatus()
 {
 	AMyPlayerController* Difficulty = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	Difficulty->GetDif();
+	//Difficulty->GetDif();
 	Difficulty->GetGameDifficulty();
 
 	if (Difficulty->bEasy)

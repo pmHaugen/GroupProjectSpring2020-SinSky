@@ -30,7 +30,7 @@ AEarthBlast::AEarthBlast()
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
-	SpellDuration = 1;
+	SpellDuration = 2;
 	Speed = { 10.f, 0.f, 0.f };
 	Damage = 50;
 }

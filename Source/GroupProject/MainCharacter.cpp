@@ -102,7 +102,7 @@ AMainCharacter::AMainCharacter()
 	AirMana = AirMaxMana;
 
 	ManaRegen = 8.f;
-	SkillPoints = 3.f;
+	SkillPoints = 0.f;
 
 	//Resistance
 	FireResistance = 0.90f;
@@ -184,7 +184,7 @@ void AMainCharacter::Tick(float DeltaTime)
 			//UE_LOG(LogTemp, Warning, TEXT("Hit location %s!"), *Hit.Location.ToString());
 
 			//Set cursor location above ground a little
-			TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 30.f);
+			TempLocation = FVector(CursorLocation.X, CursorLocation.Y, 400.f);
 
 			//Calculating direction
 			NewDirectionToCursor = TempLocation - GetActorLocation();
@@ -267,7 +267,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("SpellThree", IE_Pressed, this, &AMainCharacter::SpellThree);
 	PlayerInputComponent->BindAction("SpellFour", IE_Pressed, this, &AMainCharacter::SpellFour);
 
-	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
+	//PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AMainCharacter::Dash);
 	PlayerInputComponent->BindAction("OpenTalentMenu", IE_Pressed, this, &AMainCharacter::OpenTalentMenu);
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AMainCharacter::Pause);
 }
@@ -287,11 +287,14 @@ void AMainCharacter::MoveForward(float Value)
 		AnimSpeedX = CurrentVelocity.X;
 	}
 	*/
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
+	if (!bPause)
+	{
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
 
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(Direction, Value+MaxSpeed);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value + MaxSpeed);
+	}
 }
 
 void AMainCharacter::MoveSideways(float Value)
@@ -310,11 +313,14 @@ void AMainCharacter::MoveSideways(float Value)
 		AnimSpeedY = CurrentVelocity.Y;
 	}
 	*/
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
+	if (!bPause)
+	{
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
 
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-	AddMovementInput(Direction, Value);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(Direction, Value);
+	}
 }
 
 

@@ -29,7 +29,7 @@ AWaterWave::AWaterWave()
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 
-	SpellDuration = 1;
+	SpellDuration = 2;
 	Speed = { 50.f, 0.f, 0.f };
 	Damage = 20;
 }
