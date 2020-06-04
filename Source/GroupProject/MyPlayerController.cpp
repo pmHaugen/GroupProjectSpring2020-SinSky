@@ -237,7 +237,7 @@ void AMyPlayerController::Tick(float DeltaTime)
 		FVector2D PositionInVeiwport;
 		ProjectWorldLocationToScreen(EnemyLocation, PositionInVeiwport);
 		PositionInVeiwport.Y -= 85.f;
-		PositionInVeiwport.X -= 60.f;
+		PositionInVeiwport.X -= 90.f;
 
 		FVector2D SizeInVeiwport = FVector2D(200.f, 15.f);
 
@@ -249,7 +249,7 @@ void AMyPlayerController::Tick(float DeltaTime)
 		FVector2D PositionInVeiwport;
 		ProjectWorldLocationToScreen(BossLocation, PositionInVeiwport);
 		PositionInVeiwport.Y -= 85.f;
-		PositionInVeiwport.X -= 60.f;
+		PositionInVeiwport.X -= 70.f;
 
 		FVector2D SizeInVeiwport = FVector2D(200.f, 15.f);
 
