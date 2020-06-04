@@ -35,6 +35,7 @@ AMyPlayerController::AMyPlayerController()
 	PlayerLevel = 0;
 	bIsVisible = false;
 
+
 }
 void AMyPlayerController::BeginPlay()
 {
@@ -42,7 +43,7 @@ void AMyPlayerController::BeginPlay()
 
 	//MyController->bEnableClickEvents = true;
 	//MyController->bShowMouseCursor = true;
-	//MyController->bEnableMouseOverEvents = true;
+	//MyController->bEnableMouseOverEvents = true;	
 
 	if (HUDOverlayAsset)
 	{
@@ -177,12 +178,15 @@ void AMyPlayerController::GetGameDifficulty()
 	switch (GameDifficulty)
 	{
 	case EGameDifficultyStatus::GDS_Easy:
+		UE_LOG(LogTemp, Warning, TEXT("Easy XP"));
 		bEasy = true;
 		break;
 	case EGameDifficultyStatus::GDS_Medium:
+		UE_LOG(LogTemp, Warning, TEXT("Meduim XP"));
 		bMedium = true;
 		break;
 	case EGameDifficultyStatus::GDS_Hard:
+		UE_LOG(LogTemp, Warning, TEXT("Hard XP"));
 		bHard = true;
 		break;
 	}
