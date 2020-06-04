@@ -399,11 +399,9 @@ void ABoss::MoveToTarget(AMainCharacter* Target)
 	{
 		FAIMoveRequest MoveRequest;
 		MoveRequest.SetGoalActor(Target);
-		MoveRequest.SetAcceptanceRadius(5.0f);
+		MoveRequest.SetAcceptanceRadius(50.0f);
 
 		FNavPathSharedPtr NavPath;
-
-		AIController->MoveTo(MoveRequest, &NavPath);
 
 		AIController->MoveTo(MoveRequest, &NavPath);
 		if (Target == nullptr)
