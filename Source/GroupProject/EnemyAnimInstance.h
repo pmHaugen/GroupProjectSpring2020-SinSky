@@ -15,6 +15,9 @@ class GROUPPROJECT_API UEnemyAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 public:
 
+	/*
+	Animation class used by Enemy in blueprints
+	*/
 
 	virtual void NativeInitializeAnimation() override;
 

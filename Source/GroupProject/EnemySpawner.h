@@ -14,6 +14,10 @@ class GROUPPROJECT_API AEnemySpawner : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AEnemySpawner();
+
+	/*
+	Used for placing enemy actors in the level
+	*/
 	
 	//Declaring a body for the spawner
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning")

@@ -251,7 +251,7 @@ void AEnemy::HPSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 		AMainCharacter* MainCharacter = Cast<AMainCharacter>(OtherActor);
 		if (MainCharacter)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("HPSPhereoverlapbegin"));
+			//UE_LOG(LogTemp, Warning, TEXT("HPSPhereoverlapbegin"));
 			MainCharacter->SetCombatTarget(this);
 			MainCharacter->SetHasCombatTarget(true);
 			MainCharacter->UpdateCombatTarget();
@@ -321,7 +321,6 @@ void AEnemy::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompo
 
 void AEnemy::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Combatonoverlapbegin"));
 	if (OtherActor)
 	{
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
@@ -435,22 +434,22 @@ void AEnemy::GetEnemyElementalStatus()
 	{
 	case 1:
 		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Fire);
-		UE_LOG(LogTemp, Warning, TEXT("Fire"));
+		//UE_LOG(LogTemp, Warning, TEXT("Fire"));
 		bFireStatus = true;
 		break;
 	case 2: 
 		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Water);
-		UE_LOG(LogTemp, Warning, TEXT("Water"));
+		//UE_LOG(LogTemp, Warning, TEXT("Water"));
 		bWaterStatus = true;
 		break;
 	case 3:
 		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Earth);
-		UE_LOG(LogTemp, Warning, TEXT("Earth"));
+		//UE_LOG(LogTemp, Warning, TEXT("Earth"));
 		bEarthStatus = true;
 		break;
 	case 4:
 		SetEnemyElementalStatus(EEnemyElementalStatus::EES_Air);
-		UE_LOG(LogTemp, Warning, TEXT("Air"));
+		//UE_LOG(LogTemp, Warning, TEXT("Air"));
 		bAirStatus = true;
 		break;
 	}
@@ -504,6 +503,6 @@ void AEnemy::GetPlayerProgress()
 
 	Progress->SetScaling();
 	ProgressScaling = Progress->Scaling +1.f;
-	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
+	//UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
 }
 

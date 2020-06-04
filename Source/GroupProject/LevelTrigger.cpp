@@ -20,9 +20,6 @@ ALevelTrigger::ALevelTrigger()
 	Billboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("Billboard"));
 	Billboard->SetupAttachment(GetRootComponent());
 
-	//To be changed!
-	//NextLevelName = "StartLevel";
-
 	bCanSwitchLevel = false;
 
 }
@@ -55,13 +52,12 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 			Clear->bIsLevelCleared();
 			if (Clear->bLevelCleared)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
+				//UE_LOG(LogTemp, Warning, TEXT("LevelCleared!"));
 
 				LevelSelection();
 				if (bCanSwitchLevel)
 				{
-					//Main->SaveGame(true);
-					UE_LOG(LogTemp, Warning, TEXT("Switching level...."));
+					//UE_LOG(LogTemp, Warning, TEXT("Switching level...."));
 					Main->NextLevel(NextLevel);
 					Clear->LevelsCleared += 1;
 					//Main->NextLevel("StartLevel");
@@ -71,7 +67,7 @@ void ALevelTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 			else
 			{
 				//Notify the player that there are still enemies left
-				UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
+				//UE_LOG(LogTemp, Warning, TEXT("Still Enemies left"));
 			}
 		}
 	}
@@ -107,13 +103,13 @@ void ALevelTrigger::LevelSelection()
 			NextLevel = "AirLevel";
 			break;
 		case 5:
-			NextLevelName = "UEDPIE_0_StartLevel";
-			NextLevel = "StartLevel";
+			NextLevelName = "UEDPIE_0_BossLevel";
+			NextLevel = "BossLevel";
 			break;
 		}
 
-		UE_LOG(LogTemp, Warning, TEXT("LevelSwitch %i"), Level);
-		UE_LOG(LogTemp, Warning, TEXT("Current Level %s"), *CurrentLevel);
+		//UE_LOG(LogTemp, Warning, TEXT("LevelSwitch %i"), Level);
+		//UE_LOG(LogTemp, Warning, TEXT("Current Level %s"), *CurrentLevel);
 
 		if (CurrentLevelName != NextLevelName)
 		{

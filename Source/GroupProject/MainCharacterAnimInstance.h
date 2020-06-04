@@ -16,6 +16,9 @@ class GROUPPROJECT_API UMainCharacterAnimInstance : public UAnimInstance
 
 public:
 	
+	/*
+	Animation class used by MainCharacter(player) in blueprints
+	*/
 	virtual void NativeInitializeAnimation() override;
 
 	UFUNCTION(BlueprintCallable, Category = "AnimationProperties")

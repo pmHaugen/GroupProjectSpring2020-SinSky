@@ -15,6 +15,10 @@ class GROUPPROJECT_API UBossAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 public:
 
+	/*
+	Animation class used by boss in blueprints
+	*/
+
 	virtual void NativeInitializeAnimation() override;
 
 	UFUNCTION(BlueprintCallable, Category = AimationProperties)

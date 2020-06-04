@@ -82,7 +82,7 @@ void ABoss::BeginPlay()
 	GetBossDifficultyStatus();
 	GetPlayerProgress();
 
-	MaxHealth = 250 * DifficultyScaling * ProgressScaling;
+	MaxHealth = 500 * DifficultyScaling * ProgressScaling;
 	Health = MaxHealth;
 	
 }
@@ -208,25 +208,25 @@ void ABoss::DamageTaken(float Amount)
 	else
 	{
 		Health -= Amount;
-		UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
+		//UE_LOG(LogTemp, Warning, TEXT("Health left: %f"), Health);
 
 		if (Health - Amount <= MaxHealth * 0.75f && Health > MaxHealth * 0.5f)
 		{
 			SetBossElementalStatus(EBossElementalStatus::BES_Water);
 			bWaterStatus = true;
-			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, Watertype"), Health);
+			//UE_LOG(LogTemp, Warning, TEXT("Health left: %f, Watertype"), Health);
 		}
 		else if (Health <= MaxHealth * 0.5 && Health > MaxHealth * 0.25f)
 		{
 			bAirStatus = true;
 			SetBossElementalStatus(EBossElementalStatus::BES_Air);
-			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, AirType"), Health);
+			//UE_LOG(LogTemp, Warning, TEXT("Health left: %f, AirType"), Health);
 		}
 		else if (Health <= MaxHealth * 0.25)
 		{
 			bEarthStatus = true;
 			SetBossElementalStatus(EBossElementalStatus::BES_Earth);
-			UE_LOG(LogTemp, Warning, TEXT("Health left: %f, EarthType"), Health);
+			//UE_LOG(LogTemp, Warning, TEXT("Health left: %f, EarthType"), Health);
 		}
 	}
 }
@@ -313,13 +313,13 @@ void ABoss::CombatSphereOnOverlapEnd(class UPrimitiveComponent* OverlappedCompon
 }
 void ABoss::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Functions"));
+	//UE_LOG(LogTemp, Warning, TEXT("Functions"));
 	if (OtherActor)
 	{
 		AMainCharacter* Main = Cast<AMainCharacter>(OtherActor);
 		if (Main)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Combatonoverlapbegin"));
+			//UE_LOG(LogTemp, Warning, TEXT("Combatonoverlapbegin"));
 			if (bFireStatus)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Fire Damage!"));
@@ -418,7 +418,7 @@ void ABoss::Death()
 	//Change values.
 
 	AMyPlayerController* XpTrack = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	XpTrack->AquireXp(15);
+	XpTrack->AquireXp(60);
 	Destroy();
 }
 
@@ -453,5 +453,5 @@ void ABoss::GetPlayerProgress()
 
 	Progress->SetScaling();
 	ProgressScaling = Progress->Scaling + 1.f;
-	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
+	//UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), ProgressScaling);
 }
