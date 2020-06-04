@@ -92,20 +92,6 @@ void AMyPlayerController::BeginPlay()
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
-	LoadDif();
-
-	if (bEasy)
-	{
-		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Easy);
-	}
-	if (bMedium)
-	{
-		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Medium);
-	}
-	if (bHard)
-	{
-		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Hard);
-	}
 	//UE_LOG(LogTemp, Warning, TEXT("Kills: %f"), Kills);
 }
 
@@ -394,6 +380,24 @@ void AMyPlayerController::LoadDif()
 void AMyPlayerController::PlayerSpeed(FVector Velocity)
 {
 	CurrentPlayerSpeed = Velocity.Size();
+}
+
+void AMyPlayerController::GetDif()
+{
+	LoadDif();
+
+	if (bEasy)
+	{
+		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Easy);
+	}
+	if (bMedium)
+	{
+		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Medium);
+	}
+	if (bHard)
+	{
+		SetGameDifficultyStatus(EGameDifficultyStatus::GDS_Hard);
+	}
 }
 
 //kill, boss, kills, exp, tokens

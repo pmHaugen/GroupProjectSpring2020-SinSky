@@ -151,6 +151,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadDif();
 
+	void GetDif();
+
 	//Movement for animations
 	void PlayerSpeed(FVector Velocity);
 	float CurrentPlayerSpeed;
