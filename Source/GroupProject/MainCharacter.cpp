@@ -373,37 +373,37 @@ void AMainCharacter::CastSpell()
 
 	if (FireSpellCD <= FireTimeSinceSpell && SpellChoosen == 1 && FireMana >= FireManaCost && !bPause)
 	{
-		if (FireLvl < 10)
-		{
+		//if (FireLvl < 10)
+		//{
 			GetWorld()->SpawnActor<AFireball>(Fireball_BP, SpellSpawnLocation, SpellSpawnRotation);
 			FireTimeSinceSpell = 0;
 			FireMana -= FireManaCost;
 			UGameplayStatics::PlaySound2D(this, FireballSound);
-		}
-		if (FireLvl >= 10)
-		{
-			GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
-			FireTimeSinceSpell = 0;
-			FireMana -= FireManaCost;
-			UGameplayStatics::PlaySound2D(this, FireballSound);
-		}
+		//}
+		//if (FireLvl >= 10)
+		//{
+			//GetWorld()->SpawnActor<AFireball>(FireballLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
+			//FireTimeSinceSpell = 0;
+			//FireMana -= FireManaCost;
+			//UGameplayStatics::PlaySound2D(this, FireballSound);
+		//}
 	}
 	if (WaterSpellCD <= WaterTimeSinceSpell && SpellChoosen == 2 && WaterMana >= WaterManaCost)
 	{
-		if(WaterLvl < 10)
-		{
+		//if(WaterLvl < 10)
+		//{
 			GetWorld()->SpawnActor<AWaterWave>(WaterWave_BP, SpellSpawnLocation, SpellSpawnRotation);
 			WaterTimeSinceSpell = 0;
 			WaterMana -= WaterManaCost;
 			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
-		}
-		if (WaterLvl >= 10)
-		{
-			GetWorld()->SpawnActor<AWaterWave>(WaterWaveLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
-			WaterTimeSinceSpell = 0;
-			WaterMana -= WaterManaCost;
-			UGameplayStatics::PlaySound2D(this, WaterWaveSound);
-		}
+		//}
+		//if (WaterLvl >= 10)
+		//{
+			//GetWorld()->SpawnActor<AWaterWave>(WaterWaveLv2_BP, SpellSpawnLocation, SpellSpawnRotation);
+			//WaterTimeSinceSpell = 0;
+			//WaterMana -= WaterManaCost;
+			//UGameplayStatics::PlaySound2D(this, WaterWaveSound);
+		//}
 	}
 	if (EarthSpellCD <= EarthTimeSinceSpell && SpellChoosen == 3 && EarthMana >= EarthManaCost)
 	{
