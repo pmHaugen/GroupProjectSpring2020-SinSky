@@ -101,7 +101,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Kills")
 	float Kills;
 	float BossKills;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Kills")
 	float FoesAlive;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Kills")
 	float FoesDefeated;
 	bool bLevelCleared;
 
