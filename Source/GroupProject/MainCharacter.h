@@ -307,4 +307,23 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Anims")
 	class UAnimMontage* CombatMontage;
 
+	UFUNCTION(BlueprintCallable)
+	void SaveDif();
+
+	UFUNCTION(BlueprintCallable)
+	void SetEasy();
+	UFUNCTION(BlueprintCallable)
+	void SetMedium();
+	UFUNCTION(BlueprintCallable)
+	void SetHard();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Dif")
+	bool bEasy = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Dif")
+	bool bMedium = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Dif")
+	bool bHard = false;
+
 };

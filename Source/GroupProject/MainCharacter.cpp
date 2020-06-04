@@ -881,6 +881,7 @@ void AMainCharacter::ResetGame()
 	SaveStats->CharacterStats.PlayerLevel = 0;
 
 
+
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 
 	LoadGame(false);
@@ -918,4 +919,37 @@ void AMainCharacter::Attack()
 void AMainCharacter::AttackEnd()
 {
 	bAttacking = false;
+}
+
+
+void AMainCharacter::SetEasy()
+{
+	bEasy = true;
+	SaveDif();
+}
+void AMainCharacter::SetMedium()
+{
+	bMedium = true;
+	SaveDif();
+}
+
+void AMainCharacter::SetHard()
+{
+	bHard = true;
+	SaveDif();
+}
+
+void AMainCharacter::SaveDif()
+{
+	UGameSaver* SaveStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+	SaveStats->CharacterStats.bEasy = bEasy;
+	SaveStats->CharacterStats.bMedium = bMedium;
+	SaveStats->CharacterStats.bHard = bHard;
+
+	
+
+	UE_LOG(LogTemp, Warning, TEXT("Difficulty is Easy: %s"), (bEasy ? TEXT("TRUE"):TEXT("FALSE")));
+
+	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
 }

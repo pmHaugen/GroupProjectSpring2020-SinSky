@@ -62,6 +62,12 @@ struct FCharacterStats
 	float HealthRegenLvl;
 	UPROPERTY(VisibleAnywhere, Category = "SaveData")
 	FName NextLevel;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	bool bEasy;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	bool bMedium;
+	UPROPERTY(VisibleAnywhere, Category = "SaveData")
+	bool bHard;
 };
 UCLASS()
 class GROUPPROJECT_API UGameSaver : public USaveGame

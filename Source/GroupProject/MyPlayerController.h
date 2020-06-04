@@ -148,6 +148,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadStats();
 
+	UFUNCTION(BlueprintCallable)
+	void LoadDif();
+
 	//Movement for animations
 	void PlayerSpeed(FVector Velocity);
 	float CurrentPlayerSpeed;

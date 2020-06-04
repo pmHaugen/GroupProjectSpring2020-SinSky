@@ -367,6 +367,16 @@ void AMyPlayerController::LoadStats()
 
 }
 
+void AMyPlayerController::LoadDif()
+{
+	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
+
+	bEasy = LoadStats->CharacterStats.bEasy;
+	bMedium = LoadStats->CharacterStats.bMedium;
+	bHard = LoadStats->CharacterStats.bHard;
+}
+
 void AMyPlayerController::PlayerSpeed(FVector Velocity)
 {
 	CurrentPlayerSpeed = Velocity.Size();
