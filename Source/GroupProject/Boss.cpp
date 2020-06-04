@@ -425,7 +425,7 @@ void ABoss::Death()
 void ABoss::GetBossDifficultyStatus()
 {
 	AMyPlayerController* Difficulty = Cast<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
-	//Difficulty->GetGameDifficulty();
+	Difficulty->GetGameDifficulty();
 
 	if (Difficulty->bEasy)
 	{
