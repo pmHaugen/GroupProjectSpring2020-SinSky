@@ -106,7 +106,7 @@ public:
 	bool bLevelCleared;
 
 	//Difficulty
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Difficulty")
 	EGameDifficultyStatus GameDifficulty;
 
 	FORCEINLINE void SetGameDifficultyStatus(EGameDifficultyStatus Status) { GameDifficulty = Status; }
