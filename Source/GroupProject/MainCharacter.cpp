@@ -111,10 +111,10 @@ AMainCharacter::AMainCharacter()
 	AirResistance = 0.90f;
 
 	//Cost
-	FireManaCost = 50;
-	WaterManaCost = 5;
-	EarthManaCost = 50;
-	AirManaCost = 50;
+	FireManaCost = 65;
+	WaterManaCost = 30;
+	EarthManaCost = 65;
+	AirManaCost = 65;
 
 	//Upgrade Levels
 	FireLvl		   = 1.f;
@@ -314,7 +314,7 @@ void AMainCharacter::MoveSideways(float Value)
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
 
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-	AddMovementInput(Direction, Value+MaxSpeed);
+	AddMovementInput(Direction, Value);
 }
 
 
