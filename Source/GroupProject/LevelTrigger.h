@@ -15,6 +15,10 @@ public:
 	// Sets default values for this actor's properties
 	ALevelTrigger();
 
+	/*
+	Used for allowing players to travel between levels
+	*/
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
 	class UBoxComponent* TriggerPoint;
 

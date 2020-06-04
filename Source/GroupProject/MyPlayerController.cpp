@@ -91,12 +91,12 @@ void AMyPlayerController::BeginPlay()
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Kills: %f"), Kills);
+	//UE_LOG(LogTemp, Warning, TEXT("Kills: %f"), Kills);
 }
 
 void AMyPlayerController::ToggleSkillMenu()
 {
-		UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
+		//UE_LOG(LogTemp, Warning, TEXT("SKILL MENU"));
 		if (bIsVisible)
 		{
 			RemoveSkillMenu();
@@ -114,7 +114,7 @@ void AMyPlayerController::OpenSkillMenu()
 		HUDTalentTree->SetVisibility(ESlateVisibility::Visible);
 		FInputModeGameAndUI InputModeGameAndUI;
 		SetInputMode(InputModeGameAndUI);
-		UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller open: %f"), XpToken);
+		//UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller open: %f"), XpToken);
 
 		bShowMouseCursor = true;
 	}
@@ -127,7 +127,7 @@ void AMyPlayerController::RemoveSkillMenu()
 		HUDTalentTree->SetVisibility(ESlateVisibility::Hidden);
 		FInputModeGameOnly InputModeGameOnly;
 		SetInputMode(InputModeGameOnly);
-		UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller remove: %f"), XpToken);
+		//UE_LOG(LogTemp, Warning, TEXT("Skillpoints playercontroller remove: %f"), XpToken);
 
 		bShowMouseCursor = false;
 	}
@@ -136,7 +136,7 @@ void AMyPlayerController::RemoveSkillMenu()
 void AMyPlayerController::KillCount(float Amount)
 {
 	Kills += Amount;
-	UE_LOG(LogTemp, Warning, TEXT("The amount of kills are %f"), Kills);
+	//UE_LOG(LogTemp, Warning, TEXT("The amount of kills are %f"), Kills);
 
 	FoesDefeatedCount(Amount);
 
@@ -146,7 +146,7 @@ void AMyPlayerController::KillCount(float Amount)
 void AMyPlayerController::BossKillCount(float Amount)
 {
 	BossKills += Amount;
-	UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills are %f"), BossKills);
+	//UE_LOG(LogTemp, Warning, TEXT("The amount of boss-kills are %f"), BossKills);
 }
 
 void AMyPlayerController::FoesAliveCount(float Amount)
@@ -281,7 +281,7 @@ void AMyPlayerController::CalculateXp()
 	XPoints += XPointsDifference;
 	XPointsDifference = 0;
 
-	UE_LOG(LogTemp, Warning, TEXT("Calculate XP"));
+	//UE_LOG(LogTemp, Warning, TEXT("Calculate XP"));
 
 	if (XPoints >= MaxXp)
 	{
@@ -291,8 +291,8 @@ void AMyPlayerController::CalculateXp()
 void AMyPlayerController::SetScaling()
 {
 	Scaling = (Kills * 0.02) + (BossKills * 0.5) + (LevelsCleared * 1);
-	UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), Scaling);
-	UE_LOG(LogTemp, Warning, TEXT("Kills Scaling: %f"), Kills);
+	//UE_LOG(LogTemp, Warning, TEXT("Progress Scaling: %f"), Scaling);
+	//UE_LOG(LogTemp, Warning, TEXT("Kills Scaling: %f"), Kills);
 }
 
 //Pause Menu//
@@ -344,7 +344,7 @@ void AMyPlayerController::SaveStats()
 	SaveStats->CharacterStats.Kills = Kills;
 
 	UGameplayStatics::SaveGameToSlot(SaveStats, SaveStats->PlayerName, SaveStats->UserIndex);
-	UE_LOG(LogTemp, Warning, TEXT("Saved kills: %f"), Kills);
+	//UE_LOG(LogTemp, Warning, TEXT("Saved kills: %f"), Kills);
 }
 
 void AMyPlayerController::LoadStats()
