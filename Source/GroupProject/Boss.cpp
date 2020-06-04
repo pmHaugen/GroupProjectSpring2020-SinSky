@@ -26,8 +26,9 @@ ABoss::ABoss()
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(90.f);
 
+	//Problem?
 	CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CombatCollision"));
-	CombatCollision->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("DamageSocket"));
+	CombatCollision->SetupAttachment(GetMesh(), FName("DamageSocket"));
 
 	bOverLappingCombatSphere = false;
 

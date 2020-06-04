@@ -34,7 +34,7 @@ AMainCharacter::AMainCharacter()
 
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
+	CameraBoom->SetupAttachment(GetRootComponent());
 	CameraBoom->TargetArmLength = 1300.f;
 	CameraBoom->bEnableCameraLag = true;
 	CameraBoom->CameraLagSpeed = 40.f; //Doesn't work.
@@ -50,7 +50,7 @@ AMainCharacter::AMainCharacter()
 
 	//Mouse
 	CursorToWorld = CreateDefaultSubobject<UDecalComponent>("CursorToWorld");
-	CursorToWorld->SetupAttachment(RootComponent);
+	CursorToWorld->SetupAttachment(GetRootComponent());
 	UE_LOG(LogTemp, Warning, TEXT("trying to add decal form hardcoded path!"));
 	static ConstructorHelpers::FObjectFinder<UMaterial> DecalMaterialAsset(TEXT("Material'/Game/Materials/M_Cursor_Decal.M_Cursor_Decal'"));
 	if (DecalMaterialAsset.Succeeded())

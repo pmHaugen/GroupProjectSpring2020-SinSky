@@ -25,7 +25,7 @@ AEarthBlast::AEarthBlast()
 	RootComponent = Collider;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EarthBlast Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+	Mesh->SetupAttachment(GetRootComponent());
 
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());

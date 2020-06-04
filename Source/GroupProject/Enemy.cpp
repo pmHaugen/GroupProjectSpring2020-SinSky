@@ -28,8 +28,10 @@ AEnemy::AEnemy()
 	CombatSphere->SetupAttachment(GetRootComponent());
 	CombatSphere->InitSphereRadius(90.f);
 
+	//Problem?
 	CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CombatCollision"));
-	CombatCollision->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("DuckEnemySocket"));
+	CombatCollision->SetupAttachment(GetMesh(), FName("DuckEnemySocket"));
+	
 
 	HPSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HPSphere"));
 	HPSphere->SetupAttachment(GetRootComponent());

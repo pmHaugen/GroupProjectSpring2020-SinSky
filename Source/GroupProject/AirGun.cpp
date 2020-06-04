@@ -24,7 +24,7 @@ AAirGun::AAirGun()
 	RootComponent = Collider;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AirGun Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+	Mesh->SetupAttachment(GetRootComponent());
 
 	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
