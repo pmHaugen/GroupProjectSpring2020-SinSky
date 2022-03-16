@@ -717,33 +717,36 @@ void AMainCharacter::SaveGame(bool SaveLevel)
 
 void AMainCharacter::LoadGame(bool LoadLevel)
 {
-	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
-
-	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
-
-	//SkillPoints = LoadStats->CharacterStats.SkillPoints;
-	MaxHealth      = LoadStats->CharacterStats.MaxHealth;
-	Health         = LoadStats->CharacterStats.Health;
-	FireMana       = LoadStats->CharacterStats.FireMana;
-	WaterMana      = LoadStats->CharacterStats.WaterMana;
-	EarthMana      = LoadStats->CharacterStats.EarthMana;
-	AirMana        = LoadStats->CharacterStats.AirMana;
-	FireLvl        = LoadStats->CharacterStats.FireLvl;
-	WaterLvl       = LoadStats->CharacterStats.WaterLvl;
-	EarthLvl       = LoadStats->CharacterStats.EarthLvl;
-	AirLvl         = LoadStats->CharacterStats.AirLvl;
-	RegenLvl	   = LoadStats->CharacterStats.RegenLvl;
-	ManaRegenLvl   = LoadStats->CharacterStats.ManaRegenLvl;
-	HealthRegenLvl = LoadStats->CharacterStats.HealthRegenLvl;
-	NextLevelName  = LoadStats->CharacterStats.NextLevel;
-
-	PlayerController->LoadStats();
-
-	//UE_LOG(LogTemp, Warning, TEXT("loading Level: %f"), NextLevelName);
-	if (LoadLevel)
+	if (UGameplayStatics::DoesSaveGameExist("Default", 0))
 	{
+		UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+
+		LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
+
+		//SkillPoints = LoadStats->CharacterStats.SkillPoints;
+		MaxHealth = LoadStats->CharacterStats.MaxHealth;
+		Health = LoadStats->CharacterStats.Health;
+		FireMana = LoadStats->CharacterStats.FireMana;
+		WaterMana = LoadStats->CharacterStats.WaterMana;
+		EarthMana = LoadStats->CharacterStats.EarthMana;
+		AirMana = LoadStats->CharacterStats.AirMana;
+		FireLvl = LoadStats->CharacterStats.FireLvl;
+		WaterLvl = LoadStats->CharacterStats.WaterLvl;
+		EarthLvl = LoadStats->CharacterStats.EarthLvl;
+		AirLvl = LoadStats->CharacterStats.AirLvl;
+		RegenLvl = LoadStats->CharacterStats.RegenLvl;
+		ManaRegenLvl = LoadStats->CharacterStats.ManaRegenLvl;
+		HealthRegenLvl = LoadStats->CharacterStats.HealthRegenLvl;
+		NextLevelName = LoadStats->CharacterStats.NextLevel;
+
+		PlayerController->LoadStats();
+
 		//UE_LOG(LogTemp, Warning, TEXT("loading Level: %f"), NextLevelName);
-		NextLevel(NextLevelName);
+		if (LoadLevel)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("loading Level: %f"), NextLevelName);
+			NextLevel(NextLevelName);
+		}
 	}
 }
 

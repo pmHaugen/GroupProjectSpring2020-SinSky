@@ -350,21 +350,23 @@ void AMyPlayerController::SaveStats()
 
 void AMyPlayerController::LoadStats()
 {
-	UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
-	LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
+	if (UGameplayStatics::DoesSaveGameExist("Default", 0))
+	{
+		UGameSaver* LoadStats = Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+		LoadStats = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(LoadStats->PlayerName, LoadStats->UserIndex));
 
-	Kills = LoadStats->CharacterStats.Kills;
-	BossKills = LoadStats->CharacterStats.BossKills;
-	LevelsCleared = LoadStats->CharacterStats.LevelsCleared;
-	XPoints = LoadStats->CharacterStats.Xpoints;
-	PlayerLevel = LoadStats->CharacterStats.PlayerLevel;
-	XpToken = LoadStats->CharacterStats.SkillPoints;
-//	FoesDefeated = LoadStats->CharacterStats.FoesDefeated;
-//	FoesAlive = LoadStats->CharacterStats.FoesAlive;
+		Kills = LoadStats->CharacterStats.Kills;
+		BossKills = LoadStats->CharacterStats.BossKills;
+		LevelsCleared = LoadStats->CharacterStats.LevelsCleared;
+		XPoints = LoadStats->CharacterStats.Xpoints;
+		PlayerLevel = LoadStats->CharacterStats.PlayerLevel;
+		XpToken = LoadStats->CharacterStats.SkillPoints;
+		//	FoesDefeated = LoadStats->CharacterStats.FoesDefeated;
+		//	FoesAlive = LoadStats->CharacterStats.FoesAlive;
 
-	MaxXp = PlayerLevel * 35 + 100;
-	UE_LOG(LogTemp, Warning, TEXT("Loaded kills: %f"), Kills);
-
+		MaxXp = PlayerLevel * 35 + 100;
+		UE_LOG(LogTemp, Warning, TEXT("Loaded kills: %f"), Kills);
+	}
 }
 
 void AMyPlayerController::LoadDif()
